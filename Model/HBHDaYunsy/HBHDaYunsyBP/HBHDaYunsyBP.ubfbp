@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Component id="c71c7d5a-2750-4628-9e63-f866eecf93f8" name="GetNumAllocation" displayName="GetNumAllocation" description="" help="" type="BP" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP">
+  <Namespace id="9b462c87-fbaa-4137-a96a-61a70a85507d" name="U9.VOB.Cus.HBHDaYunsy" displayName="U9.VOB.Cus.HBHDaYunsy" description="" help="">
+    <Operation id="5bb71ab7-30c4-4612-8c81-d58cf3a960ce" name="GetNumAllocationBP" displayName="获得分配基数数据" description="获得分配基数数据" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="378d45b4-375d-4b5d-8748-abc9575c26b3" isService="False" isDefault="False" isEntityKey="False" transactionType="2" isAuthorization="True" isISV="False">
+      <Groups>
+        <Group id="c8a4f826-75dd-4449-be02-1ace0233a2e3" name="Misc" displayName="Misc" description="" help="" />
+      </Groups>
+      <Attributes>
+        <Attribute id="31e36748-9dc4-4432-ab39-eb923b435e0d" name="AccountPeriod" displayName="期间" description="" help="获得分配基数数据.Misc.期间" dataTypeID="ba391065-6c27-4c82-acc8-b52b1c93a910" isKey="False" defaultValue="0" length="8" precise="19" scale="0" isNullable="True" isReadOnly="False" isHide="False" isCalculation="False" valueExpression="" maxValue="" minValue="" sequence="0" isDefaultDimensionAttribute="False" isDefaultMeasureAttribute="False" isGlobalization="False" idGenerator="" groupName="Misc" isEntityKey="False" isEntityData="True" isSystem="False" isBusinessKey="False" isSyncDictionary="False" dictionaryKey="" isExtendCode="False" isQuery="True" isForAsso="True" isModifyControl="False" isDynamic="False" isImpressible="False" isInCache="False" isKeySerializable="False" isColumnDefine="True" isFilterDefine="True" isSortDefine="True" isDefaultColumn="True" forOBAImport="False" />
+        <Attribute id="a6e7f70b-d96a-46d9-9ff2-1ee5d2f9bba8" name="UserDefAllocRateID" displayName="分配基数" description="" help="获得分配基数数据.Misc.分配基数" dataTypeID="ba391065-6c27-4c82-acc8-b52b1c93a910" isKey="False" defaultValue="0" length="8" precise="19" scale="0" isNullable="True" isReadOnly="False" isHide="False" isCalculation="False" valueExpression="" maxValue="" minValue="" sequence="1" isDefaultDimensionAttribute="False" isDefaultMeasureAttribute="False" isGlobalization="False" idGenerator="" groupName="Misc" isEntityKey="False" isEntityData="True" isSystem="False" isBusinessKey="False" isSyncDictionary="False" dictionaryKey="" isExtendCode="False" isQuery="True" isForAsso="True" isModifyControl="False" isDynamic="False" isImpressible="False" isInCache="False" isKeySerializable="False" isColumnDefine="True" isFilterDefine="True" isSortDefine="True" isDefaultColumn="True" forOBAImport="False" />
+        <Attribute id="08b87fd2-ca57-43ea-9edf-8eafbeee6d37" name="UserRateCode" displayName="分配基数编码" description="" help="获得分配基数数据.Misc.分配基数编码" dataTypeID="3d174255-fd12-47f7-8844-3b5e4fae9e8c" isKey="False" defaultValue="" length="50" precise="5" scale="0" isNullable="True" isReadOnly="False" isHide="False" isCalculation="False" valueExpression="" maxValue="" minValue="" sequence="2" isDefaultDimensionAttribute="False" isDefaultMeasureAttribute="False" isGlobalization="False" idGenerator="" groupName="Misc" isEntityKey="False" isEntityData="True" isSystem="False" isBusinessKey="False" isSyncDictionary="False" dictionaryKey="" isExtendCode="False" isQuery="True" isForAsso="True" isModifyControl="False" isDynamic="False" isImpressible="False" isInCache="False" isKeySerializable="False" isColumnDefine="True" isFilterDefine="True" isSortDefine="True" isDefaultColumn="True" forOBAImport="False" />
+      </Attributes>
+      <Implements>
+        <Operation id="eafd9523-2fc0-44c1-8377-3660dd445c73" name="Impement" displayName="实现" description="" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="378d45b4-375d-4b5d-8748-abc9575c26b3" isService="False" isDefault="True" isEntityKey="False" transactionType="2" isAuthorization="True" isISV="False" />
+      </Implements>
+    </Operation>
+    <Diagram id="7b3d7d3e-625f-4ff0-be86-e137a785f22f" name="HBHDaYunsyBP" displayName="HBHDaYunsyBP">
+      <Class Editable="True" ID="5bd6c275-1e28-4ddd-8583-1073f8463ee2" Type="Operation" ADID="5bb71ab7-30c4-4612-8c81-d58cf3a960ce">
+        <Location X="222" Y="151" />
+        <Size width="120" height="58" />
+      </Class>
+    </Diagram>
+  </Namespace>
+</Component>

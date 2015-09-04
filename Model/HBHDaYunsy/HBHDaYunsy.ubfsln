@@ -1,0 +1,9 @@
+<Solution>
+  <SourceControl>
+  </SourceControl>
+  <ItemGroup>
+    <Item id="4521a095-f04b-4607-bd83-91eb76bc99f8" include="HBHDaYunsy_UIProject\HBHDaYunsy_UIProject.ubfuiproj" />
+    <Item id="53f454ed-313e-4948-a026-8f9ecd934046" include="HBHDaYunsyBP\HBHDaYunsyBP.ubfbpproj" />
+  </ItemGroup>
+  <ServiceGroupInfo id="427b2538-4dfc-4130-bfc4-8a967ce84166" name="HBHDaYunsy" displayName="HBHDaYunsy" description="" help="" fullPath="D:\U9Cust\UFIDA\U9Proj\U9AppCode\U9.VOB.Apps.Cus\CusApp\HBHDaYunSY\Model\HBHDaYunsy\HBHDaYunsy.ubfsln" applicationID="" />
+</Solution>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ReferenceComponent id="07bcfc91-fd3d-4319-8ed7-883676254bc6" name="AccountPeriodRef" displayName="会计期间" description="" help="" refType="1" isMultiSelect="False" isDefault="False" isClientReturn="False" width="580" height="408" isBinding="False" displayNameResourceID="" URI="HBHDaYunsy_UIProject.AccountPeriodRef" Classify="" ForMultOrg="False">
+  <References>
+    <Reference id="16114e43-fa83-4086-8b23-cc2675b71974" name="cRef" displayName="cRef" description="" help="会计期间" refEntityId="7bf5f98b-4b43-45b2-95b3-d52dd8cb95d2" refEntityName="UFIDA.U9.Base.Account.AccountPeriod" refType="1" isMain="False">
+      <RefFields>
+        <RefField id="66fcc3fc-21fa-4cb9-ad8b-8fccf452858a" name="ID" displayName="ID" description="" help="会计期间.Key.ID" isKey="True" isEdit="False" isName="False" isVisible="False" isParent="False" sequence="0" length="80" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:ID" displayNameIndexStr="2" />
+        <RefField id="73531692-bbdd-4d62-a9a9-e6142c9c3e51" name="AccountingCalendar_Description" displayName="名称" description="" help="会计日历.Misc.描述" isKey="False" isEdit="True" isName="True" isVisible="True" isParent="False" sequence="0" length="80" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:AccountingCalendar.Description" displayNameIndexStr="" />
+        <RefField id="bfd8479f-19dd-4071-85c8-89d00870f587" name="Year" displayName="会计年度" description="" help="会计期间.Misc.会计年度" isKey="False" isEdit="False" isName="False" isVisible="True" isParent="False" sequence="0" length="80" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:Year" displayNameIndexStr="2" />
+        <RefField id="693b3c1f-ceee-4b4d-b539-9a3b83ff9b2b" name="Month" displayName="月份" description="" help="会计期间.Misc.月份" isKey="False" isEdit="False" isName="False" isVisible="True" isParent="False" sequence="0" length="80" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:Month" displayNameIndexStr="2" />
+        <RefField id="69cecc2b-bfa9-4e04-b222-207cfe4975a5" name="Number" displayName="期间号" description="" help="会计期间.Misc.期间号" isKey="False" isEdit="False" isName="False" isVisible="True" isParent="False" sequence="0" length="80" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:Number" displayNameIndexStr="2" />
+        <RefField id="7461316b-7510-40e4-939b-077a0f00520d" name="Quarter" displayName="季度" description="" help="会计期间.Misc.季度" isKey="False" isEdit="False" isName="False" isVisible="True" isParent="False" sequence="0" length="80" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:Quarter" displayNameIndexStr="2" />
+        <RefField id="a44c05fe-c21f-46e0-aa6e-d1c1127f096f" name="FromDate" displayName="开始日期" description="" help="会计期间.Misc.开始日期" isKey="False" isEdit="False" isName="False" isVisible="True" isParent="False" sequence="0" length="80" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:FromDate" displayNameIndexStr="2" />
+        <RefField id="e14873fe-e1fb-4b12-ba9c-7201e999ecc2" name="ToDate" displayName="结束日期" description="" help="会计期间.Misc.结束日期" isKey="False" isEdit="False" isName="False" isVisible="True" isParent="False" sequence="0" length="80" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:ToDate" displayNameIndexStr="2" />
+      </RefFields>
+      <OrderFields>
+        <OrderField id="c63e58ab-38ab-4471-a561-1b6edcf56324" name="Year" displayName="会计年度" description="" help="会计期间.Misc.会计年度" direction="0" sequence="0" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:Year" />
+        <OrderField id="b992de78-fdd0-4fd1-ac23-87940f2d945a" name="Month" displayName="月份" description="" help="会计期间.Misc.月份" direction="0" sequence="0" refAttributeName="UFIDA.U9.Base.Account.AccountPeriod:Month" />
+      </OrderFields>
+      <Filter />
+    </Reference>
+  </References>
+</ReferenceComponent>

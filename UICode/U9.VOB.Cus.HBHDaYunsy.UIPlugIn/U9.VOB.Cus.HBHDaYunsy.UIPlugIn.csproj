@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2D199AC6-A55C-4B08-836A-C9580F1C9906}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>U9.VOB.Cus.HBHDaYunsy.UIPlugIn</RootNamespace>
+    <AssemblyName>U9.VOB.Cus.HBHDaYunsy.UIPlugIn</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HBH.DoNet.DevPlatform.EntityMapping">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\HBHCommon\HBH.DoNet.DevPlatform.EntityMapping.dll</HintPath>
+    </Reference>
+    <Reference Include="HBH.DoNet.DevPlatform.U9Mapping">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\HBHCommon\HBH.DoNet.DevPlatform.U9Mapping.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP.Agent">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsy_UIProject.WebPart">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\U9.VOB.Cus.HBHDaYunsy.HBHDaYunsy_UIProject.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="U9.VOB.HBHCommon.HBHCommonUI.WebPart">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\HBHCommon\U9.VOB.HBHCommon.HBHCommonUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="U9.VOB.HBHCommon.U9CommonSV.Agent">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\HBHCommon\U9.VOB.HBHCommon.U9CommonSV.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="U9.VOB.HBHCommon.U9CommonSV.Deploy">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\HBHCommon\U9.VOB.HBHCommon.U9CommonSV.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UBF.System, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UBF.System.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.Cust.HBH.Common.CommonHelper">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\Unconfiged\Component\UFIDA.U9.Cust.HBH.Common.CommonHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.Cust.HBH.Common.CommonLibary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\Unconfiged\Component\UFIDA.U9.Cust.HBH.Common.CommonLibary.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.FI.AP.APMaintenanceUI.WebPart">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.FI.AP.APMaintenanceUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.MFG.MRP.PlannerWorkBenchUI.WebPart">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.MFG.MRP.PlannerWorkBenchUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SCM.INV.TransferInUI.WebPart">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.INV.TransferInUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SCM.INV.TransferOutUI.WebPart">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.INV.TransferOutUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SCM.PM.PRUI.WebPart">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.PM.PRUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SCM.PM.PurchaseOrderUI.WebPart, Version=21.5401.3609.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\UFIDA.U9.SCM.PM.PurchaseOrderUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SCM.PM.ReceivementUI.WebPart">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.PM.ReceivementUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SCM.SD.ShipUI.WebPart">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.SD.ShipUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SCM.SD.SOUI.WebPart, Version=25.5401.8124.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.SD.SOUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SM.SMBE">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\App\UFIDA.U9.SM.SMBE.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.UI.BusinessHelper">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\UI\UFIDA.U9.UI.BusinessHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.UI.PDHelper, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFIDA.U9.UI.PDHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Analysis.Interface">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Analysis.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Analysis.MD.Report">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Analysis.MD.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.AopFrame, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.AopFrame.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Business, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.ExportService, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.ExportService.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.MD, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.MD.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.PL">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.PL.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Platform.Runtime">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Platform.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Report.Base">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Report.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Report.DataProviderForRS, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Report.DataProviderForRS.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Report.Entity">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Report.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Report.Filter.FilterWebControl, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Report.Filter.FilterWebControl.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Report.Runtime">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Report.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Report.Tools">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Report.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Sys.Database">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Sys.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.ActionProcess, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.ActionProcess.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.Controls.Interface, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.Controls.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.Engine.Runtime, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.Engine.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.FormProcess, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.FormProcess.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.IView, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.IView.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.MD.Runtime, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.MD.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.Portal, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.Portal.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.State, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.State.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.UIAsyncPostBackTrigger, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.UIAsyncPostBackTrigger.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.WebControls.Association, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.WebControls.Association.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.WebControls.BaseComponent, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.WebControls.BaseComponent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.UI.WebControls.UFDataGrid">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.UI.WebControls.UFDataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Util.DataAccess">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Util.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Util.DBHelper, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Util.DBHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Util.DBScriptGen">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Util.DBScriptGen.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Util.SQLBuilder, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Util.SQLBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.View.Query">
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.View.Query.dll</HintPath>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Report.Filter.FilterModel, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UFSoft.UBF.Report.Filter.FilterModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserDefAllocRateUIPlugin.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="U9.VOB.Cus.HBHDaYunsy.UIPlugIn.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+      if exist "$(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\\" goto copyfile
+      Md "$(ProjectDir)\.\..\....\\..\..\..\UBFV30\U9.VOB.Product.WebPart\\"
+      :copyfile
+      Copy $(TargetDir)\$(TargetName).dll $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\\
+      Copy $(TargetDir)\$(TargetName).pdb $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\\
+      Copy $(TargetDir)\$(TargetName).config $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\\
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
