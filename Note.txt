@@ -1,0 +1,3 @@
+
+<ExtendedPart parentPartFullName="UFIDA.U9.COST.CA.UserDefAllocRateUIModel.UserDefAllocRateMainUIFromWebPart" extendedPartFullName="U9.VOB.Cus.HBHDaYun.UserDefAllocRateUIPlugIn.BtnSver" extendedPartAssemblyName="U9.VOB.Cus.HBHDaYun.UserDefAllocRateUIPlugIn.dll">
+ </ExtendedPart>
