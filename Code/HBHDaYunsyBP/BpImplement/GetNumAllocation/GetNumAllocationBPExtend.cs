@@ -14,6 +14,7 @@ namespace U9.VOB.Cus.HBHDaYunsy
     using UFIDA.U9.CBO.HR.Department;
     using UFIDA.U9.CBO.MFG.ProductionLine;
     using UFIDA.U9.CBO.MFG.WorkCenter;
+    using UFIDA.U9.Base;
 
 	/// <summary>
 	/// GetNumAllocationBP partial 
@@ -48,7 +49,7 @@ namespace U9.VOB.Cus.HBHDaYunsy
 
             if (bpObj != null)
             {
-                OutputQty.EntityList qtylist = OutputQty.Finder.FindAll(" AccountingPeriod = " + bpObj.AccountPeriod + "", new OqlParam[0]);
+                OutputQty.EntityList qtylist = OutputQty.Finder.FindAll(" Org = @Org and  AccountingPeriod = " + bpObj.AccountPeriod + "", new OqlParam(Context.LoginOrg.ID));
                 UserDefAllocRate rate = UserDefAllocRate.Finder.Find("ID = " + bpObj.UserDefAllocRateID + "", new OqlParam[0]);
                 UserDefAllocRatebyobject.EntityList userobj = UserDefAllocRatebyobject.Finder.FindAll("UserDefAllocRate = " + bpObj.UserDefAllocRateID + "", new OqlParam[0]);
                 AccountPeriod period = AccountPeriod.Finder.Find("ID = " + bpObj.AccountPeriod, new OqlParam[0]);
@@ -82,7 +83,7 @@ namespace U9.VOB.Cus.HBHDaYunsy
                                     //if (!bpObj.IsCarLoad)
                                     if (bpObj.UserRateCode != "001")
                                     {
-                                        StdWorkingHours.EntityList lststd = StdWorkingHours.Finder.FindAll("ItemMaster = " + qty.ItemMaster.ID, new OqlParam[0]);
+                                        StdWorkingHours.EntityList lststd = StdWorkingHours.Finder.FindAll(" Org = @Org and ItemMaster = " + qty.ItemMaster.ID,  new OqlParam(Context.LoginOrg.ID));
                                         if (lststd.Count != 0)
                                         {
                                             foreach (StdWorkingHours std in lststd)
