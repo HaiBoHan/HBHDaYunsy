@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Component id="c71c7d5a-2750-4628-9e63-f866eecf93f8" name="GetNumAllocation" displayName="GetNumAllocation" description="" help="" type="BP" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP">
+<Component id="c71c7d5a-2750-4628-9e63-f866eecf93f8" name="GetNumAllocation" displayName="GetNumAllocation" description="" help="" type="BP" assemblyName="HBHDaYunsyBP">
   <Namespace id="9b462c87-fbaa-4137-a96a-61a70a85507d" name="U9.VOB.Cus.HBHDaYunsy" displayName="U9.VOB.Cus.HBHDaYunsy" description="" help="">
     <Operation id="5bb71ab7-30c4-4612-8c81-d58cf3a960ce" name="GetNumAllocationBP" displayName="获得分配基数数据" description="获得分配基数数据" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="378d45b4-375d-4b5d-8748-abc9575c26b3" isService="False" isDefault="False" isEntityKey="False" transactionType="2" isAuthorization="True" isISV="False">
       <Groups>

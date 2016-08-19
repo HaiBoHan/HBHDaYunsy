@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project id="c1f10b75-cdd9-4218-9c52-8aba8075a1e9" name="HBHDaYunsySV" displayName="HBHDaYunsySV" description="" help="" type="SV" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV" mapProject="" resourceName="" projectVersion="Normal">
+  <SourceControl />
+  <ItemGroup>
+    <Item id="a2d3b417-a167-4c4a-b0e8-eab88832eaac" name="RMASV.ubfsvr" displayName="RMASV.ubfsvr" description="" help="" include="RMASV.ubfsvr" type="BE" />
+    <Item id="505d0c6c-d2ac-46c5-926e-ac5bb02eaa7c" name="SalesOrderSV.ubfsvr" displayName="SalesOrderSV.ubfsvr" description="" help="" include="SalesOrderSV.ubfsvr" type="BE" />
+    <Item id="7dcb4d8c-6172-4c51-b6ef-7e7625958c3f" name="ShipSV.ubfsvr" displayName="ShipSV.ubfsvr" description="" help="" include="ShipSV.ubfsvr" type="BE" />
+    <Item id="34556978-59d5-4c8f-81cc-6821268b50e9" name="TransferInSV.ubfsvr" displayName="TransferInSV.ubfsvr" description="" help="" include="TransferInSV.ubfsvr" type="BE" />
+    <Item id="f9f1026c-dffb-4cb7-beac-6ce9aaa299c9" name="DipatchOutWhAPISV.ubfsvr" displayName="DipatchOutWhAPISV.ubfsvr" description="" help="" include="DipatchOutWhAPISV.ubfsvr" type="BE" />
+  </ItemGroup>
+</Project>
