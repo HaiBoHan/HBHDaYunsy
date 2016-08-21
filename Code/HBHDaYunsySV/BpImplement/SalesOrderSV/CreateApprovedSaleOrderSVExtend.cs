@@ -296,13 +296,13 @@
             }
             foreach (string key in dic.Keys)
             {
-                List<SoLineDTO> listSOLineDTO = dic[key];
+                List<SoLineDTO> listLineDTO = dic[key];
 
-                if (listSOLineDTO != null
-                    && listSOLineDTO.Count > 0
+                if (listLineDTO != null
+                    && listLineDTO.Count > 0
                     )
                 {
-                    SoLineDTO firstDTO = listSOLineDTO.GetFirst<SoLineDTO>();
+                    SoLineDTO firstDTO = listLineDTO.GetFirst<SoLineDTO>();
 
                     SaleOrderDTOData sodto = new SaleOrderDTOData();
                     sodto.DocumentType = (new CommonArchiveDataDTOData());
