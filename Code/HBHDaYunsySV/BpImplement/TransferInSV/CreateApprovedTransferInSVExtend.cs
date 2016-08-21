@@ -30,6 +30,7 @@
     using UFIDA.U9.InvDoc.TransferIn.Proxy;
     using UFIDA.U9.ISV.TransferInISV.Proxy;
     using UFIDA.U9.InvDoc.TransferIn;
+    using HBH.DoNet.DevPlatform.U9Mapping;
 
 	/// <summary>
 	/// CreateApprovedTransferInSV partial 
@@ -58,10 +59,40 @@
 			//IContext context = ContextManager.Context	
 			
 			//auto generating code end,underside is user custom code
-			//and if you Implement replace this Exception Code...
+            //and if you Implement replace this Exception Code...
 
+            long svID = -1;
+            if (CreateApprovedSaleOrderSVImpementStrategy.isLog)
+            {
+                svID = ProxyLogger.CreateTransferSV(bpObj.GetType().FullName, EntitySerialization.EntitySerial(bpObj)
+                    , bpObj.GetType().FullName, string.Empty);
+            }
+
+            List<TransferInResultDTO> result2 = CreateTransferIn(bpObj);
+
+            if (svID > 0)
+            {
+                if (result2 != null
+                    && result2.Count > 0
+                    )
+                {
+                    string resultXml = EntitySerialization.EntitySerial(result2);
+                    TransferInResultDTO first = result2.GetFirst();
+
+                    if (first != null)
+                    {
+                        ProxyLogger.UpdateTransferSV(svID, resultXml, first.IsSuccess, first.ErrorInfo, first.ERPDocNo, string.Empty);
+                    }
+                }
+            }
+
+            return result2;
+        }
+
+        private List<TransferInResultDTO> CreateTransferIn(CreateApprovedTransferInSV bpObj)
+        {
             System.Collections.Generic.List<TransferInResultDTO> result = new System.Collections.Generic.List<TransferInResultDTO>();
-            object result2;
+            //object result2;
             try
             {
                 if (bpObj.TransferInLineDTOList == null || bpObj.TransferInLineDTOList.Count == 0)
@@ -72,7 +103,7 @@
                         ErrorInfo = "传入参数不可为空",
                         Timestamp = System.DateTime.Now
                     });
-                    result2 = result;
+                    //result2 = result;
                 }
                 else
                 {
@@ -85,7 +116,7 @@
                             ErrorInfo = errormessage + "请检查传入参数",
                             Timestamp = System.DateTime.Now
                         });
-                        result2 = result;
+                        //result2 = result;
                     }
                     else
                     {
@@ -105,8 +136,9 @@
                                         ErrorInfo = "生单失败：没有生成调入单",
                                         Timestamp = System.DateTime.Now
                                     });
-                                    result2 = result;
-                                    return result2;
+                                    //result2 = result;
+                                    //return result2;
+                                    return result;
                                 }
                                 TransferInBatchApproveSRVProxy approveproxy = new TransferInBatchApproveSRVProxy();
                                 approveproxy.DocList = (transinidlist);
@@ -124,8 +156,9 @@
                                     ErrorInfo = "生单失败：" + e.Message,
                                     Timestamp = System.DateTime.Now
                                 });
-                                result2 = result;
-                                return result2;
+                                //result2 = result;
+                                //return result2;
+                                return result;
                             }
                         }
                         foreach (CommonArchiveDataDTOData transin in transinidlist)
@@ -143,7 +176,7 @@
                                 });
                             }
                         }
-                        result2 = result;
+                        //result2 = result;
                     }
                 }
             }
@@ -155,9 +188,10 @@
                     ErrorInfo = e.Message,
                     Timestamp = System.DateTime.Now
                 });
-                result2 = result;
+                //result2 = result;
             }
-            return result2;
+            //return result2;
+            return result;
         }
 
         // 传入参数非空校验

@@ -32,6 +32,7 @@
     using UFIDA.U9.InvDoc.TransferIn;
     using UFIDA.U9.SM.RMA;
     using UFIDA.U9.Base.DTOs;
+    using HBH.DoNet.DevPlatform.U9Mapping;
 
 	/// <summary>
 	/// CreateRMASV partial 
@@ -60,10 +61,40 @@
 			//IContext context = ContextManager.Context	
 			
 			//auto generating code end,underside is user custom code
-			//and if you Implement replace this Exception Code...
+            //and if you Implement replace this Exception Code...
 
+            long svID = -1;
+            if (CreateApprovedSaleOrderSVImpementStrategy.isLog)
+            {
+                svID = ProxyLogger.CreateTransferSV(bpObj.GetType().FullName, EntitySerialization.EntitySerial(bpObj)
+                    , bpObj.GetType().FullName, string.Empty);
+            }
+
+            List<ShipBackDTO> result2 = CreateRMA(bpObj);
+
+            if (svID > 0)
+            {
+                if (result2 != null
+                    && result2.Count > 0
+                    )
+                {
+                    string resultXml = EntitySerialization.EntitySerial(result2);
+                    ShipBackDTO first = result2.GetFirst();
+
+                    if (first != null)
+                    {
+                        ProxyLogger.UpdateTransferSV(svID, resultXml, first.IsSuccess, first.ErrorInfo, first.ERPDocNo, string.Empty);
+                    }
+                }
+            }
+
+            return result2;
+        }
+
+        private List<ShipBackDTO> CreateRMA(CreateRMASV bpObj)
+        {
             System.Collections.Generic.List<ShipBackDTO> result = new System.Collections.Generic.List<ShipBackDTO>();
-            object result2;
+            //object result2;
             try
             {
                 if (bpObj.RMALineDTOs == null || bpObj.RMALineDTOs.Count == 0)
@@ -74,7 +105,7 @@
                         ErrorInfo = "传入参数不可为空",
                         Timestamp = System.DateTime.Now
                     });
-                    result2 = result;
+                    //result2 = result;
                 }
                 else
                 {
@@ -87,11 +118,11 @@
                             ErrorInfo = errormessage + "请检查传入参数",
                             Timestamp = System.DateTime.Now
                         });
-                        result2 = result;
+                        //result2 = result;
                     }
                     else
                     {
-                        System.Collections.Generic.List<DocKeyDTOData> rmaidlist;
+                        System.Collections.Generic.List<DocKeyDTOData> rmaidlist = null;
                         try
                         {
                             CreateRMASRVProxy proxy = new CreateRMASRVProxy();
@@ -113,8 +144,9 @@
                                 ErrorInfo = "生单失败：" + e.Message,
                                 Timestamp = System.DateTime.Now
                             });
-                            result2 = result;
-                            return result2;
+                            //result2 = result;
+                            //return result2;
+                            return result;
                         }
                         if (rmaidlist == null || rmaidlist.Count <= 0)
                         {
@@ -124,7 +156,7 @@
                                 ErrorInfo = "生单失败：没有生成退回处理单",
                                 Timestamp = System.DateTime.Now
                             });
-                            result2 = result;
+                            //result2 = result;
                         }
                         else
                         {
@@ -138,7 +170,7 @@
                                     ERPDocNo = rmaid.DocNO
                                 });
                             }
-                            result2 = result;
+                            //result2 = result;
                         }
                     }
                 }
@@ -151,9 +183,10 @@
                     ErrorInfo = e.Message,
                     Timestamp = System.DateTime.Now
                 });
-                result2 = result;
+                //result2 = result;
             }
-            return result2;
+            //return result2;
+            return result;
         }
 
         // 传入参数非空校验

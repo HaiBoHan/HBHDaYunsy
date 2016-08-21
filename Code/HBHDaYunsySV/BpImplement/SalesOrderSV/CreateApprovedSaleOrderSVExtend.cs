@@ -23,6 +23,7 @@
     using UFIDA.U9.CBO.Pub.Controller.Proxy;
     using UFIDA.U9.Base.Organization;
     using UFIDA.U9.ISV.SM.Proxy;
+    using HBH.DoNet.DevPlatform.U9Mapping;
 
 	/// <summary>
 	/// CreateApprovedSaleOrderSV partial 
@@ -42,6 +43,8 @@
 	/// </summary>	
 	internal partial class CreateApprovedSaleOrderSVImpementStrategy : BaseStrategy
 	{
+        public const bool isLog = true;
+
 		public CreateApprovedSaleOrderSVImpementStrategy() { }
 
 		public override object Do(object obj)
@@ -54,9 +57,46 @@
 			//auto generating code end,underside is user custom code
             //and if you Implement replace this Exception Code...
 
+            long svID = -1;
+            if (CreateApprovedSaleOrderSVImpementStrategy.isLog)
+            {
+                svID = ProxyLogger.CreateTransferSV(bpObj.GetType().FullName, EntitySerialization.EntitySerial(bpObj)
+                    , bpObj.GetType().FullName, string.Empty);
+            }
+
+            List<SoBackDTO> result2 = CreateSO(bpObj);
+
+            if (svID > 0)
+            {
+                if (result2 != null
+                    && result2.Count > 0
+                    )
+                {
+                    string resultXml = EntitySerialization.EntitySerial(result2);
+                    SoBackDTO first = result2.GetFirst();
+
+                    if (first != null)
+                    {
+                        ProxyLogger.UpdateTransferSV(svID, resultXml, first.IsSuccess, first.ErrorInfo, first.ERPDocNo, string.Empty);
+                    }
+                }
+            }
+
+            return result2;
+        }
+
+        // 创建SO
+        /// <summary>
+        /// 创建SO
+        /// </summary>
+        /// <param name="bpObj"></param>
+        /// <returns></returns>
+        private List<SoBackDTO> CreateSO(CreateApprovedSaleOrderSV bpObj)
+        {
+
             System.Collections.Generic.List<SoBackDTO> results = new System.Collections.Generic.List<SoBackDTO>();
             SoBackDTO result = new SoBackDTO();
-            object result2;
+            //object result2;
             try
             {
                 if (bpObj.SoLineDto == null || bpObj.SoLineDto.Count == 0)
@@ -65,7 +105,7 @@
                     result.ErrorInfo = "传入参数不可为空";
                     result.Timestamp = System.DateTime.Now.ToString();
                     results.Add(result);
-                    result2 = results;
+                    //result2 = results;
                 }
                 else
                 {
@@ -78,7 +118,7 @@
                         result.ErrorInfo = errormessage;
                         result.Timestamp = System.DateTime.Now.ToString();
                         results.Add(result);
-                        result2 = results;
+                        //result2 = results;
                     }
                     else
                     {
@@ -132,9 +172,16 @@
                                     }
                                     onlineSendObjsProxy.Do();
                                 }
-                                catch (System.Exception ex)
+                                catch (System.Exception e)
                                 {
-                                    throw new System.ApplicationException(string.Format("{0}项目下发失败：{1}", project2.Code, ex.Message));
+                                    //throw new System.ApplicationException(string.Format("{0}项目下发失败：{1}", project2.Code, ex.Message));
+                                    result.IsSuccess = false;
+                                    result.ErrorInfo = e.Message;
+                                    result.Timestamp = System.DateTime.Now.ToString();
+                                    results.Add(result);
+                                    //result2 = results;
+                                    //return result2;
+                                    return results;
                                 }
                             }
                             try
@@ -154,8 +201,8 @@
                                     result.ErrorInfo = "没有生成销售订单";
                                     result.Timestamp = System.DateTime.Now.ToString();
                                     results.Add(result);
-                                    result2 = results;
-                                    return result2;
+                                    //result2 = results;
+                                    return results;
                                 }
                                 SOStatusTransferBPProxy bp = new SOStatusTransferBPProxy();
                                 bp.SOKeyDTOList = new System.Collections.Generic.List<SM.SO.SOKeyDTOData>();
@@ -187,8 +234,9 @@
                                 result.ErrorInfo = e.Message;
                                 result.Timestamp = System.DateTime.Now.ToString();
                                 results.Add(result);
-                                result2 = results;
-                                return result2;
+                                //result2 = results;
+                                //return result2;
+                                return results;
                             }
                         }
                         if (statusDTOs != null && statusDTOs.Count > 0)
@@ -206,7 +254,7 @@
                                 }
                             }
                         }
-                        result2 = results;
+                        //result2 = results;
                     }
                 }
             }
@@ -216,9 +264,10 @@
                 result.ErrorInfo = e.Message;
                 result.Timestamp = System.DateTime.Now.ToString();
                 results.Add(result);
-                result2 = results;
+                //result2 = results;
             }
-            return result2;
+            //return result2;
+            return results;
         }
 
         // 传入参数非空校验

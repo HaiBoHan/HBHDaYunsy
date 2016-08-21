@@ -35,6 +35,9 @@
     <Reference Include="HBH.DoNet.DevPlatform.EntityMapping">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\HBHCommon\HBH.DoNet.DevPlatform.EntityMapping.dll</HintPath>
     </Reference>
+    <Reference Include="HBH.DoNet.DevPlatform.U9Mapping">
+      <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\HBHCommon\HBH.DoNet.DevPlatform.U9Mapping.dll</HintPath>
+    </Reference>
     <Reference Include="UFIDA.U9.Base.BaseBE">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\UBF\UFIDA.U9.Base.BaseBE.dll</HintPath>
     </Reference>
