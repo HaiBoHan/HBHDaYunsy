@@ -28,7 +28,7 @@
         <Attribute id="01cfeb49-c040-4a72-ab1e-8a5f3bc8b6f9" name="RefitMoney" displayName="上装价格" description="" help="出货单行DTO.Misc.上装价格" dataTypeID="3d174255-fd12-47f7-8844-3b5e4fae9e8c" isKey="False" defaultValue="" length="50" precise="5" scale="0" isNullable="True" isReadOnly="False" isHide="False" isCalculation="False" valueExpression="" maxValue="" minValue="" sequence="19" isDefaultDimensionAttribute="False" isDefaultMeasureAttribute="False" isGlobalization="False" idGenerator="" groupName="Misc" isEntityKey="False" isEntityData="True" isSystem="False" isBusinessKey="False" isSyncDictionary="False" dictionaryKey="" isExtendCode="False" isQuery="True" isForAsso="True" isModifyControl="False" isDynamic="False" isImpressible="False" isInCache="False" isKeySerializable="False" isColumnDefine="True" isFilterDefine="True" isSortDefine="True" isDefaultColumn="True" forOBAImport="False" />
       </Attributes>
     </PropertyType>
-    <Operation id="37046eb9-68df-4b73-ad2f-357a9238c0c7" name="DispatchOutWhCarSV" displayName="DMS发运出库接口" description="DMS发运出库接口" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="378d45b4-375d-4b5d-8748-abc9575c26b3" isService="True" isDefault="False" isEntityKey="False" transactionType="2" isAuthorization="True" isISV="False">
+    <Operation id="37046eb9-68df-4b73-ad2f-357a9238c0c7" name="DispatchOutWhCarSV" displayName="DMS发运出库接口" description="DMS发运出库接口" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="8671eabf-2cea-4764-acae-e1a3ae285d1a" isService="True" isDefault="False" isReturnCollection="True" isEntityKey="False" transactionType="2" isAuthorization="True" isISV="False">
       <Groups>
         <Group id="ba6c8306-b17b-4fbe-a714-4626ea0e35d2" name="Misc" displayName="Misc" description="" help="" />
       </Groups>
@@ -40,12 +40,12 @@
       </Implements>
     </Operation>
     <Diagram id="b0779b73-82dd-4561-ab38-e990bee7ed91" name="DipatchOutWhAPISV" displayName="DipatchOutWhAPISV">
-      <Class Editable="True" ID="d923fe44-ebb2-4776-800f-e4b4d6b8ce23" Type="Service" ADID="37046eb9-68df-4b73-ad2f-357a9238c0c7">
-        <Location X="77" Y="71" />
-        <Size width="120" height="58" />
-      </Class>
       <Class Editable="True" ID="cf982896-73c6-4c3b-a382-d7412ad157b0" Type="PropertyType" ADID="cce59fa4-57d5-4cde-aaf5-04479a77dc8a">
         <Location X="316" Y="119" />
+        <Size width="120" height="58" />
+      </Class>
+      <Class Editable="True" ID="d923fe44-ebb2-4776-800f-e4b4d6b8ce23" Type="Service" ADID="37046eb9-68df-4b73-ad2f-357a9238c0c7">
+        <Location X="77" Y="71" />
         <Size width="120" height="58" />
       </Class>
     </Diagram>
