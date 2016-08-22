@@ -62,21 +62,21 @@
             //and if you Implement replace this Exception Code...
 
 
-            long svID = HBHCommon.HBHCommonSVBefore(bpObj);
+            //long svID = HBHCommon.HBHCommonSVBefore(bpObj);
 
             List<TransferInResultDTO> result2 = CreateTransferIn(bpObj);
             
-            if (result2 != null
-                && result2.Count > 0
-                )
-            {
-                TransferInResultDTO first = result2.GetFirst();
+            //if (result2 != null
+            //    && result2.Count > 0
+            //    )
+            //{
+            //    TransferInResultDTO first = PubClass.GetFirst<TransferInResultDTO>(result2);
 
-                if (first != null)
-                {
-                    HBHCommon.HBHCommonSVAfter(svID, result2, first.IsSuccess, first.ErrorInfo, first.ERPDocNo);
-                }
-            }
+            //    if (first != null)
+            //    {
+            //        HBHCommon.HBHCommonSVAfter(svID, result2, first.IsSuccess, first.ErrorInfo, first.ERPDocNo);
+            //    }
+            //}
 
             return result2;
         }

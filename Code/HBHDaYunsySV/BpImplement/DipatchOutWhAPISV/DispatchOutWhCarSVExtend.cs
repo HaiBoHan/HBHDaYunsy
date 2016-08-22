@@ -62,21 +62,21 @@
 			//auto generating code end,underside is user custom code
             //and if you Implement replace this Exception Code...
 
-            long svID = HBHCommon.HBHCommonSVBefore(bpObj);
+            //long svID = HBHCommon.HBHCommonSVBefore(bpObj);
 
             List<ShipBackDTO> result2 = CreateDispatch(bpObj);
 
-            if (result2 != null
-                && result2.Count > 0
-                )
-            {
-                ShipBackDTO first = result2.GetFirst();
+            //if (result2 != null
+            //    && result2.Count > 0
+            //    )
+            //{
+            //    ShipBackDTO first = PubClass.GetFirst<ShipBackDTO>(result2);
 
-                if (first != null)
-                {
-                    HBHCommon.HBHCommonSVAfter(svID, result2, first.IsSuccess, first.ErrorInfo, first.ERPDocNo);
-                }
-            }
+            //    if (first != null)
+            //    {
+            //        HBHCommon.HBHCommonSVAfter(svID, result2, first.IsSuccess, first.ErrorInfo, first.ERPDocNo);
+            //    }
+            //}
 
             return result2;
         }

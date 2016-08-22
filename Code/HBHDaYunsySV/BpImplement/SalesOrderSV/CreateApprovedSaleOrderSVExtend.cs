@@ -58,21 +58,21 @@
             //and if you Implement replace this Exception Code...
 
 
-            long svID = HBHCommon.HBHCommonSVBefore(bpObj);
+            //long svID = HBHCommon.HBHCommonSVBefore(bpObj);
 
             List<SoBackDTO> result2 = CreateSO(bpObj);
 
-            if (result2 != null
-                && result2.Count > 0
-                )
-            {
-                SoBackDTO first = result2.GetFirst();
+            //if (result2 != null
+            //    && result2.Count > 0
+            //    )
+            //{
+            //    SoBackDTO first = PubClass.GetFirst<SoBackDTO>(result2); 
 
-                if (first != null)
-                {
-                    HBHCommon.HBHCommonSVAfter(svID, result2, first.IsSuccess, first.ErrorInfo, first.ERPDocNo);
-                }
-            }
+            //    if (first != null)
+            //    {
+            //        HBHCommon.HBHCommonSVAfter(svID, result2, first.IsSuccess, first.ErrorInfo, first.ERPDocNo);
+            //    }
+            //}
 
             return result2;
         }

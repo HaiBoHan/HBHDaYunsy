@@ -38,6 +38,9 @@
     <Reference Include="HBH.DoNet.DevPlatform.U9Mapping">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\HBHCommon\HBH.DoNet.DevPlatform.U9Mapping.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\UBF\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="U9.VOB.HBHCommon.U9CommonSV">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\HBHCommon\U9.VOB.HBHCommon.U9CommonSV.dll</HintPath>
     </Reference>
