@@ -61,28 +61,20 @@
 			//auto generating code end,underside is user custom code
             //and if you Implement replace this Exception Code...
 
-            long svID = -1;
-            if (CreateApprovedSaleOrderSVImpementStrategy.isLog)
-            {
-                svID = ProxyLogger.CreateTransferSV(bpObj.GetType().FullName, EntitySerialization.EntitySerial(bpObj)
-                    , bpObj.GetType().FullName, string.Empty);
-            }
+
+            long svID = HBHCommon.HBHCommonSVBefore(bpObj);
 
             List<TransferInResultDTO> result2 = CreateTransferIn(bpObj);
-
-            if (svID > 0)
+            
+            if (result2 != null
+                && result2.Count > 0
+                )
             {
-                if (result2 != null
-                    && result2.Count > 0
-                    )
-                {
-                    string resultXml = EntitySerialization.EntitySerial(result2);
-                    TransferInResultDTO first = result2.GetFirst();
+                TransferInResultDTO first = result2.GetFirst();
 
-                    if (first != null)
-                    {
-                        ProxyLogger.UpdateTransferSV(svID, resultXml, first.IsSuccess, first.ErrorInfo, first.ERPDocNo, string.Empty);
-                    }
+                if (first != null)
+                {
+                    HBHCommon.HBHCommonSVAfter(svID, result2, first.IsSuccess, first.ErrorInfo, first.ERPDocNo);
                 }
             }
 

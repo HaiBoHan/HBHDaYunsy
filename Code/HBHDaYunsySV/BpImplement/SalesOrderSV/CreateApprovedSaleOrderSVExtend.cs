@@ -57,28 +57,20 @@
 			//auto generating code end,underside is user custom code
             //and if you Implement replace this Exception Code...
 
-            long svID = -1;
-            if (CreateApprovedSaleOrderSVImpementStrategy.isLog)
-            {
-                svID = ProxyLogger.CreateTransferSV(bpObj.GetType().FullName, EntitySerialization.EntitySerial(bpObj)
-                    , bpObj.GetType().FullName, string.Empty);
-            }
+
+            long svID = HBHCommon.HBHCommonSVBefore(bpObj);
 
             List<SoBackDTO> result2 = CreateSO(bpObj);
 
-            if (svID > 0)
+            if (result2 != null
+                && result2.Count > 0
+                )
             {
-                if (result2 != null
-                    && result2.Count > 0
-                    )
-                {
-                    string resultXml = EntitySerialization.EntitySerial(result2);
-                    SoBackDTO first = result2.GetFirst();
+                SoBackDTO first = result2.GetFirst();
 
-                    if (first != null)
-                    {
-                        ProxyLogger.UpdateTransferSV(svID, resultXml, first.IsSuccess, first.ErrorInfo, first.ERPDocNo, string.Empty);
-                    }
+                if (first != null)
+                {
+                    HBHCommon.HBHCommonSVAfter(svID, result2, first.IsSuccess, first.ErrorInfo, first.ERPDocNo);
                 }
             }
 
@@ -160,15 +152,28 @@
                                     onlineSendObjsProxy.IDs.Add(project2.ID);
                                     onlineSendObjsProxy.FromOrg = (Context.LoginOrg.ID);
                                     onlineSendObjsProxy.ToOrgList = (new System.Collections.Generic.List<long>());
-                                    Organization org = Organization.Finder.Find("Code='10'", new OqlParam[0]);
-                                    if (org != null)
+                                    //Organization org = Organization.Finder.Find("Code='10'", new OqlParam[0]);
+                                    //if (org != null)
+                                    //{
+                                    //    onlineSendObjsProxy.ToOrgList.Add(org.ID);
+                                    //}
+                                    //Organization org2 = Organization.Finder.Find("Code='30'", new OqlParam[0]);
+                                    //if (org2 != null)
+                                    //{
+                                    //    onlineSendObjsProxy.ToOrgList.Add(org2.ID);
+                                    //}
+                                    if (HBHCommon.ProjectSendOrgCode.Count > 0)
                                     {
-                                        onlineSendObjsProxy.ToOrgList.Add(org.ID);
-                                    }
-                                    Organization org2 = Organization.Finder.Find("Code='30'", new OqlParam[0]);
-                                    if (org2 != null)
-                                    {
-                                        onlineSendObjsProxy.ToOrgList.Add(org2.ID);
+                                        foreach (string orgCode in HBHCommon.ProjectSendOrgCode)
+                                        {
+                                            Organization org = Organization.Finder.Find("Code=@OrgCode"
+                                                , new OqlParam(orgCode)
+                                                );
+                                            if (org != null)
+                                            {
+                                                onlineSendObjsProxy.ToOrgList.Add(org.ID);
+                                            }
+                                        }
                                     }
                                     onlineSendObjsProxy.Do();
                                 }
@@ -360,10 +365,12 @@
                     sodto.OrderBy.Code = (firstDTO.DealerCode);
                     sodto.SOSrcType = (SOSourceTypeEnum.Manual.Value);
                     sodto.TC = (new CommonArchiveDataDTOData());
-                    sodto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? "C001" : firstDTO.Currency);
+                    //sodto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? "C001" : firstDTO.Currency);
+                    sodto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? HBHCommon.DefaultCurrencyCode : firstDTO.Currency);
                     sodto.DescFlexField = (new DescFlexSegmentsData());
                     sodto.DescFlexField.PubDescSeg5 = (firstDTO.DmsSaleNo);
-                    string RecTerm = "01";
+                    //string RecTerm = "01";
+                    string RecTerm = HBHCommon.DefaultRecTermCode;
                     Customer customer = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, firstDTO.DealerCode), new OqlParam[0]);
                     if (customer != null)
                     {
@@ -374,7 +381,7 @@
                         }
                         else
                         {
-                            sodto.ConfirmTerm.Code = ("01");
+                            sodto.ConfirmTerm.Code = HBHCommon.DefaultConfirmTermCode;  // ("01");
                         }
                         sodto.BargainMode = (customer.Bargain.Value);
                         sodto.ShipRule = (new CommonArchiveDataDTOData());
@@ -384,7 +391,7 @@
                         }
                         else
                         {
-                            sodto.ShipRule.Code = ("C001");
+                            sodto.ShipRule.Code = HBHCommon.DefaultShipRuleCode;    // ("C001");
                         }
                         if (customer.RecervalTermKey != null)
                         {
@@ -393,10 +400,10 @@
                     }
                     else
                     {
-                        sodto.ShipRule.Code = ("C001");
-                        sodto.BargainMode = (0);
+                        sodto.ShipRule.Code = HBHCommon.DefaultShipRuleCode;    // ("C001");
+                        sodto.BargainMode = HBHCommon.DefaultBargainMode;    // (0);
                         sodto.ConfirmTerm = (new CommonArchiveDataDTOData());
-                        sodto.ConfirmTerm.Code = ("01");
+                        sodto.ConfirmTerm.Code = HBHCommon.DefaultConfirmTermCode;  // ("01");
                     }
                     sodto.SOLines = new List<ISV.SM.SOLineDTOData>();
                     foreach (SoLineDTO srcsolinedto in dic[key])
