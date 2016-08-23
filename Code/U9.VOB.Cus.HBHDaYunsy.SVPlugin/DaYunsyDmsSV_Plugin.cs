@@ -13,12 +13,17 @@ namespace U9.VOB.Cus.HBHDaYunsy.SVPlugin
     {
         private long svID = -1;
 
-        public override void BeforeDo(object bpObj)
+        public override void BeforeDo(object bp)
         {
             //CreateApprovedSaleOrderSV bpObj = bp as CreateApprovedSaleOrderSV;
 
-            long svID = HBHCommon.HBHCommonSVBefore(bpObj);
-            
+            svID = HBHCommon.HBHCommonSVBefore(bp);
+
+            //HBHTransferSV transSV = bp as HBHTransferSV;
+            //if (transSV != null)
+            //{
+            //    transSV.ID = svID;
+            //}
         }
 
         public override void AfterDo(object bp, ref object result)
@@ -26,6 +31,13 @@ namespace U9.VOB.Cus.HBHDaYunsy.SVPlugin
             if (result != null
                 )
             {
+                //HBHTransferSV transSV = bp as HBHTransferSV;
+
+                //if (transSV != null)
+                //{
+                //    svID = transSV.ID;
+                //}
+
                 List<TransferInResultDTO> resultTransfer = result as List<TransferInResultDTO>;
                 List<ShipBackDTO> resultShipBack = result as List<ShipBackDTO>;
                 List<SoBackDTO> resultSOBack = result as List<SoBackDTO>;

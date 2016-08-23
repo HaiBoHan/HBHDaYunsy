@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HBH.DoNet.DevPlatform.U9Mapping;
 using HBH.DoNet.DevPlatform.EntityMapping;
+using UFIDA.U9.Cust.HBDY.API;
 
 namespace U9.VOB.Cus.HBHDaYunsy.SVPlugin
 {
@@ -24,6 +25,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.SVPlugin
 
             // 重置上下文
             U9Helper.SetDefaultContext();
+
             return svID;
         }
 
