@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HBHCommon.cs" />
+    <Compile Include="TransferSV.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV.target" />

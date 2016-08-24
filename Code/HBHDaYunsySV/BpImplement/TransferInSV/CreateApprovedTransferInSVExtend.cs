@@ -35,7 +35,7 @@
 	/// <summary>
 	/// CreateApprovedTransferInSV partial 
 	/// </summary>	
-	public partial class CreateApprovedTransferInSV 
+    public partial class CreateApprovedTransferInSV // : HBHTransferSV
 	{	
 		internal BaseStrategy Select()
 		{
@@ -89,31 +89,44 @@
             {
                 if (bpObj.TransferInLineDTOList == null || bpObj.TransferInLineDTOList.Count == 0)
                 {
-                    result.Add(new TransferInResultDTO
-                    {
-                        IsSuccess = false,
-                        ErrorInfo = "传入参数不可为空",
-                        Timestamp = System.DateTime.Now
-                    });
+                    //result.Add(new TransferInResultDTO
+                    //{
+                    //    IsSuccess = false,
+                    //    ErrorInfo = "传入参数不可为空",
+                    //    Timestamp = System.DateTime.Now
+                    //});
                     //result2 = result;
+
+                    TransferInResultDTO backDTO = new TransferInResultDTO();
+                    backDTO.IsSuccess = false;
+                    backDTO.ErrorInfo = "传入参数不可为空";
+                    backDTO.Timestamp = System.DateTime.Now;
+                    HBHCommon.LoggerError(backDTO.ErrorInfo);
+                    result.Add(backDTO);
                 }
                 else
                 {
                     string errormessage = this.ValidateParamNullOrEmpty(bpObj);
                     if (!string.IsNullOrEmpty(errormessage))
                     {
-                        result.Add(new TransferInResultDTO
-                        {
-                            IsSuccess = false,
-                            ErrorInfo = errormessage + "请检查传入参数",
-                            Timestamp = System.DateTime.Now
-                        });
+                        //result.Add(new TransferInResultDTO
+                        //{
+                        //    IsSuccess = false,
+                        //    ErrorInfo = errormessage + "请检查传入参数",
+                        //    Timestamp = System.DateTime.Now
+                        //});
                         //result2 = result;
+
+                        TransferInResultDTO backDTO = new TransferInResultDTO();
+                        backDTO.IsSuccess = false;
+                        backDTO.ErrorInfo = errormessage + "请检查传入参数";
+                        backDTO.Timestamp = System.DateTime.Now;
+                        HBHCommon.LoggerError(backDTO.ErrorInfo);
                     }
                     else
                     {
                         System.Collections.Generic.List<CommonArchiveDataDTOData> transinidlist;
-                        using (UBFTransactionScope trans = new UBFTransactionScope(TransactionOption.Required))
+                        //using (UBFTransactionScope trans = new UBFTransactionScope(TransactionOption.Required))
                         {
                             try
                             {
@@ -122,14 +135,20 @@
                                 transinidlist = proxy.Do();
                                 if (transinidlist == null || transinidlist.Count <= 0)
                                 {
-                                    result.Add(new TransferInResultDTO
-                                    {
-                                        IsSuccess = false,
-                                        ErrorInfo = "生单失败：没有生成调入单",
-                                        Timestamp = System.DateTime.Now
-                                    });
+                                    //result.Add(new TransferInResultDTO
+                                    //{
+                                    //    IsSuccess = false,
+                                    //    ErrorInfo = "生单失败：没有生成调入单",
+                                    //    Timestamp = System.DateTime.Now
+                                    //});
                                     //result2 = result;
                                     //return result2;
+
+                                    TransferInResultDTO backDTO = new TransferInResultDTO();
+                                    backDTO.IsSuccess = false;
+                                    backDTO.ErrorInfo = "生单失败：没有生成调入单";
+                                    backDTO.Timestamp = System.DateTime.Now;
+                                    HBHCommon.LoggerError(backDTO.ErrorInfo );
                                     return result;
                                 }
                                 TransferInBatchApproveSRVProxy approveproxy = new TransferInBatchApproveSRVProxy();
@@ -137,19 +156,25 @@
                                 approveproxy.ApprovedBy = (Context.LoginUser);
                                 approveproxy.ApprovedOn = (System.DateTime.Now);
                                 approveproxy.Do();
-                                trans.Commit();
+                                //trans.Commit();
                             }
                             catch (System.Exception e)
                             {
-                                trans.Rollback();
-                                result.Add(new TransferInResultDTO
-                                {
-                                    IsSuccess = false,
-                                    ErrorInfo = "生单失败：" + e.Message,
-                                    Timestamp = System.DateTime.Now
-                                });
+                                //trans.Rollback();
+                                //result.Add(new TransferInResultDTO
+                                //{
+                                //    IsSuccess = false,
+                                //    ErrorInfo = "生单失败：" + e.Message,
+                                //    Timestamp = System.DateTime.Now
+                                //});
                                 //result2 = result;
                                 //return result2;
+
+                                TransferInResultDTO backDTO = new TransferInResultDTO();
+                                backDTO.IsSuccess = false;
+                                backDTO.ErrorInfo = "生单失败：" + e.Message;
+                                backDTO.Timestamp = System.DateTime.Now;
+                                HBHCommon.LoggerError(backDTO.ErrorInfo + "/r/n" + e.StackTrace);
                                 return result;
                             }
                         }
@@ -174,13 +199,19 @@
             }
             catch (System.Exception e)
             {
-                result.Add(new TransferInResultDTO
-                {
-                    IsSuccess = false,
-                    ErrorInfo = e.Message,
-                    Timestamp = System.DateTime.Now
-                });
+                //result.Add(new TransferInResultDTO
+                //{
+                //    IsSuccess = false,
+                //    ErrorInfo = e.Message,
+                //    Timestamp = System.DateTime.Now
+                //});
                 //result2 = result;
+
+                TransferInResultDTO backDTO = new TransferInResultDTO();
+                backDTO.IsSuccess = false;
+                backDTO.ErrorInfo = e.Message;
+                backDTO.Timestamp = System.DateTime.Now;
+                HBHCommon.LoggerError(backDTO.ErrorInfo + "/r/n" + e.StackTrace);
             }
             //return result2;
             return result;
@@ -239,6 +270,11 @@
                 if (linedto.Number <= 0)
                 {
                     errormessage += string.Format("[{0}]DMS移库单的参数TtransInLines的[数量]必须大于0,", linedto.TransDocNo);
+                }
+
+                if (linedto.SpitOrderFlag.IsNull())
+                {
+                    linedto.SpitOrderFlag = HBHCommon.DefaultSplitFlag;
                 }
             }
             return errormessage;

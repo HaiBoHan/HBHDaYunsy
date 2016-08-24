@@ -28,7 +28,7 @@
 	/// <summary>
 	/// CreateApprovedSaleOrderSV partial 
 	/// </summary>	
-	public partial class CreateApprovedSaleOrderSV 
+    public partial class CreateApprovedSaleOrderSV // : HBHTransferSV
 	{	
 		internal BaseStrategy Select()
 		{
@@ -96,6 +96,7 @@
                     result.IsSuccess = false;
                     result.ErrorInfo = "传入参数不可为空";
                     result.Timestamp = System.DateTime.Now.ToString();
+                    HBHCommon.LoggerError(result.ErrorInfo);
                     results.Add(result);
                     //result2 = results;
                 }
@@ -109,13 +110,14 @@
                         result.IsSuccess = false;
                         result.ErrorInfo = errormessage;
                         result.Timestamp = System.DateTime.Now.ToString();
+                        HBHCommon.LoggerError(result.ErrorInfo);
                         results.Add(result);
                         //result2 = results;
                     }
                     else
                     {
                         System.Collections.Generic.List<SOStatusDTOData> statusDTOs = null;
-                        using (UBFTransactionScope trans = new UBFTransactionScope(TransactionOption.Required))
+                        //using (UBFTransactionScope trans = new UBFTransactionScope(TransactionOption.Required))
                         {
                             using (ISession session = Session.Open())
                             {
@@ -141,64 +143,65 @@
                                 }
                                 session.Commit();
                             }
-                            Project project2 = Project.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, bpObj.SoLineDto[0].DmsSaleNo), new OqlParam[0]);
-                            if (project2 != null)
-                            {
-                                try
-                                {
-                                    OnlineSendObjsProxy onlineSendObjsProxy = new OnlineSendObjsProxy();
-                                    onlineSendObjsProxy.FullName = ("UFIDA.U9.CBO.SCM.ProjectTask.Project");
-                                    onlineSendObjsProxy.IDs = (new System.Collections.Generic.List<long>());
-                                    onlineSendObjsProxy.IDs.Add(project2.ID);
-                                    onlineSendObjsProxy.FromOrg = (Context.LoginOrg.ID);
-                                    onlineSendObjsProxy.ToOrgList = (new System.Collections.Generic.List<long>());
-                                    //Organization org = Organization.Finder.Find("Code='10'", new OqlParam[0]);
-                                    //if (org != null)
-                                    //{
-                                    //    onlineSendObjsProxy.ToOrgList.Add(org.ID);
-                                    //}
-                                    //Organization org2 = Organization.Finder.Find("Code='30'", new OqlParam[0]);
-                                    //if (org2 != null)
-                                    //{
-                                    //    onlineSendObjsProxy.ToOrgList.Add(org2.ID);
-                                    //}
-                                    if (HBHCommon.ProjectSendOrgCode.Count > 0)
-                                    {
-                                        foreach (string orgCode in HBHCommon.ProjectSendOrgCode)
-                                        {
-                                            Organization org = Organization.Finder.Find("Code=@OrgCode"
-                                                , new OqlParam(orgCode)
-                                                );
-                                            if (org != null)
-                                            {
-                                                onlineSendObjsProxy.ToOrgList.Add(org.ID);
-                                            }
-                                        }
-                                    }
-                                    onlineSendObjsProxy.Do();
-                                }
-                                catch (System.Exception e)
-                                {
-                                    //throw new System.ApplicationException(string.Format("{0}项目下发失败：{1}", project2.Code, ex.Message));
-                                    result.IsSuccess = false;
-                                    result.ErrorInfo = e.Message;
-                                    result.Timestamp = System.DateTime.Now.ToString();
-                                    results.Add(result);
-                                    //result2 = results;
-                                    //return result2;
-                                    return results;
-                                }
-                            }
+                            // 先不下发，下发直接死掉了
+                            //Project project2 = Project.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, bpObj.SoLineDto[0].DmsSaleNo), new OqlParam[0]);
+                            //if (project2 != null)
+                            //{
+                            //    try
+                            //    {
+                            //        OnlineSendObjsProxy onlineSendObjsProxy = new OnlineSendObjsProxy();
+                            //        onlineSendObjsProxy.FullName = ("UFIDA.U9.CBO.SCM.ProjectTask.Project");
+                            //        onlineSendObjsProxy.IDs = (new System.Collections.Generic.List<long>());
+                            //        onlineSendObjsProxy.IDs.Add(project2.ID);
+                            //        onlineSendObjsProxy.FromOrg = (Context.LoginOrg.ID);
+                            //        onlineSendObjsProxy.ToOrgList = (new System.Collections.Generic.List<long>());
+                            //        //Organization org = Organization.Finder.Find("Code='10'", new OqlParam[0]);
+                            //        //if (org != null)
+                            //        //{
+                            //        //    onlineSendObjsProxy.ToOrgList.Add(org.ID);
+                            //        //}
+                            //        //Organization org2 = Organization.Finder.Find("Code='30'", new OqlParam[0]);
+                            //        //if (org2 != null)
+                            //        //{
+                            //        //    onlineSendObjsProxy.ToOrgList.Add(org2.ID);
+                            //        //}
+                            //        if (HBHCommon.ProjectSendOrgCode.Count > 0)
+                            //        {
+                            //            foreach (string orgCode in HBHCommon.ProjectSendOrgCode)
+                            //            {
+                            //                Organization org = Organization.Finder.Find("Code=@OrgCode"
+                            //                    , new OqlParam(orgCode)
+                            //                    );
+                            //                if (org != null)
+                            //                {
+                            //                    onlineSendObjsProxy.ToOrgList.Add(org.ID);
+                            //                }
+                            //            }
+                            //        }
+                            //        onlineSendObjsProxy.Do();
+                            //    }
+                            //    catch (System.Exception e)
+                            //    {
+                            //        //throw new System.ApplicationException(string.Format("{0}项目下发失败：{1}", project2.Code, ex.Message));
+                            //        result.IsSuccess = false;
+                            //        result.ErrorInfo = e.Message;
+                            //        result.Timestamp = System.DateTime.Now.ToString();
+                            //        results.Add(result);
+                            //        //result2 = results;
+                            //        //return result2;
+                            //        return results;
+                            //    }
+                            //}
                             try
                             {
                                 CommonCreateSOSRVProxy proxy = new CommonCreateSOSRVProxy();
                                 proxy.SOs = (this.GetSaleOrderDTODataList(bpObj));
-                                proxy.ContextDTO = (new ContextDTOData());
-                                proxy.ContextDTO.OrgID = (Context.LoginOrg.ID);
-                                proxy.ContextDTO.OrgCode = (Context.LoginOrg.Code);
-                                proxy.ContextDTO.EntCode = (enterprise);
-                                proxy.ContextDTO.UserCode = (usercode);
-                                proxy.ContextDTO.CultureName = (Context.LoginLanguageCode);
+                                //proxy.ContextDTO = (new ContextDTOData());
+                                //proxy.ContextDTO.OrgID = (Context.LoginOrg.ID);
+                                //proxy.ContextDTO.OrgCode = (Context.LoginOrg.Code);
+                                //proxy.ContextDTO.EntCode = (enterprise);
+                                //proxy.ContextDTO.UserCode = (usercode);
+                                //proxy.ContextDTO.CultureName = (Context.LoginLanguageCode);
                                 System.Collections.Generic.List<CommonArchiveDataDTOData> resultsolist = proxy.Do();
                                 if (resultsolist == null || resultsolist.Count == 0)
                                 {
@@ -207,6 +210,8 @@
                                     result.Timestamp = System.DateTime.Now.ToString();
                                     results.Add(result);
                                     //result2 = results;
+
+                                    HBHCommon.LoggerError(result.ErrorInfo);
                                     return results;
                                 }
                                 SOStatusTransferBPProxy bp = new SOStatusTransferBPProxy();
@@ -230,17 +235,18 @@
                                     bp.SOKeyDTOList.Add(dto);
                                 }
                                 statusDTOs = bp.Do();
-                                trans.Commit();
+                                //trans.Commit();
                             }
                             catch (System.Exception e)
                             {
-                                trans.Rollback();
+                                //trans.Rollback();
                                 result.IsSuccess = false;
                                 result.ErrorInfo = e.Message;
                                 result.Timestamp = System.DateTime.Now.ToString();
                                 results.Add(result);
                                 //result2 = results;
                                 //return result2;
+                                HBHCommon.LoggerError(result.ErrorInfo + "/r/n" + e.StackTrace);
                                 return results;
                             }
                         }
@@ -268,6 +274,7 @@
                 result.IsSuccess = false;
                 result.ErrorInfo = e.Message;
                 result.Timestamp = System.DateTime.Now.ToString();
+                HBHCommon.LoggerError(result.ErrorInfo + "/r/n" + e.StackTrace);
                 results.Add(result);
                 //result2 = results;
             }
@@ -283,48 +290,53 @@
         private string ValidateParamNullOrEmpty(CreateApprovedSaleOrderSV bpObj)
         {
             string errormessage = string.Empty;
-            foreach (SoLineDTO solinedto in bpObj.SoLineDto)
+            foreach (SoLineDTO linedto in bpObj.SoLineDto)
             {
-                if (string.IsNullOrEmpty(solinedto.DealerCode))
+                if (string.IsNullOrEmpty(linedto.DealerCode))
                 {
-                    errormessage += string.Format("[{0}]DMS销售订单的[经销商代码]不可为空,", solinedto.DmsSaleNo);
+                    errormessage += string.Format("[{0}]DMS销售订单的[经销商代码]不可为空,", linedto.DmsSaleNo);
                 }
                 else
                 {
-                    Customer customer = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, solinedto.DealerCode), new OqlParam[0]);
+                    Customer customer = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, linedto.DealerCode), new OqlParam[0]);
                     if (customer == null)
                     {
-                        errormessage += string.Format("[{0}]DMS销售订单的[经销商代码({1})]在U9系统中找不到对应的客户档案,请同步,", solinedto.DmsSaleNo, solinedto.DealerCode);
+                        errormessage += string.Format("[{0}]DMS销售订单的[经销商代码({1})]在U9系统中找不到对应的客户档案,请同步,", linedto.DmsSaleNo, linedto.DealerCode);
                     }
                 }
-                if (string.IsNullOrEmpty(solinedto.OrderType))
+                if (string.IsNullOrEmpty(linedto.OrderType))
                 {
-                    errormessage += string.Format("[{0}]DMS销售订单的[订单类型]不可为空,", solinedto.DmsSaleNo);
+                    errormessage += string.Format("[{0}]DMS销售订单的[订单类型]不可为空,", linedto.DmsSaleNo);
                 }
                 else
                 {
-                    SODocType doctype = SODocType.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, solinedto.OrderType), new OqlParam[0]);
+                    SODocType doctype = SODocType.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, linedto.OrderType), new OqlParam[0]);
                     if (doctype == null)
                     {
-                        errormessage += string.Format("[{0}]DMS销售订单的[订单类型]在U9系统中找不到对应的[销售单据类型({1})],请同步,", solinedto.DmsSaleNo, solinedto.OrderType);
+                        errormessage += string.Format("[{0}]DMS销售订单的[订单类型]在U9系统中找不到对应的[销售单据类型({1})],请同步,", linedto.DmsSaleNo, linedto.OrderType);
                     }
                 }
-                if (string.IsNullOrEmpty(solinedto.ErpMaterialCode))
+                if (string.IsNullOrEmpty(linedto.ErpMaterialCode))
                 {
-                    errormessage += string.Format("[{0}]DMS销售订单的参数SOLines的[ERP物料编号]不可为空,", solinedto.DmsSaleNo);
+                    errormessage += string.Format("[{0}]DMS销售订单的参数SOLines的[ERP物料编号]不可为空,", linedto.DmsSaleNo);
                 }
                 else
                 {
-                    ItemMaster item = ItemMaster.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, solinedto.ErpMaterialCode), new OqlParam[0]);
+                    ItemMaster item = ItemMaster.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, linedto.ErpMaterialCode), new OqlParam[0]);
                     if (item == null)
                     {
-                        errormessage += string.Format("[{0}]DMS销售订单的参数SOLines的[ERP物料编号({1})]在U9系统中找不到对应的料品档案,请同步,", solinedto.DmsSaleNo, solinedto.ErpMaterialCode);
+                        errormessage += string.Format("[{0}]DMS销售订单的参数SOLines的[ERP物料编号({1})]在U9系统中找不到对应的料品档案,请同步,", linedto.DmsSaleNo, linedto.ErpMaterialCode);
                     }
                 }
-                SO so = SO.Finder.Find(string.Format("Org={0} and DescFlexField.PubDescSeg5='{1}'", Context.LoginOrg.ID, solinedto.DmsSaleNo), new OqlParam[0]);
+                SO so = SO.Finder.Find(string.Format("Org={0} and DescFlexField.PubDescSeg5='{1}'", Context.LoginOrg.ID, linedto.DmsSaleNo), new OqlParam[0]);
                 if (so != null)
                 {
-                    errormessage += string.Format("DMS订单[{0}]已经生成U9标准销售订单{1},不能重复生成,", solinedto.DmsSaleNo, so.DocNo);
+                    errormessage += string.Format("DMS订单[{0}]已经生成U9标准销售订单{1},不能重复生成,", linedto.DmsSaleNo, so.DocNo);
+                }
+
+                if (linedto.SpitOrderFlag.IsNull())
+                {
+                    linedto.SpitOrderFlag = HBHCommon.DefaultSplitFlag;
                 }
             }
             return errormessage;

@@ -35,7 +35,7 @@
 	/// <summary>
 	/// DispatchOutWhCarSV partial 
 	/// </summary>	
-	public partial class DispatchOutWhCarSV 
+    public partial class DispatchOutWhCarSV // : HBHTransferSV
 	{	
 		internal BaseStrategy Select()
 		{
@@ -89,13 +89,15 @@
             {
                 if (bpObj.CarShipLineDTOs == null || bpObj.CarShipLineDTOs.Count == 0)
                 {
+                    string msg = "传入参数不可为空";
                     result.Add(new ShipBackDTO
                     {
                         IsSuccess = false,
-                        ErrorInfo = "传入参数不可为空",
+                        ErrorInfo = msg,
                         Timestamp = System.DateTime.Now
                     });
                     //result2 = result;
+                    HBHCommon.LoggerError(msg);
                 }
                 else
                 {
@@ -104,6 +106,7 @@
                     string errormessage = this.ValidateParamNullOrEmpty(bpObj, ref shiplist, ref transferinlist);
                     if (!string.IsNullOrEmpty(errormessage))
                     {
+                        string msg = "请检查传入参数";
                         result.Add(new ShipBackDTO
                         {
                             IsSuccess = false,
@@ -111,6 +114,7 @@
                             Timestamp = System.DateTime.Now
                         });
                         //result2 = result;
+                        HBHCommon.LoggerError(msg);
                     }
                     else
                     {
@@ -126,32 +130,45 @@
                             }
                             catch (System.Exception e)
                             {
-                                result.Add(new ShipBackDTO
-                                {
-                                    IsSuccess = false,
-                                    ErrorInfo = "生成出货单失败：" + e.Message,
-                                    Timestamp = System.DateTime.Now
-                                });
+                                //result.Add(new ShipBackDTO
+                                //{
+                                //    IsSuccess = false,
+                                //    ErrorInfo = "生成出货单失败：" + e.Message,
+                                //    Timestamp = System.DateTime.Now
+                                //});
                                 //result2 = result;
                                 //return result2;
+                                ShipBackDTO backDTO = new ShipBackDTO();
+                                backDTO.IsSuccess = false;
+                                backDTO.ErrorInfo = "生成出货单失败：" + e.Message;
+                                backDTO.Timestamp = System.DateTime.Now;
+                                HBHCommon.LoggerError(backDTO.ErrorInfo + "/r/n" + e.StackTrace);
+                                result.Add(backDTO);
                                 return result;
                             }
                             if (shipidlist == null || shipidlist.Count <= 0)
                             {
-                                result.Add(new ShipBackDTO
-                                {
-                                    IsSuccess = false,
-                                    ErrorInfo = "生单失败：没有生成出货单",
-                                    Timestamp = System.DateTime.Now
-                                });
+                                //result.Add(new ShipBackDTO
+                                //{
+                                //    IsSuccess = false,
+                                //    ErrorInfo = "生单失败：没有生成出货单",
+                                //    Timestamp = System.DateTime.Now
+                                //});
                                 //result2 = result;
                                 //return result2;
+
+                                ShipBackDTO backDTO = new ShipBackDTO();
+                                backDTO.IsSuccess = false;
+                                backDTO.ErrorInfo = "生单失败：没有生成出货单";
+                                backDTO.Timestamp = System.DateTime.Now;
+                                HBHCommon.LoggerError(backDTO.ErrorInfo );
+                                result.Add(backDTO);
                                 return result;
                             }
                         }
                         if (transferinlist != null && transferinlist.Count > 0)
                         {
-                            using (UBFTransactionScope trans = new UBFTransactionScope(TransactionOption.Required))
+                            //using (UBFTransactionScope trans = new UBFTransactionScope(TransactionOption.Required))
                             {
                                 try
                                 {
@@ -160,14 +177,21 @@
                                     transinidlist = proxy2.Do();
                                     if (transinidlist == null || transinidlist.Count <= 0)
                                     {
-                                        result.Add(new ShipBackDTO
-                                        {
-                                            IsSuccess = false,
-                                            ErrorInfo = "生单失败：没有生成调入单",
-                                            Timestamp = System.DateTime.Now
-                                        });
+                                        //result.Add(new ShipBackDTO
+                                        //{
+                                        //    IsSuccess = false,
+                                        //    ErrorInfo = "生单失败：没有生成调入单",
+                                        //    Timestamp = System.DateTime.Now
+                                        //});
                                         //result2 = result;
                                         //return result2;
+
+                                        ShipBackDTO backDTO = new ShipBackDTO();
+                                        backDTO.IsSuccess = false;
+                                        backDTO.ErrorInfo = "生单失败：没有生成调入单";
+                                        backDTO.Timestamp = System.DateTime.Now;
+                                        HBHCommon.LoggerError(backDTO.ErrorInfo);
+                                        result.Add(backDTO);
                                         return result;
                                     }
                                     TransferInBatchApproveSRVProxy approveproxy = new TransferInBatchApproveSRVProxy();
@@ -175,19 +199,25 @@
                                     approveproxy.ApprovedBy = (Context.LoginUser);
                                     approveproxy.ApprovedOn = (System.DateTime.Now);
                                     approveproxy.Do();
-                                    trans.Commit();
+                                    //trans.Commit();
                                 }
                                 catch (System.Exception e)
                                 {
-                                    trans.Rollback();
-                                    result.Add(new ShipBackDTO
-                                    {
-                                        IsSuccess = false,
-                                        ErrorInfo = "生成调入单失败：" + e.Message,
-                                        Timestamp = System.DateTime.Now
-                                    });
+                                    //trans.Rollback();
+                                    //result.Add(new ShipBackDTO
+                                    //{
+                                    //    IsSuccess = false,
+                                    //    ErrorInfo = "生成调入单失败：" + e.Message,
+                                    //    Timestamp = System.DateTime.Now
+                                    //});
                                     //result2 = result;
                                     //return result2;
+                                    ShipBackDTO backDTO = new ShipBackDTO();
+                                    backDTO.IsSuccess = false;
+                                    backDTO.ErrorInfo = "生成调入单失败：" + e.Message;
+                                    backDTO.Timestamp = System.DateTime.Now;
+                                    HBHCommon.LoggerError(backDTO.ErrorInfo + "/r/n" + e.StackTrace);
+                                    result.Add(backDTO);
                                     return result;
                                 }
                             }
@@ -228,13 +258,20 @@
             }
             catch (System.Exception e)
             {
-                result.Add(new ShipBackDTO
-                {
-                    IsSuccess = false,
-                    ErrorInfo = e.Message,
-                    Timestamp = System.DateTime.Now
-                });
+                //result.Add(new ShipBackDTO
+                //{
+                //    IsSuccess = false,
+                //    ErrorInfo = e.Message,
+                //    Timestamp = System.DateTime.Now
+                //});
                 //result2 = result;
+
+                ShipBackDTO backDTO = new ShipBackDTO();
+                backDTO.IsSuccess = false;
+                backDTO.ErrorInfo = e.Message;
+                backDTO.Timestamp = System.DateTime.Now;
+                HBHCommon.LoggerError(backDTO.ErrorInfo + "/r/n" + e.StackTrace);
+                result.Add(backDTO);
             }
             //return result2;
             return result;
@@ -314,6 +351,11 @@
                 if (linedto.Number <= 0m)
                 {
                     errormessage += string.Format("[{0}]DMS销售出库单的[数量]必须大于0,", linedto.DMSShipNo);
+                }
+
+                if (linedto.SpitOrderFlag.IsNull())
+                {
+                    linedto.SpitOrderFlag = HBHCommon.DefaultSplitFlag;
                 }
             }
             return errormessage;

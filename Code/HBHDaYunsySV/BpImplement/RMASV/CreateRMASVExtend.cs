@@ -37,7 +37,7 @@
 	/// <summary>
 	/// CreateRMASV partial 
 	/// </summary>	
-	public partial class CreateRMASV 
+    public partial class CreateRMASV // : HBHTransferSV
 	{	
 		internal BaseStrategy Select()
 		{
@@ -91,26 +91,39 @@
             {
                 if (bpObj.RMALineDTOs == null || bpObj.RMALineDTOs.Count == 0)
                 {
-                    result.Add(new ShipBackDTO
-                    {
-                        IsSuccess = false,
-                        ErrorInfo = "传入参数不可为空",
-                        Timestamp = System.DateTime.Now
-                    });
+                    //result.Add(new ShipBackDTO
+                    //{
+                    //    IsSuccess = false,
+                    //    ErrorInfo = "传入参数不可为空",
+                    //    Timestamp = System.DateTime.Now
+                    //});
                     //result2 = result;
+
+                    ShipBackDTO backDTO = new ShipBackDTO();
+                    backDTO.IsSuccess = false;
+                    backDTO.ErrorInfo = "传入参数不可为空";
+                    backDTO.Timestamp = System.DateTime.Now;
+                    HBHCommon.LoggerError(backDTO.ErrorInfo);
+                    result.Add(backDTO);
                 }
                 else
                 {
                     string errormessage = this.ValidateParamNullOrEmpty(bpObj);
                     if (!string.IsNullOrEmpty(errormessage))
                     {
-                        result.Add(new ShipBackDTO
-                        {
-                            IsSuccess = false,
-                            ErrorInfo = errormessage + "请检查传入参数",
-                            Timestamp = System.DateTime.Now
-                        });
+                        //result.Add(new ShipBackDTO
+                        //{
+                        //    IsSuccess = false,
+                        //    ErrorInfo = errormessage + "请检查传入参数",
+                        //    Timestamp = System.DateTime.Now
+                        //});
                         //result2 = result;
+                        ShipBackDTO backDTO = new ShipBackDTO();
+                        backDTO.IsSuccess = false;
+                        backDTO.ErrorInfo = errormessage + "请检查传入参数" ;
+                        backDTO.Timestamp = System.DateTime.Now;
+                        HBHCommon.LoggerError(backDTO.ErrorInfo);
+                        result.Add(backDTO);
                     }
                     else
                     {
@@ -119,36 +132,50 @@
                         {
                             CreateRMASRVProxy proxy = new CreateRMASRVProxy();
                             proxy.RMADTOs = (this.GetRMADTOList(bpObj));
-                            proxy.ContextDTO = (new ContextDTOData());
-                            proxy.ContextDTO.OrgID = (Context.LoginOrg.ID);
-                            proxy.ContextDTO.OrgCode = (Context.LoginOrg.Code);
-                            proxy.ContextDTO.EntCode = (bpObj.RMALineDTOs[0].EnterpriseCode);
-                            proxy.ContextDTO.UserID = (long.Parse(Context.LoginUserID));
-                            proxy.ContextDTO.UserCode = (Context.LoginUser);
-                            proxy.ContextDTO.CultureName = (Context.LoginLanguageCode);
+                            //proxy.ContextDTO = (new ContextDTOData());
+                            //proxy.ContextDTO.OrgID = (Context.LoginOrg.ID);
+                            //proxy.ContextDTO.OrgCode = (Context.LoginOrg.Code);
+                            //proxy.ContextDTO.EntCode = (bpObj.RMALineDTOs[0].EnterpriseCode);
+                            //proxy.ContextDTO.UserID = (long.Parse(Context.LoginUserID));
+                            //proxy.ContextDTO.UserCode = (Context.LoginUser);
+                            //proxy.ContextDTO.CultureName = (Context.LoginLanguageCode);
                             rmaidlist = proxy.Do();
                         }
                         catch (System.Exception e)
                         {
-                            result.Add(new ShipBackDTO
-                            {
-                                IsSuccess = false,
-                                ErrorInfo = "生单失败：" + e.Message,
-                                Timestamp = System.DateTime.Now
-                            });
+                            //result.Add(new ShipBackDTO
+                            //{
+                            //    IsSuccess = false,
+                            //    ErrorInfo = "生单失败：" + e.Message,
+                            //    Timestamp = System.DateTime.Now
+                            //});
                             //result2 = result;
                             //return result2;
+
+                            ShipBackDTO backDTO = new ShipBackDTO();
+                            backDTO.IsSuccess = false;
+                            backDTO.ErrorInfo = "生单失败：" + e.Message;
+                            backDTO.Timestamp = System.DateTime.Now;
+                            HBHCommon.LoggerError(backDTO.ErrorInfo + "/r/n" + e.StackTrace);
+                            result.Add(backDTO);
                             return result;
                         }
                         if (rmaidlist == null || rmaidlist.Count <= 0)
                         {
-                            result.Add(new ShipBackDTO
-                            {
-                                IsSuccess = false,
-                                ErrorInfo = "生单失败：没有生成退回处理单",
-                                Timestamp = System.DateTime.Now
-                            });
+                            //result.Add(new ShipBackDTO
+                            //{
+                            //    IsSuccess = false,
+                            //    ErrorInfo = "生单失败：没有生成退回处理单",
+                            //    Timestamp = System.DateTime.Now
+                            //});
                             //result2 = result;
+
+                            ShipBackDTO backDTO = new ShipBackDTO();
+                            backDTO.IsSuccess = false;
+                            backDTO.ErrorInfo = "生单失败：没有生成退回处理单";
+                            backDTO.Timestamp = System.DateTime.Now;
+                            HBHCommon.LoggerError(backDTO.ErrorInfo);
+                            result.Add(backDTO);
                         }
                         else
                         {
@@ -169,13 +196,20 @@
             }
             catch (System.Exception e)
             {
-                result.Add(new ShipBackDTO
-                {
-                    IsSuccess = false,
-                    ErrorInfo = e.Message,
-                    Timestamp = System.DateTime.Now
-                });
+                //result.Add(new ShipBackDTO
+                //{
+                //    IsSuccess = false,
+                //    ErrorInfo = e.Message,
+                //    Timestamp = System.DateTime.Now
+                //});
                 //result2 = result;
+
+                ShipBackDTO backDTO = new ShipBackDTO();
+                backDTO.IsSuccess = false;
+                backDTO.ErrorInfo = e.Message;
+                backDTO.Timestamp = System.DateTime.Now;
+                HBHCommon.LoggerError(backDTO.ErrorInfo + "/r/n" + e.StackTrace);
+                result.Add(backDTO);
             }
             //return result2;
             return result;
@@ -230,6 +264,11 @@
                 if (linedto.Number <= 0m)
                 {
                     errormessage += string.Format("[{0}]DMS销售出库单的参数RMALineDTOs的[退回数量]必须大于0,", linedto.DMSShipNo);
+                }
+
+                if (linedto.SpitOrderFlag.IsNull())
+                {
+                    linedto.SpitOrderFlag = HBHCommon.DefaultSplitFlag;
                 }
             }
             return errormessage;
