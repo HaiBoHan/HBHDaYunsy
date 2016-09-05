@@ -1,4 +1,4 @@
-﻿namespace UFIDA.U9.Cust.HBDY.API
+﻿namespace UFIDA.U9.Cust.HBDY.API.DipatchOutWhAPISV
 {
 	using System;
 	using System.Collections.Generic;
@@ -31,6 +31,7 @@
     using UFIDA.U9.ISV.TransferInISV.Proxy;
     using UFIDA.U9.InvDoc.TransferIn;
     using HBH.DoNet.DevPlatform.U9Mapping;
+    using UFIDA.U9.Cust.HBDY.API.ShipSV;
 
 	/// <summary>
 	/// DispatchOutWhCarSV partial 
