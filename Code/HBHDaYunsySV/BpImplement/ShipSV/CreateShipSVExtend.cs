@@ -1,4 +1,4 @@
-﻿namespace UFIDA.U9.Cust.HBDY.API
+﻿namespace UFIDA.U9.Cust.HBDY.API.ShipSV
 {
 	using System;
 	using System.Collections.Generic;

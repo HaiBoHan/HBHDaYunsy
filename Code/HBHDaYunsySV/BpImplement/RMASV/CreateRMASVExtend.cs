@@ -1,4 +1,4 @@
-﻿namespace UFIDA.U9.Cust.HBDY.API
+﻿namespace UFIDA.U9.Cust.HBDY.API.RMASV
 {
 	using System;
 	using System.Collections.Generic;
@@ -33,6 +33,7 @@
     using UFIDA.U9.SM.RMA;
     using UFIDA.U9.Base.DTOs;
     using HBH.DoNet.DevPlatform.U9Mapping;
+    using UFIDA.U9.Cust.HBDY.API.ShipSV;
 
 	/// <summary>
 	/// CreateRMASV partial 
