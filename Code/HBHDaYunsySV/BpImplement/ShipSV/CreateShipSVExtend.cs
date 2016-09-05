@@ -506,6 +506,10 @@
                     {
                         shipdto.BusinessDate = (System.DateTime.Now);
                     }
+
+                    // 默认价格含税
+                    shipdto.IsPriceIncludeTax = true;
+
                     shipdto.ShipLines = (new System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipLineDTOForIndustryChainData>());
                     foreach (ShipLineDTO linedto in listLineDTO)
                     {
@@ -557,6 +561,10 @@
                         shiplinedto.DescFlexField.PubDescSeg14 = ((linedto.ShipMoney <= 0m) ? (linedto.Money - linedto.EarnestMoney).ToString("G0") : linedto.ShipMoney.ToString("G0"));
                         shiplinedto.DescFlexField.PubDescSeg21 = (linedto.Deposit.ToString("G0"));
                         shiplinedto.DescFlexField.PubDescSeg12 = (linedto.VIN);
+
+                        // 默认价格含税
+                        shiplinedto.IsPriceIncludeTax = true;
+
                         shipdto.ShipLines.Add(shiplinedto);
                     }
                     list.Add(shipdto);
