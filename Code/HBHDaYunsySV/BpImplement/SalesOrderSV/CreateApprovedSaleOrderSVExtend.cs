@@ -24,6 +24,7 @@
     using UFIDA.U9.Base.Organization;
     using UFIDA.U9.ISV.SM.Proxy;
     using HBH.DoNet.DevPlatform.U9Mapping;
+    using UFIDA.U9.Cust.HBDY.API;
 
 	/// <summary>
 	/// CreateApprovedSaleOrderSV partial 

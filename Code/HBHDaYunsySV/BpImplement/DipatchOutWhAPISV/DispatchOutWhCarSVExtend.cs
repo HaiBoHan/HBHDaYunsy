@@ -32,6 +32,7 @@
     using UFIDA.U9.InvDoc.TransferIn;
     using HBH.DoNet.DevPlatform.U9Mapping;
     using UFIDA.U9.Cust.HBDY.API.ShipSV;
+    using UFIDA.U9.Cust.HBDY.API;
 
 	/// <summary>
 	/// DispatchOutWhCarSV partial 

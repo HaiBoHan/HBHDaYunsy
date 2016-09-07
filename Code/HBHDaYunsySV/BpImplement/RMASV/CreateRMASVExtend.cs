@@ -34,6 +34,7 @@
     using UFIDA.U9.Base.DTOs;
     using HBH.DoNet.DevPlatform.U9Mapping;
     using UFIDA.U9.Cust.HBDY.API.ShipSV;
+    using UFIDA.U9.Cust.HBDY.API;
 
 	/// <summary>
 	/// CreateRMASV partial 

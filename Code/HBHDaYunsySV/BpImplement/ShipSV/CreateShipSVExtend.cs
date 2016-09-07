@@ -28,6 +28,8 @@
     using UFIDA.U9.InvTrans.WhQoh.Proxy;
     using UFIDA.U9.InvTrans.WhQoh;
     using HBH.DoNet.DevPlatform.U9Mapping;
+    using UFIDA.U9.Cust.HBDY.API;
+    using UFSoft.UBF.Business;
 
 	/// <summary>
 	/// CreateShipSV partial 
@@ -364,7 +366,7 @@
         private System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipDTOForIndustryChainData> GetShipDTOList(System.Collections.Generic.List<ShipLineDTO> shiplinelist)
         {
             System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipDTOForIndustryChainData> list = new System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipDTOForIndustryChainData>();
-            string opeatorstr = "DMSTESTUSER";
+
             System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<ShipLineDTO>> dic = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<ShipLineDTO>>();
             foreach (ShipLineDTO dtoline in shiplinelist)
             {
@@ -387,17 +389,38 @@
                     UFIDA.U9.ISV.SM.ShipDTOForIndustryChainData shipdto = new UFIDA.U9.ISV.SM.ShipDTOForIndustryChainData();
                     string doctypecode = string.Empty;
                     shipdto.DocumentType = (new CommonArchiveDataDTOData());
-                    if (firstDTO.OrderType == "0")
+                    // 风驰电动车
+                    //if (Context.LoginOrg.Code == "70")
+                    if (Context.LoginOrg.Code == HBHCommon.Const_ElectricOrgCode)
                     {
-                        doctypecode = "XM10";
+                        if (firstDTO.OrderType == "0")
+                        {
+                            doctypecode = "CK-XJ";
+                        }
+                        else if (firstDTO.OrderType == "1")
+                        {
+                            throw new BusinessException("电动车无储备订单出库业务!");
+                        }
+                        else if (firstDTO.OrderType == "2")
+                        {
+                            doctypecode = "CK-SB";
+                        }
                     }
-                    else if (firstDTO.OrderType == "1")
+                    // 湖北大运
+                    else
                     {
-                        doctypecode = "XM5";
-                    }
-                    else if (firstDTO.OrderType == "2")
-                    {
-                        doctypecode = "XM12";
+                        if (firstDTO.OrderType == "0")
+                        {
+                            doctypecode = "XM10";
+                        }
+                        else if (firstDTO.OrderType == "1")
+                        {
+                            doctypecode = "XM5";
+                        }
+                        else if (firstDTO.OrderType == "2")
+                        {
+                            doctypecode = "XM12";
+                        }
                     }
                     shipdto.DocumentType.Code = (doctypecode);
                     shipdto.CreatedBy = (Context.LoginUser);
@@ -479,8 +502,8 @@
                     shipdto.InvoiceAccording = (new CommonArchiveDataDTOData());
                     shipdto.InvoiceAccording.ID = (InvoiceAccording);
                     shipdto.Seller = (new CommonArchiveDataDTOData());
-                    shipdto.Seller.Code = (opeatorstr);
-                    Operators opeator = Operators.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), opeatorstr), new OqlParam[0]);
+                    shipdto.Seller.Code = (HBHCommon.DefaultShipOperatorCode);
+                    Operators opeator = Operators.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), HBHCommon.DefaultShipOperatorCode), new OqlParam[0]);
                     if (opeator != null)
                     {
                         shipdto.SaleDept = (new CommonArchiveDataDTOData());
