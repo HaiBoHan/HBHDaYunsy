@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A1121BAD-E0ED-4B7A-968E-A2DC4FA4F24D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>U9.VOB.Cus.HBHDaYunsy.PlugInBE</RootNamespace>
+    <AssemblyName>U9.VOB.Cus.HBHDaYunsy.PlugInBE</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="COM.DaYun.MFG.SingleWorkPlanBE">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\COM.DaYun.MFG.SingleWorkPlanBE.dll</HintPath>
+    </Reference>
+    <Reference Include="COM.DaYun.MFG.SingleWorkPlanBE.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\COM.DaYun.MFG.SingleWorkPlanBE.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="HBH.DoNet.DevPlatform.ErpSvProxy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\HBHCommon\HBH.DoNet.DevPlatform.ErpSvProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\UBF\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UFIDA.U9.Base.BaseBP.Agent">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\UBF\UFIDA.U9.Base.BaseBP.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.Base.BaseBP.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\UBF\UFIDA.U9.Base.BaseBP.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubBP.Agent">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubBP.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubBP.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubBP.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubSV">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubSV.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubSV.Agent">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubSV.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubSV.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubSV.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.SCMBP.Agent">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.SCMBP.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.SCMBP.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.SCMBP.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.SCMSV.Agent, Version=25.5401.8621.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.SCMSV.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.SCMSV.Deploy, Version=25.5401.8621.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.SCMSV.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.GL.GLBE">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.GL.GLBE.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.GL.GLBE.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.GL.GLBE.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBE">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocBE.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBE.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocBE.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvTrans.InvTransBE">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvTrans.InvTransBE.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvTrans.InvTransBE.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvTrans.InvTransBE.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SPR.SPRBE">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.SPR.SPRBE.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SPR.SPRBE.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.SPR.SPRBE.Deploy.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="APBillHeadUpdated.cs" />
+    <Compile Include="ARBillHeadUpdated.cs" />
+    <Compile Include="CompleteRptUpdated.cs" />
+    <Compile Include="CustomerDeleted.cs" />
+    <Compile Include="CustomerInserted.cs" />
+    <Compile Include="CustomerUpdated.cs" />
+    <Compile Include="DMSSVProxy\PubExtend.cs" />
+    <Compile Include="MOUpdated.cs" />
+    <Compile Include="PrdEndChkBillUpdated.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="PubHelper.cs" />
+    <Compile Include="SalePriceAdjustmentInserted.cs" />
+    <Compile Include="SalePriceAdjustmentUpdated.cs" />
+    <Compile Include="SalePriceListDeleted.cs" />
+    <Compile Include="SalePriceListInserted.cs" />
+    <Compile Include="SalePriceListUpdating.cs" />
+    <Compile Include="Service References\DMSAsync_PI07\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SingleWorkPlanCreated.cs" />
+    <Compile Include="SingleWorkPlanUpdated.cs" />
+    <Compile Include="SODeleted.cs" />
+    <Compile Include="SupplierDeleted.cs" />
+    <Compile Include="SupplierInserted.cs" />
+    <Compile Include="SupplierItemDeleted.cs" />
+    <Compile Include="SupplierItemInserted.cs" />
+    <Compile Include="SupplierItemUpdated.cs" />
+    <Compile Include="SupplierUpdated.cs" />
+    <Compile Include="TransferInUpdated.cs" />
+    <Compile Include="TransferOutPlugInUpdated.cs" />
+    <Compile Include="TransLineDeleted.cs" />
+    <Compile Include="TransLineInserted.cs" />
+    <Compile Include="VoucherDeleted.cs" />
+    <Compile Include="VoucherUpdated.cs" />
+    <Compile Include="Web References\DMS_PI06\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_PI07\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_PI08\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_SI02\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_SI03\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_SI04\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_SI05\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_SI08\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_SI09\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_SI11\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DMSAsync_PI07\PI07ImplService.wsdl" />
+    <None Include="Service References\DMSAsync_PI07\U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMSAsync_PI07.stockDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_PI06\partBaseDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_PI06\PI06ImplService.wsdl" />
+    <None Include="Web References\DMS_PI06\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_PI07\PI07ImplService.wsdl" />
+    <None Include="Web References\DMS_PI07\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_PI07\stockDTO.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_PI08\PI08ImplService.wsdl" />
+    <None Include="Web References\DMS_PI08\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_PI08\supplierDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_SI02\orderInfoDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_SI02\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_SI02\SI02ImplService.wsdl" />
+    <None Include="Web References\DMS_SI03\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_SI03\SI03ImplService.wsdl" />
+    <None Include="Web References\DMS_SI03\vehicleInfoDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_SI04\accountInfoDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_SI04\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_SI04\SI04ImplService.wsdl" />
+    <None Include="Web References\DMS_SI05\accountReturnDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_SI05\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_SI05\SI05ImplService.wsdl" />
+    <None Include="Web References\DMS_SI08\dealerInfoDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_SI08\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_SI08\SI08ImplService.wsdl" />
+    <None Include="Web References\DMS_SI09\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_SI09\SI09ImplService.wsdl" />
+    <None Include="Web References\DMS_SI09\vehicleChangeInfoDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_SI11\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_SI11\SI11ImplService.wsdl" />
+    <None Include="Web References\DMS_SI11\vehicleMoveInfoDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://10.3.21.115:8080/hbfcdms/ws/PI06%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_PI06\</RelPath>
+      <UpdateFromURL>http://10.3.21.115:8080/hbfcdms/ws/PI06%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI06_PI06ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.21.115:8080/hbfcdms/ws/PI07%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_PI07\</RelPath>
+      <UpdateFromURL>http://10.3.21.115:8080/hbfcdms/ws/PI07%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI07_PI07ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.21.115:8080/hbfcdms/ws/PI08%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_PI08\</RelPath>
+      <UpdateFromURL>http://10.3.21.115:8080/hbfcdms/ws/PI08%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI08_PI08ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.11.227:9081/dms/ws/SI02%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_SI02\</RelPath>
+      <UpdateFromURL>http://10.3.11.227:9081/dms/ws/SI02%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI02_SI02ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.11.227:9081/dms/ws/SI03%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_SI03\</RelPath>
+      <UpdateFromURL>http://10.3.11.227:9081/dms/ws/SI03%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI03_SI03ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.21.115:8080/hbfcdms/ws/SI04%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_SI04\</RelPath>
+      <UpdateFromURL>http://10.3.21.115:8080/hbfcdms/ws/SI04%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI04_SI04ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.11.227:9081/dms/ws/SI05%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_SI05\</RelPath>
+      <UpdateFromURL>http://10.3.11.227:9081/dms/ws/SI05%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI05_SI05ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.21.115:8080/hbfcdms/ws/SI08%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_SI08\</RelPath>
+      <UpdateFromURL>http://10.3.21.115:8080/hbfcdms/ws/SI08%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI08_SI08ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.11.227:9081/dms/ws/SI09%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_SI09\</RelPath>
+      <UpdateFromURL>http://10.3.11.227:9081/dms/ws/SI09%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI09_SI09ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.3.11.227:9081/dms/ws/SI11%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_SI11\</RelPath>
+      <UpdateFromURL>http://10.3.11.227:9081/dms/ws/SI11%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI11_SI11ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\DMSAsync_PI07\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DMSAPIServiceConfig.xml" />
+    <None Include="Service References\DMSAsync_PI07\configuration91.svcinfo" />
+    <None Include="Service References\DMSAsync_PI07\configuration.svcinfo" />
+    <None Include="Service References\DMSAsync_PI07\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="U9.VOB.Cus.HBHDaYunsy.PlugInBE.sub.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="HBH.BEPlugIn.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    
+      if exist "$(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\" goto copyfile
+      Md "$(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\"
+      :copyfile
+      Copy $(TargetDir)\$(TargetName).dll $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\
+      Copy $(TargetDir)\$(TargetName).pdb $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\
+      Copy $(TargetDir)\$(TargetName).sub.xml $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\
+      Copy $(TargetDir)\$(TargetName).dll.config $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\
+
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

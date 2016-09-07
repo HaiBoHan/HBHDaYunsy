@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="U9.VOB.Cus.HBHDaYunsy.PlugInBE.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI06_PI06ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.21.115:8080/hbfcdms/ws/PI06</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI08_PI08ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.21.115:8080/hbfcdms/ws/PI08</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI02_SI02ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.11.227:9081/dms/ws/SI02</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI03_SI03ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.11.227:9081/dms/ws/SI03</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI04_SI04ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.21.115:8080/hbfcdms/ws/SI04</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI05_SI05ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.11.227:9081/dms/ws/SI05</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI08_SI08ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.21.115:8080/hbfcdms/ws/SI08</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI09_SI09ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.11.227:9081/dms/ws/SI09</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI11_SI11ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.11.227:9081/dms/ws/SI11</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI07_PI07ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.3.21.115:8080/hbfcdms/ws/PI07</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
