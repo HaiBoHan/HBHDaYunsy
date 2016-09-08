@@ -149,6 +149,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\DMSAsync_PI08\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DMSAsync_SI08\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="SingleWorkPlanCreated.cs" />
     <Compile Include="SingleWorkPlanUpdated.cs" />
     <Compile Include="SODeleted.cs" />
@@ -230,6 +240,14 @@
     </None>
     <None Include="Service References\DMSAsync_PI07\PI07ImplService.wsdl" />
     <None Include="Service References\DMSAsync_PI07\U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMSAsync_PI07.stockDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DMSAsync_PI08\PI08ImplService.wsdl" />
+    <None Include="Service References\DMSAsync_PI08\U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMSAsync_PI08.supplierDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DMSAsync_SI08\SI08ImplService.wsdl" />
+    <None Include="Service References\DMSAsync_SI08\U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMSAsync_SI08.dealerInfoDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Web References\DMS_PI06\partBaseDto.datasource">
@@ -434,6 +452,8 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\DMSAsync_PI06\" />
     <WCFMetadataStorage Include="Service References\DMSAsync_PI07\" />
+    <WCFMetadataStorage Include="Service References\DMSAsync_PI08\" />
+    <WCFMetadataStorage Include="Service References\DMSAsync_SI08\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DMSAPIServiceConfig.xml" />
@@ -446,6 +466,18 @@
     <None Include="Service References\DMSAsync_PI06\configuration91.svcinfo" />
     <None Include="Service References\DMSAsync_PI06\configuration.svcinfo" />
     <None Include="Service References\DMSAsync_PI06\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DMSAsync_PI08\configuration91.svcinfo" />
+    <None Include="Service References\DMSAsync_PI08\configuration.svcinfo" />
+    <None Include="Service References\DMSAsync_PI08\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DMSAsync_SI08\configuration91.svcinfo" />
+    <None Include="Service References\DMSAsync_SI08\configuration.svcinfo" />
+    <None Include="Service References\DMSAsync_SI08\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
