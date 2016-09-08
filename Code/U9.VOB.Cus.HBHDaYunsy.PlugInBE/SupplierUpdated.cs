@@ -25,38 +25,16 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         if (flag)
                         {
                             if (
-                                SupplierInserted.IsUpdateDMS(supplier)
+                                PubHelper.IsUpdateDMS(supplier)
                                 )
                             {
                                 try
                                 {
                                     PI08ImplService service = new PI08ImplService();
                                     service.Url = PubHelper.GetAddress(service.Url);
-                                    supplierDto dto = new supplierDto();
                                     System.Collections.Generic.List<supplierDto> list = new System.Collections.Generic.List<supplierDto>();
-                                    dto.suptCode = supplier.Code;
-                                    dto.suptName = supplier.Name;
-                                    dto.supShortName = supplier.ShortName;
-                                    if (supplier.ContactObjectKey != null)
-                                    {
-                                        if (supplier.ContactObject.PersonName != null)
-                                        {
-                                            dto.linkMan = supplier.ContactObject.PersonName.DisplayName;
-                                        }
-                                        dto.phone = supplier.ContactObject.DefaultPhoneNum;
-                                        dto.fax = supplier.ContactObject.DefaultFaxNum;
-                                        if (supplier.ContactObject.DefaultLocation != null && supplier.ContactObject.DefaultLocation.PostalCode != null)
-                                        {
-                                            dto.zipCode = supplier.ContactObject.DefaultLocation.PostalCode.PostalCode;
-                                        }
-                                        if (supplier.ContactObject.DefaultLocation != null)
-                                        {
-                                            dto.address = supplier.ContactObject.DefaultLocation.Address1;
-                                        }
-                                    }
-                                    dto.actionType = 2;
-                                    // status  100201 有效 100202 无效
-                                    dto.status = (supplier.Effective != null && supplier.Effective.IsEffective) ? "100201" : "100202";
+
+                                    supplierDto dto = GetUpdateDMSDTO(supplier);
 
                                     list.Add(dto);
                                     supplierDto s = service.Do(list.ToArray());
@@ -75,5 +53,34 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				}
 			}
 		}
+
+        public static supplierDto GetUpdateDMSDTO(Supplier supplier)
+        {
+            supplierDto dto = new supplierDto();
+            dto.suptCode = supplier.Code;
+            dto.suptName = supplier.Name;
+            dto.supShortName = supplier.ShortName;
+            if (supplier.ContactObjectKey != null)
+            {
+                if (supplier.ContactObject.PersonName != null)
+                {
+                    dto.linkMan = supplier.ContactObject.PersonName.DisplayName;
+                }
+                dto.phone = supplier.ContactObject.DefaultPhoneNum;
+                dto.fax = supplier.ContactObject.DefaultFaxNum;
+                if (supplier.ContactObject.DefaultLocation != null && supplier.ContactObject.DefaultLocation.PostalCode != null)
+                {
+                    dto.zipCode = supplier.ContactObject.DefaultLocation.PostalCode.PostalCode;
+                }
+                if (supplier.ContactObject.DefaultLocation != null)
+                {
+                    dto.address = supplier.ContactObject.DefaultLocation.Address1;
+                }
+            }
+            dto.actionType = 2;
+            // status  100201 有效 100202 无效
+            dto.status = (supplier.Effective != null && supplier.Effective.IsEffective) ? "100201" : "100202";
+            return dto;
+        }
 	}
 }

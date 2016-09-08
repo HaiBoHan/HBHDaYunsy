@@ -9,6 +9,9 @@ using UFIDA.U9.CBO.SCM.Warehouse;
 using HBH.DoNet.DevPlatform.EntityMapping;
 using UFIDA.U9.SPR.SalePriceList;
 using UFIDA.U9.CBO.SCM.Supplier;
+using UFIDA.U9.SM.Ship;
+using UFIDA.U9.InvTrans.Trans;
+using UFSoft.UBF.PL;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -89,6 +92,35 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             }
         }
 
+        // 现金
+        /// <summary>
+        /// 现金
+        /// </summary>
+        public const string Const_ShipDocType_XJ = "CK-XJ";
+        // 三包
+        /// <summary>
+        /// 三包
+        /// </summary>
+        public const string Const_ShipDocType_SB = "CK-SB";
+        // 生产组织转DMS
+        private static List<string> lstDMSShipDocType = new List<string>();
+        /// <summary>
+        /// 生产组织转DMS
+        /// </summary>
+        public static List<string> DMSShipDocType
+        {
+            get
+            {
+                if (lstDMSShipDocType.Count == 0)
+                {
+                    lstDMSShipDocType.Add(Const_ShipDocType_XJ);
+                    lstDMSShipDocType.Add(Const_ShipDocType_XJ);
+                }
+
+                return lstDMSShipDocType;
+            }
+        }
+
         public static bool IsOrg_Customer2DMS()
         {
             return PubHelper.SaleOrg2DMS.Contains(Context.LoginOrg.Code);
@@ -105,6 +137,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         }
 
         public static bool IsOrg_SalePriceList2DMS()
+        {
+            return PubHelper.SaleOrg2DMS.Contains(Context.LoginOrg.Code);
+        }
+
+        public static bool IsOrg_Finance2DMS()
         {
             return PubHelper.SaleOrg2DMS.Contains(Context.LoginOrg.Code);
         }
@@ -129,7 +166,83 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             return false;
         }
 
+        public static bool IsUpdateDMS(LotInfo lotinfo,out Supplier supt)
+        {
+            supt = null;
+            if (lotinfo != null
+                && lotinfo.LotMaster_EntityID != null
+                )
+            {
+                string suptCode = lotinfo.LotMaster_EntityID.DescFlexSegments.PrivateDescSeg1;
+                if (suptCode.IsNotNullOrWhiteSpace())
+                {
+                    supt = Supplier.Finder.Find("Code=@Code"
+                        , new OqlParam(suptCode)
+                        );
+
+                    if (PubHelper.IsUpdateDMS(supt))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool IsUpdateDMS(SupplierMISCInfo supplier)
+        {
+            if (supplier != null
+                && supplier.Supplier != null
+                )
+            {
+                return IsUpdateDMS(supplier.Supplier);
+            }
+            return false;
+        }
+
+        public static bool IsUpdateDMS(Supplier supplier)
+        {
+            if (supplier != null
+                && supplier.Category != null
+                )
+            {
+                return supplier.Category.Code == "001"
+                    || (supplier.Category != null
+                        && supplier.Category.DescFlexField != null
+                        && supplier.Category.DescFlexField.PrivateDescSeg1.GetBool()
+                        );
+            }
+
+            return false;
+        }
+
+        public static bool IsUpdateDMS_Electric(ShipDocType shipDocType)
+        {
+            if (shipDocType != null
+                && PubHelper.DMSShipDocType.Contains(shipDocType.Code)
+                )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static SalePriceLine GetSalePriceList(SupplierItem supplierItem)
+        {
+            string opath = string.Format("SalePriceList.Org={0} and ItemInfo.ItemID={1} and Active=1 and '{2}' between FromDate and ToDate ", Context.LoginOrg.ID.ToString(), supplierItem.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString());
+            if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            {
+                opath += string.Format(" and SalePriceList.Code='{0}'", Const_ElectricPartPriceListCode);
+            }
+            else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
+            {
+                //opath += string.Format(" and SalePriceList.Code={0}", Const_SalePartPriceListCode);
+            }
+            return SalePriceLine.Finder.Find(opath);
+        }
+
+        public static SalePriceLine GetSalePriceList(SupplySource supplierItem)
         {
             string opath = string.Format("SalePriceList.Org={0} and ItemInfo.ItemID={1} and Active=1 and '{2}' between FromDate and ToDate ", Context.LoginOrg.ID.ToString(), supplierItem.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString());
             if (Context.LoginOrg.Code == Const_OrgCode_Electric)

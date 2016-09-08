@@ -19,8 +19,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				BusinessEntity.EntityKey key = ((EntityEvent)args[0]).EntityKey;
 				if (!(key == null))
 				{
-					Voucher voucher = key.GetEntity() as Voucher;
-					if (voucher.Org.Code == "20")
+                    Voucher voucher = key.GetEntity() as Voucher;
+                    //if (voucher.Org.Code == "20")
+                    if (PubHelper.IsOrg_Finance2DMS())
 					{
 						bool flag = PubHelper.IsUsedDMSAPI();
                         if (flag)

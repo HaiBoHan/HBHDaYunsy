@@ -25,7 +25,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         if (flag)
                         {
                             if (
-                                SupplierInserted.IsUpdateDMS(supplier)
+                                PubHelper.IsUpdateDMS(supplier)
                                 )
                             {
                                 try

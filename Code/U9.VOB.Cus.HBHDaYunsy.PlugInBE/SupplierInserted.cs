@@ -24,7 +24,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 						bool flag = PubHelper.IsUsedDMSAPI();
                         if (flag)
                         {
-                            if (IsUpdateDMS(supplier)
+                            if (PubHelper.IsUpdateDMS(supplier)
                                 )
                             {
                                 try
@@ -74,21 +74,5 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				}
 			}
 		}
-
-        public static bool IsUpdateDMS(Supplier supplier)
-        {
-            if (supplier != null
-                && supplier.Category != null
-                )
-            {
-                return supplier.Category.Code == "001"
-                    || (supplier.Category != null
-                        && supplier.Category.DescFlexField != null
-                        && supplier.Category.DescFlexField.PrivateDescSeg1.GetBool()
-                        );
-            }
-
-            return false;
-        }
 	}
 }

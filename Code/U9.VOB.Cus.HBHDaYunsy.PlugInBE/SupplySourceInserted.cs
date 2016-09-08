@@ -9,7 +9,9 @@ using UFSoft.UBF.Eventing;
 using UFSoft.UBF.PL;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
-	public class SupplierItemInserted : IEventSubscriber
+    // CBO.SCM.MF2010_10
+    // UFIDA.U9.CBO.SCM.Supplier.SupplySource
+    public class SupplySourceInserted : IEventSubscriber
 	{
 		public void Notify(params object[] args)
 		{
@@ -18,7 +20,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				BusinessEntity.EntityKey key = ((EntityEvent)args[0]).EntityKey;
 				if (!(key == null))
 				{
-					SupplierItem supplierItem = key.GetEntity() as SupplierItem;
+                    SupplySource supplierItem = key.GetEntity() as SupplySource;
                     //if (Context.LoginOrg.Code == "10")
                     if (PubHelper.IsOrg_SupplierItem2DMS())
 					{
@@ -87,7 +89,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 			}
 		}
 
-        public static bool IsUpdateDMS(SupplierItem supplierItem)
+        public static bool IsUpdateDMS(SupplySource supplierItem)
         {
             return supplierItem != null
                 && supplierItem.SupplierInfo != null

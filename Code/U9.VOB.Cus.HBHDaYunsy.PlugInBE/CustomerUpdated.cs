@@ -43,20 +43,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									SI08ImplService service = new SI08ImplService();
 									// service.Url = PubHelper.GetAddress(service.Url);
 									System.Collections.Generic.List<dealerInfoDto> list = new System.Collections.Generic.List<dealerInfoDto>();
-									dealerInfoDto dto = new dealerInfoDto();
-									dto.dealerCode = customer.Code;
-									dto.dealerName = customer.Name;
-									dto.dealerShortName = customer.ShortName;
-									dto.companyCode = customer.Code;
-									dto.companyName = customer.Name;
-									dto.companyShortName = customer.ShortName;
-									if (customer.CustomerCategoryKey != null)
-									{
-										dto.dealerType = int.Parse(customer.CustomerCategory.Code);
-									}
-                                    dto.actionType = 2;
-                                    // status  100201 有效 100202 无效
-                                    dto.status = (customer.Effective != null && customer.Effective.IsEffective) ? "100201" : "100202";
+
+                                    dealerInfoDto dto = GetUpdateDMSDTO(customer);
 
 									list.Add(dto);
 									dealerInfoDto d = service.Do(list.ToArray());
@@ -75,5 +63,24 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				}
 			}
 		}
+
+        public static dealerInfoDto GetUpdateDMSDTO(Customer customer)
+        {
+            dealerInfoDto dto = new dealerInfoDto();
+            dto.dealerCode = customer.Code;
+            dto.dealerName = customer.Name;
+            dto.dealerShortName = customer.ShortName;
+            dto.companyCode = customer.Code;
+            dto.companyName = customer.Name;
+            dto.companyShortName = customer.ShortName;
+            if (customer.CustomerCategoryKey != null)
+            {
+                dto.dealerType = int.Parse(customer.CustomerCategory.Code);
+            }
+            dto.actionType = 2;
+            // status  100201 有效 100202 无效
+            dto.status = (customer.Effective != null && customer.Effective.IsEffective) ? "100201" : "100202";
+            return dto;
+        }
 	}
 }

@@ -139,6 +139,11 @@
     <Compile Include="SalePriceListDeleted.cs" />
     <Compile Include="SalePriceListInserted.cs" />
     <Compile Include="SalePriceListUpdating.cs" />
+    <Compile Include="Service References\DMSAsync_PI06\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\DMSAsync_PI07\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -209,12 +214,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="SupplySourceInserted.cs" />
+    <Compile Include="SupplySourceDeleted.cs" />
+    <Compile Include="SupplySourceUpdated.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DMSAsync_PI06\PI06ImplService.wsdl" />
+    <None Include="Service References\DMSAsync_PI06\U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMSAsync_PI06.partBaseDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\DMSAsync_PI07\PI07ImplService.wsdl" />
     <None Include="Service References\DMSAsync_PI07\U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMSAsync_PI07.stockDTO.datasource">
@@ -420,6 +432,7 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\DMSAsync_PI06\" />
     <WCFMetadataStorage Include="Service References\DMSAsync_PI07\" />
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +440,12 @@
     <None Include="Service References\DMSAsync_PI07\configuration91.svcinfo" />
     <None Include="Service References\DMSAsync_PI07\configuration.svcinfo" />
     <None Include="Service References\DMSAsync_PI07\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DMSAsync_PI06\configuration91.svcinfo" />
+    <None Include="Service References\DMSAsync_PI06\configuration.svcinfo" />
+    <None Include="Service References\DMSAsync_PI06\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

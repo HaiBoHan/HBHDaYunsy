@@ -7,6 +7,7 @@ using UFIDA.U9.SM.RMA;
 using UFIDA.U9.SM.Ship;
 using UFSoft.UBF.Business;
 using UFSoft.UBF.Eventing;
+using HBH.DoNet.DevPlatform.EntityMapping;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class ARBillHeadUpdated : IEventSubscriber
@@ -18,8 +19,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				BusinessEntity.EntityKey key = ((EntityEvent)args[0]).EntityKey;
 				if (!(key == null))
 				{
-					ARBillHead ARbillhead = key.GetEntity() as ARBillHead;
-					if (PubHelper.SaleOrg2DMS.Contains(Context.LoginOrg.Code))
+                    ARBillHead ARbillhead = key.GetEntity() as ARBillHead;
+                    //if (voucher.Org.Code == "20")
+                    if (PubHelper.IsOrg_Finance2DMS())
 					{
 						bool flag = PubHelper.IsUsedDMSAPI();
 						if (flag)
@@ -35,7 +37,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									if (line.SrcDocType == ARBillSrcDocTypeEnum.ShipmentBill && line.SrcBillLineID > 0)
 									{
 										ShipLine shipline = ShipLine.Finder.FindByID(line.SrcBillLineID);
-										if (shipline != null && (shipline.Ship.DocumentType.Code == "XM10" || shipline.Ship.DocumentType.Code == "XM12" || shipline.Ship.DocumentType.Code == "XM1" || shipline.Ship.DocumentType.Code == "XM7" || shipline.Ship.DocumentType.Code == "XM4"))
+                                        if (IsUpdateDMS(shipline))
 										{
 											dto.dealerCode = ARbillhead.AccrueCust.Customer.Code;
 											if (ARbillhead.AccrueCust.Customer.CustomerCategoryKey != null)
@@ -56,24 +58,42 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									}
 									else if (line.SrcDocType == ARBillSrcDocTypeEnum.RMA && line.SrcBillLineID > 0)
 									{
-										RMALine srcline = RMALine.Finder.FindByID(line.SrcBillLineID);
+                                        RMALine srcline = RMALine.Finder.FindByID(line.SrcBillLineID);
 										if (srcline != null)
-										{
-											dto.dealerCode = srcline.RMA.Customer.Customer.Code;
-											dto.DMSShipNo = srcline.RMA.DescFlexField.PrivateDescSeg1;
-											dto.dmsSaleNo = srcline.RMA.DescFlexField.PubDescSeg5;
-											dto.earnestMoney = srcline.RMA.DescFlexField.PubDescSeg13;
-											dto.deposit = srcline.RMA.DescFlexField.PubDescSeg21;
-											dto.shipMoney = srcline.RMA.DescFlexField.PubDescSeg14;
-											dto.UNineCreateUser = ARbillhead.CreatedBy;
-											if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
-											{
-												dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
-											}
-											dto.vin = srcline.RMA.DescFlexField.PubDescSeg12;
-											dto.amount += double.Parse((line.AROCMoney.NonTax + line.AROCMoney.GoodsTax).ToString());
-											dto.operaTionType = "1";
-											flag2 = true;
+                                        {
+                                            ShipLine shipline = null;
+                                            if (srcline.SrcDocLine != null
+                                                && srcline.SrcDocLine.ID > 0
+                                                )
+                                            {
+                                                shipline = ShipLine.Finder.FindByID(srcline.SrcDocLine.ID);
+                                            }
+
+                                            if ((shipline == null
+                                                && srcline.RMA.DescFlexField.PubDescSeg5.IsNotNullOrWhiteSpace()
+                                                )
+                                                || (shipline != null
+                                                    && IsUpdateDMS(shipline)
+                                                    )
+                                                )
+                                            {
+                                                dto.dealerCode = srcline.RMA.Customer.Customer.Code;
+                                                dto.DMSShipNo = shipline != null ? shipline.Ship.DescFlexField.PrivateDescSeg1
+                                                    : srcline.RMA.DescFlexField.PrivateDescSeg1;
+                                                dto.dmsSaleNo = srcline.RMA.DescFlexField.PubDescSeg5;
+                                                dto.earnestMoney = srcline.RMA.DescFlexField.PubDescSeg13;
+                                                dto.deposit = srcline.RMA.DescFlexField.PubDescSeg21;
+                                                dto.shipMoney = srcline.RMA.DescFlexField.PubDescSeg14;
+                                                dto.UNineCreateUser = ARbillhead.CreatedBy;
+                                                if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                                {
+                                                    dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                                }
+                                                dto.vin = srcline.RMA.DescFlexField.PubDescSeg12;
+                                                dto.amount += double.Parse((line.AROCMoney.NonTax + line.AROCMoney.GoodsTax).ToString());
+                                                dto.operaTionType = "1";
+                                                flag2 = true;
+                                            }
 										}
 									}
 								}
@@ -102,5 +122,31 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				}
 			}
 		}
+
+        private static bool IsUpdateDMS(ShipLine shipline)
+        {
+            if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
+            {
+                if (shipline != null
+                    && shipline.Ship != null
+                    && shipline.Ship.DocumentType != null
+                    && PubHelper.IsUpdateDMS_Electric(shipline.Ship.DocumentType)
+                    )
+                {
+                    return true;
+                }
+            }
+            else if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Chengdu
+                || Context.LoginOrg.Code == PubHelper.Const_OrgCode_Hubei
+                )
+            {
+                if (shipline != null && (shipline.Ship.DocumentType.Code == "XM10" || shipline.Ship.DocumentType.Code == "XM12" || shipline.Ship.DocumentType.Code == "XM1" || shipline.Ship.DocumentType.Code == "XM7" || shipline.Ship.DocumentType.Code == "XM4")
+                    )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 	}
 }

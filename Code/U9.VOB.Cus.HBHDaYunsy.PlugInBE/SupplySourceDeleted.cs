@@ -9,7 +9,7 @@ using UFSoft.UBF.Eventing;
 using UFSoft.UBF.PL;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
-	public class SupplierItemInserted : IEventSubscriber
+    public class SupplySourceDeleted : IEventSubscriber
 	{
 		public void Notify(params object[] args)
 		{
@@ -18,15 +18,14 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				BusinessEntity.EntityKey key = ((EntityEvent)args[0]).EntityKey;
 				if (!(key == null))
 				{
-					SupplierItem supplierItem = key.GetEntity() as SupplierItem;
+                    SupplySource supplierItem = key.GetEntity() as SupplySource;
                     //if (Context.LoginOrg.Code == "10")
-                    if (PubHelper.IsOrg_SupplierItem2DMS())
+                    if(PubHelper.IsOrg_SupplierItem2DMS())
 					{
 						bool flag = PubHelper.IsUsedDMSAPI();
                         if (flag)
                         {
-                            if (IsUpdateDMS(supplierItem)
-                                )
+                            if (SupplySourceInserted.IsUpdateDMS(supplierItem))
                             {
                                 try
                                 {
@@ -51,12 +50,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                     {
                                         linedto.miniPack = ((supplierItem.ItemInfo.ItemID.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(supplierItem.ItemInfo.ItemID.PurchaseInfo.MinRcvQty) : 1);
                                     }
-                                    linedto.isFlag = "2";
                                     //SalePriceLine line = SalePriceLine.Finder.Find(string.Format("SalePriceList.Org={0} and ItemInfo.ItemID={1} and Active=1 and '{2}' between FromDate and ToDate", Context.LoginOrg.ID.ToString(), supplierItem.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
                                     SalePriceLine line = PubHelper.GetSalePriceList(supplierItem);
                                     if (line != null)
                                     {
-                                        linedto.salePrice = float.Parse(line.Price.ToString("G0"));
+                                        linedto.salePrice = float.Parse(line.Price.ToString());
                                         linedto.unitPrace = linedto.salePrice;
                                     }
                                     else
@@ -64,11 +62,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                         linedto.salePrice = 0f;
                                         linedto.unitPrace = 0f;
                                     }
+                                    linedto.isFlag = "2";
                                     linedto.isDanger = "0";
                                     linedto.isReturn = "1";
                                     linedto.isSale = "1";
                                     linedto.isEffective = supplierItem.Effective.IsEffective.ToString();
-                                    linedto.actionType = 1;
+                                    linedto.actionType = 3;
                                     lines.Add(linedto);
                                     partBaseDto d = service.Do(lines.ToArray());
                                     if (d != null && d.flag == 0)
@@ -86,14 +85,5 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				}
 			}
 		}
-
-        public static bool IsUpdateDMS(SupplierItem supplierItem)
-        {
-            return supplierItem != null
-                && supplierItem.SupplierInfo != null
-                && supplierItem.SupplierInfo.Supplier != null
-                && PubHelper.IsUpdateDMS(supplierItem.SupplierInfo.Supplier)
-                ;
-        }
 	}
 }

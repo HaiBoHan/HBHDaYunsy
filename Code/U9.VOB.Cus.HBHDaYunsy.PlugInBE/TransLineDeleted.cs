@@ -11,6 +11,8 @@ using UFIDA.U9.SM.RMA;
 using UFIDA.U9.SM.Ship;
 using UFSoft.UBF.Business;
 using UFSoft.UBF.Eventing;
+using HBH.DoNet.DevPlatform.EntityMapping;
+using UFIDA.U9.CBO.SCM.Supplier;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class TransLineDeleted : IEventSubscriber
@@ -27,9 +29,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 					{
 						bool flag = PubHelper.IsUsedDMSAPI();
 						if (flag)
-						{
+                        {
+                            Supplier supt;
                             //if (transline.Wh != null && transline.Wh.Code.StartsWith("SHBJ"))
-                            if(TransLineInserted.IsUpdateDMS(transline))
+                            if (TransLineInserted.IsUpdateDMS(transline, out supt))
 							{
                                 //if (transline.DocLine != null && transline.DocLine.EntityType != "UFIDA.U9.InvDoc.PrdEndCheck.PrdEndChkBill" && transline.DocLine.EntityType != "UFIDA.U9.SM.Ship.ShipLine")
 								{
@@ -53,10 +56,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             System.Collections.Generic.List<DMSAsync_PI07.stockDTO> list = new System.Collections.Generic.List<DMSAsync_PI07.stockDTO>();
                                             DMSAsync_PI07.stockDTO dto = new DMSAsync_PI07.stockDTO();
 											dto.itemMaster = transline.ItemInfo.ItemID.Code;
-											if (transline.SupplierInfo != null && transline.SupplierInfo.Supplier != null)
-											{
-												dto.supplier = transline.SupplierInfo.Supplier.Code;
-											}
+                                            //if (transline.SupplierInfo != null && transline.SupplierInfo.Supplier != null)
+                                            //{
+                                            //    dto.supplier = transline.SupplierInfo.Supplier.Code;
+                                            //}
+                                            dto.supplier = supt != null ? supt.Code : string.Empty;
                                             //else if (transline.DocLine.EntityType == "UFIDA.U9.PM.Rcv.RcvLine")
                                             //{
                                             //    RcvLine rcvline = RcvLine.Finder.FindByID(transline.DocLine.EntityID);
@@ -73,7 +77,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             //        }
                                             //    }
                                             //}
-											dto.number = System.Convert.ToInt32(transline.StoreUOMQty);
+                                            //dto.number = System.Convert.ToInt32(transline.StoreUOMQty);
+                                            dto.number = transline.StoreUOMQty.GetInt();
 											if (transline.LotInfo != null)
 											{
 												dto.lot = transline.LotInfo.LotCode;

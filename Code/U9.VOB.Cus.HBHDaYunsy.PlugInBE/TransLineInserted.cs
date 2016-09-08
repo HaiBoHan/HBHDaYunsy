@@ -12,6 +12,9 @@ using UFIDA.U9.SM.Ship;
 using UFSoft.UBF.Business;
 using UFSoft.UBF.Eventing;
 using System.ServiceModel;
+using HBH.DoNet.DevPlatform.EntityMapping;
+using UFIDA.U9.CBO.SCM.Supplier;
+using UFSoft.UBF.PL;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class TransLineInserted : IEventSubscriber
@@ -29,7 +32,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 						bool flag = PubHelper.IsUsedDMSAPI();
 						if (flag)
 						{
-                            if (IsUpdateDMS(transline))
+                            Supplier supt;
+                            if (IsUpdateDMS(transline, out supt))
 							{
                                 //if (transline.DocLine != null && transline.DocLine.EntityType != "UFIDA.U9.InvDoc.PrdEndCheck.PrdEndChkBill" && transline.DocLine.EntityType != "UFIDA.U9.SM.Ship.ShipLine")
 								{
@@ -62,10 +66,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             System.Collections.Generic.List<DMSAsync_PI07.stockDTO> list = new System.Collections.Generic.List<DMSAsync_PI07.stockDTO>();
                                             DMSAsync_PI07.stockDTO dto = new DMSAsync_PI07.stockDTO();
 											dto.itemMaster = transline.ItemInfo.ItemID.Code;
-											if (transline.SupplierInfo != null && transline.SupplierInfo.Supplier != null)
-											{
-												dto.supplier = transline.SupplierInfo.Supplier.Code;
-											}
+                                            //if (transline.SupplierInfo != null && transline.SupplierInfo.Supplier != null)
+                                            //{
+                                            //    dto.supplier = transline.SupplierInfo.Supplier.Code;
+                                            //}
+                                            dto.supplier = supt != null ? supt.Code : string.Empty;
+
                                             //else if (transline.DocLine.EntityType == "UFIDA.U9.PM.Rcv.RcvLine")
                                             //{
                                             //    RcvLine rcvline = RcvLine.Finder.FindByID(transline.DocLine.EntityID);
@@ -82,7 +88,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             //        }
                                             //    }
                                             //}
-											dto.number = System.Convert.ToInt32(transline.StoreUOMQty);
+                                            //dto.number = System.Convert.ToInt32(transline.StoreUOMQty);
+                                            dto.number = transline.StoreUOMQty.GetInt();
 											if (transline.LotInfo != null)
 											{
 												dto.lot = transline.LotInfo.LotCode;
@@ -128,12 +135,48 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 			}
 		}
 
-        public static bool IsUpdateDMS(TransLine transline)
+        public static bool IsUpdateDMS(TransLine transline, out Supplier supt)
         {
+            supt = null;
+
             //return transline.Wh != null && transline.Wh.Code.StartsWith("SHBJ");
-            return transline.Wh != null 
+            if (transline.Wh != null
                 && PubHelper.IsWarehouse2DMS(transline.Wh)
-                ;
+                //&& PubHelper.IsUpdateDMS(transline.SupplierInfo)
+                )
+            {
+                //// 批次供应商
+                //string suptCode = transline.LotInfo.LotMaster_EntityID.DescFlexSegments.PrivateDescSeg1;
+                //if (suptCode.IsNotNullOrWhiteSpace())
+                //{
+                //    Supplier supt = Supplier.Finder.Find("Code=@Code"
+                //        , new OqlParam(suptCode)
+                //        );
+                    
+                //    if (PubHelper.IsUpdateDMS(supt))
+                //    {
+                //        return true;
+                //    }
+                //}
+
+                // 如果存在货源表
+                bool bl = PubHelper.IsUpdateDMS(transline.LotInfo,out supt);
+
+                if (bl)
+                {
+                    SupplySource supplySource = SupplySource.Finder.Find("ItemInfo.ItemID=@ItemID and SupplierInfo.Supplier=@SuptID"
+                        , new OqlParam(transline.ItemInfo.ItemIDKey.ID)
+                        , new OqlParam(supt.ID)
+                        );
+
+                    if (supplySource != null)
+                    {
+                        return SupplySourceInserted.IsUpdateDMS(supplySource);
+                    }
+                }
+            }
+
+            return false;
         }
 	}
 }
