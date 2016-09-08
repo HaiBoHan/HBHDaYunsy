@@ -21,16 +21,19 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
 
     // CBO.Pub.Supplier.SupplierItemList
     // SupplierItemCrossBList.SupplierItemCrossBListWebPart	UFIDA.U9.CBO.Pub.SupplierItemUI.WebPart
-    public class SupplierItem_UIPlugin: ExtendedPartBase
+
+    // CBO.Pub.Item.ItemList
+    // ItemBListUIModel.ItemBListUIFormWebPart	UFIDA.U9.CBO.Pub.Item.ItemUI.WebPart
+    public class ItemList_UIPlugin: ExtendedPartBase
     {
         public UFSoft.UBF.UI.IView.IPart part;
-        private SupplierItemCrossBList.SupplierItemCrossBListWebPart _strongPart;
+        private ItemBListUIModel.ItemBListUIFormWebPart _strongPart;
 
 
         public override void AfterInit(IPart Part, EventArgs e)
         {
             part = Part;
-            _strongPart = Part as SupplierItemCrossBList.SupplierItemCrossBListWebPart;
+            _strongPart = Part as ItemBListUIModel.ItemBListUIFormWebPart;
 
 
             // Card0
@@ -39,13 +42,13 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
             if (card0 != null)
             {
                 IUFButton btn2DMSWhqoh = new UFWebButtonAdapter();
-                btn2DMSWhqoh.Text = "同步DMS库存";
+                btn2DMSWhqoh.Text = "下发DMS库存";
                 btn2DMSWhqoh.ID = "btn2DMSWhqoh";
                 btn2DMSWhqoh.AutoPostBack = true;
                 btn2DMSWhqoh.Click += new EventHandler(btn2DMSWhqoh_Click);
 
                 card0.Controls.Add(btn2DMSWhqoh);
-                HBHCommon.HBHCommonUI.UICommonHelper.Layout(card0, btn2DMSWhqoh, 2, 0);
+                HBHCommon.HBHCommonUI.UICommonHelper.Layout(card0, btn2DMSWhqoh, 8, 0);
 
                 // 确认对话框
                 UFIDA.U9.UI.PDHelper.PDFormMessage.ShowDelConfirmDialog(_strongPart.Page, "确认同步DMS库存？", "确认同步DMS库存", btn2DMSWhqoh);
@@ -60,8 +63,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
             part.IsDataBinding = true;
 
             StoreQty2DMSSVProxy proxy = new StoreQty2DMSSVProxy();
+            proxy.TransferType = (int)DaYun2DMSTransferTypeEnum.Whqoh;
 
-            long[] selected = _strongPart.Model.SupplierItem.GetSelectedRecordIDs();
+            long[] selected = _strongPart.Model.ItemMaster.GetSelectedRecordIDs();
 
             if (selected != null
                 && selected.Length > 0
