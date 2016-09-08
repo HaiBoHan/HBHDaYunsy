@@ -11,7 +11,8 @@
     <RootNamespace>U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV</RootNamespace>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +41,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\UBF\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="U9.VOB.Cus.HBHDaYunsy.PlugInBE">
+      <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\U9.VOB.Cus.HBHDaYunsy.PlugInBE.dll</HintPath>
     </Reference>
     <Reference Include="U9.VOB.HBHCommon.U9CommonSV">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\HBHCommon\U9.VOB.HBHCommon.U9CommonSV.dll</HintPath>
@@ -185,10 +190,22 @@
     <Reference Include="UFIDA.U9.SM.SMSV.Deploy">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.SM.SMSV.Deploy.dll</HintPath>
     </Reference>
+    <Reference Include="UFIDA.U9.SPR.SPRBE">
+      <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.SPR.SPRBE.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.SPR.SPRBE.Deploy">
+      <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.SPR.SPRBE.Deploy.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HBHCommon.cs" />
     <Compile Include="HBHTransferSV.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV.target" />

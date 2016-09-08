@@ -6,6 +6,9 @@ using UFSoft.UBF.Service;
 using UFIDA.U9.Cust.HBDY.API;
 using HBH.DoNet.DevPlatform.EntityMapping;
 using HBH.DoNet.DevPlatform.U9Mapping;
+using UFIDA.U9.Cust.HBDY.API.ShipSV;
+using UFIDA.U9.Cust.HBDY.API.TransferInSV;
+using UFIDA.U9.Cust.HBDY.API.SalesOrderSV;
 
 namespace U9.VOB.Cus.HBHDaYunsy.SVPlugin
 {

@@ -44,41 +44,5 @@ namespace U9.VOB.Cus.HBHDaYunsy.SVPlugin
             }
         }
 
-        #region 接口常量
-
-        public readonly static List<string> ProjectSendOrgCode = new List<string>() { "10", "20" };
-
-        // 默认币种编码
-        /// <summary>
-        /// 默认币种编码
-        /// </summary>
-        public const string DefaultCurrencyCode = "C001";
-
-        // 默认收款条件编码
-        /// <summary>
-        /// 默认收款条件编码
-        /// </summary>
-        public const string DefaultRecTermCode = "01";
-
-        // 默认出货原则编码
-        /// <summary>
-        /// 默认出货原则编码
-        /// </summary>
-        public const string DefaultShipRuleCode = "C001";
-
-        // 默认立账条件编码
-        /// <summary>
-        /// 默认立账条件编码
-        /// </summary>
-        public const string DefaultConfirmTermCode = "01";
-
-        // 默认成交方式编码
-        /// <summary>
-        /// 默认成交方式编码
-        /// </summary>
-        public const int DefaultBargainMode = 0;
-
-        #endregion
-
     }
 }

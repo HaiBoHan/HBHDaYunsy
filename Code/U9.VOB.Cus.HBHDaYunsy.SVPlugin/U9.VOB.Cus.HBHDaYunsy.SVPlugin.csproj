@@ -53,6 +53,7 @@
   <ItemGroup>
     <None Include="U9.VOB.Cus.HBHDaYunsy.SVPlugin.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

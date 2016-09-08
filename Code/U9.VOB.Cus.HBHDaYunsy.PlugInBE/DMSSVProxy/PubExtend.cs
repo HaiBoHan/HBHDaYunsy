@@ -20,6 +20,7 @@ using HBH.DoNet.DevPlatform.EntityMapping;
 using HBH.DoNet.DevPlatform.ErpSvProxy;
 using UFIDA.U9.CBO.SCM.Supplier;
 using UFIDA.U9.SPR.SalePriceList;
+using UFIDA.U9.CBO.SCM.Customer;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -216,7 +217,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             return null;
         }
 
-        public static void SendSupplyItem2DMS_Async(IList<SupplySource> lstErpData, int actionType)
+        public static void BatchSend2DMS_Async(IList<SupplySource> lstErpData, int actionType)
         {
             if (lstErpData != null
                 && lstErpData.Count > 0
@@ -583,6 +584,194 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             return null;
         }
 
+
+        #region 供应商同步(异步)
+
+        public static DMSAsync_PI08.PI08Client GetPI08Async()
+        {
+            BasicHttpBinding binding = new BasicHttpBinding();
+            binding.MaxReceivedMessageSize = int.MaxValue;
+            binding.MaxBufferPoolSize = int.MaxValue;
+            //  http://10.3.11.227:9081/dms/ws/PI07
+            //  http://10.3.21.115:8080/hbfcdms/ws/PI07
+            System.ServiceModel.EndpointAddress remoteAddress = new System.ServiceModel.EndpointAddress(new Uri("http://ip/dms/ws/PI07")); ;
+
+            DMSAsync_PI08.PI08Client service = new DMSAsync_PI08.PI08Client(binding, remoteAddress);
+
+            return service;
+        }
+
+        // 供应商同步(异步)
+        /// <summary>
+        /// 供应商同步(异步)
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static DMSAsync_PI08.supplierDto Do(this DMSAsync_PI08.PI08Client service, DMSAsync_PI08.supplierDto[] param)
+        {
+            service.Endpoint.Address = new System.ServiceModel.EndpointAddress(PubHelper.GetAddress(service.Endpoint.Address.Uri.ToString()));
+
+            string entityName = "供应商同步(异步)";
+            long svID = -1;
+            if (IsLog)
+            {
+                svID = ProxyLogger.CreateTransferSV(entityName
+                    //, EntitySerialization.EntitySerial(bpObj)
+                    , Newtonsoft.Json.JsonConvert.SerializeObject(param)
+                    , service.GetType().FullName, Newtonsoft.Json.JsonConvert.SerializeObject(service.Endpoint.Address));
+            }
+
+            //UFIDA.U9.CBO.Pub.Controller.ContextDTO contextDTO = new UFIDA.U9.CBO.Pub.Controller.ContextDTO();
+            //contextDTO.EntCode = PubClass.GetString(UFIDA.U9.Base.Context.GetAttribute("EnterpriseID"));
+            //contextDTO.OrgCode = Context.LoginOrg.Code;
+            //contextDTO.UserCode = Context.LoginUser;
+
+            U9Context context = GetHBHU9Context();
+
+            try
+            {
+                //var result = service.receive(param);
+
+                //service.receiveCompleted += new EventHandler<DMSAsync_PI07.receiveCompletedEventArgs>(service_receiveCompleted);
+                //service.receiveAsync(param, svID);
+                service.Beginreceive(param
+                    , delegate(IAsyncResult asyncResult)
+                    {
+                        if (asyncResult != null
+                            )
+                        {
+                            //long svID = (long)asyncResult.AsyncState;
+                            svID = (long)asyncResult.AsyncState;
+
+                            if (svID > 0)
+                            {
+                                EntityResult logResult = new EntityResult();
+
+                                DMSAsync_PI08.supplierDto result = null;
+                                try
+                                {
+                                    result = service.Endreceive(asyncResult);
+                                    //contextDTO.WriteToContext();
+                                }
+                                catch (Exception ex)
+                                {
+                                    //ProxyLogger.UpdateTransferSV(svID, string.Empty, false, ex.Message, "异步获取返回值异常!", ex.StackTrace);
+                                    logResult.Sucessfull = false;
+                                    logResult.Message = ex.Message;
+                                    logResult.Trace = ex.StackTrace;
+                                    logResult.StringValue = "异步获取返回值异常!";
+                                    UpdateU9LogProxy(context, logResult, svID);
+                                }
+
+                                if (result != null
+                                    )
+                                {
+                                    //string resultXml = EntitySerialization.EntitySerial(result);
+                                    string resultXml = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+
+                                    bool flag = result.flag == 1;
+                                    string msg = result.errMsg;
+                                    //try
+                                    //{
+                                    //    ProxyLogger.UpdateTransferSV(svID, resultXml, flag, msg, string.Empty, string.Empty);
+                                    //}
+                                    //catch (Exception ex)
+                                    //{
+                                    //    throw ex;
+                                    //}
+
+                                    logResult.Sucessfull = flag;
+                                    logResult.Message = msg;
+                                    logResult.StringValue = resultXml;
+                                    logResult.Trace = string.Empty;
+
+                                    UpdateU9LogProxy(context, logResult, svID);
+                                }
+                                else
+                                {
+                                    //ProxyLogger.UpdateTransferSV(svID, string.Empty, false, Const_ResultNullMessage, string.Empty, string.Empty);
+
+                                    logResult.Sucessfull = false;
+                                    logResult.Message = Const_ResultNullMessage;
+                                    logResult.Trace = string.Empty;
+                                    logResult.StringValue = "异步返回值为空!";
+                                    UpdateU9LogProxy(context, logResult, svID);
+                                }
+                            }
+                            //return result;
+                        }
+                    }
+                    , svID);
+
+            }
+            catch (Exception ex)
+            {
+                if (svID > 0)
+                {
+                    ProxyLogger.UpdateTransferSV(svID, string.Empty, false, ex.Message, string.Empty, ex.StackTrace);
+                }
+
+                throw ex;
+            }
+
+            return null;
+        }
+
+        public static void BatchSend2DMS_Async(IList<Supplier> lstErpData, int actionType)
+        {
+            if (lstErpData != null
+                && lstErpData.Count > 0
+                )
+            {
+                DMSAsync_PI08.PI08Client service = PubExtend.GetPI08Async();
+
+                System.Collections.Generic.List<DMSAsync_PI08.supplierDto> lines = new System.Collections.Generic.List<DMSAsync_PI08.supplierDto>();
+                foreach (Supplier supplier in lstErpData)
+                {
+                    DMSAsync_PI08.supplierDto dto = new DMSAsync_PI08.supplierDto();
+                    dto.suptCode = supplier.Code;
+                    dto.suptName = supplier.Name;
+                    dto.supShortName = supplier.ShortName;
+                    if (supplier.ContactObjectKey != null)
+                    {
+                        if (supplier.ContactObject.PersonName != null)
+                        {
+                            dto.linkMan = supplier.ContactObject.PersonName.DisplayName;
+                        }
+                        dto.phone = supplier.ContactObject.DefaultPhoneNum;
+                        dto.fax = supplier.ContactObject.DefaultFaxNum;
+                        if (supplier.ContactObject.DefaultLocation != null && supplier.ContactObject.DefaultLocation.PostalCode != null)
+                        {
+                            dto.zipCode = supplier.ContactObject.DefaultLocation.PostalCode.PostalCode;
+                        }
+                        if (supplier.ContactObject.DefaultLocation != null)
+                        {
+                            dto.address = supplier.ContactObject.DefaultLocation.Address1;
+                        }
+                    }
+                    dto.actionType = 2;
+                    // status  100201 有效 100202 无效
+                    dto.status = (supplier.Effective != null && supplier.Effective.IsEffective) ? "100201" : "100202";
+
+                    lines.Add(dto);
+                }
+
+                // service.Do(lines);
+
+                try
+                {
+                    PubExtend.Do(service, lines.ToArray());
+                }
+                catch (System.Exception e)
+                {
+                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                }
+            }
+        }
+
+        #endregion
+
         // 整车订单同步接口
         /// <summary>
         /// 整车订单同步接口
@@ -859,6 +1048,185 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
             return null;
         }
+
+
+        #region 经销商主数据接口(异步)
+
+        public static DMSAsync_SI08.SI08Client GetSI08Async()
+        {
+            BasicHttpBinding binding = new BasicHttpBinding();
+            binding.MaxReceivedMessageSize = int.MaxValue;
+            binding.MaxBufferPoolSize = int.MaxValue;
+            //  http://10.3.11.227:9081/dms/ws/PI07
+            //  http://10.3.21.115:8080/hbfcdms/ws/PI07
+            System.ServiceModel.EndpointAddress remoteAddress = new System.ServiceModel.EndpointAddress(new Uri("http://ip/dms/ws/PI07")); ;
+
+            DMSAsync_SI08.SI08Client service = new DMSAsync_SI08.SI08Client(binding, remoteAddress);
+
+            return service;
+        }
+
+        // 经销商主数据接口(异步)
+        /// <summary>
+        /// 经销商主数据接口(异步)
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static DMSAsync_SI08.dealerInfoDto Do(this DMSAsync_SI08.SI08Client service, DMSAsync_SI08.dealerInfoDto[] param)
+        {
+            service.Endpoint.Address = new System.ServiceModel.EndpointAddress(PubHelper.GetAddress(service.Endpoint.Address.Uri.ToString()));
+
+            string entityName = "经销商主数据接口(异步)";
+            long svID = -1;
+            if (IsLog)
+            {
+                svID = ProxyLogger.CreateTransferSV(entityName
+                    //, EntitySerialization.EntitySerial(bpObj)
+                    , Newtonsoft.Json.JsonConvert.SerializeObject(param)
+                    , service.GetType().FullName, Newtonsoft.Json.JsonConvert.SerializeObject(service.Endpoint.Address));
+            }
+
+            //UFIDA.U9.CBO.Pub.Controller.ContextDTO contextDTO = new UFIDA.U9.CBO.Pub.Controller.ContextDTO();
+            //contextDTO.EntCode = PubClass.GetString(UFIDA.U9.Base.Context.GetAttribute("EnterpriseID"));
+            //contextDTO.OrgCode = Context.LoginOrg.Code;
+            //contextDTO.UserCode = Context.LoginUser;
+
+            U9Context context = GetHBHU9Context();
+
+            try
+            {
+                //var result = service.receive(param);
+
+                //service.receiveCompleted += new EventHandler<DMSAsync_PI07.receiveCompletedEventArgs>(service_receiveCompleted);
+                //service.receiveAsync(param, svID);
+                service.Beginreceive(param
+                    , delegate(IAsyncResult asyncResult)
+                    {
+                        if (asyncResult != null
+                            )
+                        {
+                            //long svID = (long)asyncResult.AsyncState;
+                            svID = (long)asyncResult.AsyncState;
+
+                            if (svID > 0)
+                            {
+                                EntityResult logResult = new EntityResult();
+
+                                DMSAsync_SI08.dealerInfoDto result = null;
+                                try
+                                {
+                                    result = service.Endreceive(asyncResult);
+                                    //contextDTO.WriteToContext();
+                                }
+                                catch (Exception ex)
+                                {
+                                    //ProxyLogger.UpdateTransferSV(svID, string.Empty, false, ex.Message, "异步获取返回值异常!", ex.StackTrace);
+                                    logResult.Sucessfull = false;
+                                    logResult.Message = ex.Message;
+                                    logResult.Trace = ex.StackTrace;
+                                    logResult.StringValue = "异步获取返回值异常!";
+                                    UpdateU9LogProxy(context, logResult, svID);
+                                }
+
+                                if (result != null
+                                    )
+                                {
+                                    //string resultXml = EntitySerialization.EntitySerial(result);
+                                    string resultXml = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+
+                                    bool flag = result.flag == 1;
+                                    string msg = result.errMsg;
+                                    //try
+                                    //{
+                                    //    ProxyLogger.UpdateTransferSV(svID, resultXml, flag, msg, string.Empty, string.Empty);
+                                    //}
+                                    //catch (Exception ex)
+                                    //{
+                                    //    throw ex;
+                                    //}
+
+                                    logResult.Sucessfull = flag;
+                                    logResult.Message = msg;
+                                    logResult.StringValue = resultXml;
+                                    logResult.Trace = string.Empty;
+
+                                    UpdateU9LogProxy(context, logResult, svID);
+                                }
+                                else
+                                {
+                                    //ProxyLogger.UpdateTransferSV(svID, string.Empty, false, Const_ResultNullMessage, string.Empty, string.Empty);
+
+                                    logResult.Sucessfull = false;
+                                    logResult.Message = Const_ResultNullMessage;
+                                    logResult.Trace = string.Empty;
+                                    logResult.StringValue = "异步返回值为空!";
+                                    UpdateU9LogProxy(context, logResult, svID);
+                                }
+                            }
+                            //return result;
+                        }
+                    }
+                    , svID);
+
+            }
+            catch (Exception ex)
+            {
+                if (svID > 0)
+                {
+                    ProxyLogger.UpdateTransferSV(svID, string.Empty, false, ex.Message, string.Empty, ex.StackTrace);
+                }
+
+                throw ex;
+            }
+
+            return null;
+        }
+
+        public static void BatchSend2DMS_Async(IList<Customer> lstErpData, int actionType)
+        {
+            if (lstErpData != null
+                && lstErpData.Count > 0
+                )
+            {
+                DMSAsync_SI08.SI08Client service = PubExtend.GetSI08Async();
+
+                System.Collections.Generic.List<DMSAsync_SI08.dealerInfoDto> lines = new System.Collections.Generic.List<DMSAsync_SI08.dealerInfoDto>();
+                foreach (Customer customer in lstErpData)
+                {
+                    DMSAsync_SI08.dealerInfoDto dto = new DMSAsync_SI08.dealerInfoDto();
+
+                    dto.dealerCode = customer.Code;
+                    dto.dealerName = customer.Name;
+                    dto.dealerShortName = customer.ShortName;
+                    dto.companyCode = customer.Code;
+                    dto.companyName = customer.Name;
+                    dto.companyShortName = customer.ShortName;
+                    if (customer.CustomerCategoryKey != null)
+                    {
+                        dto.dealerType = int.Parse(customer.CustomerCategory.Code);
+                    }
+                    dto.actionType = 2;
+                    // status  100201 有效 100202 无效
+                    dto.status = (customer.Effective != null && customer.Effective.IsEffective) ? "100201" : "100202";
+                    
+                    lines.Add(dto);
+                }
+
+                // service.Do(lines);
+
+                try
+                {
+                    PubExtend.Do(service, lines.ToArray());
+                }
+                catch (System.Exception e)
+                {
+                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                }
+            }
+        }
+
+        #endregion
 
         // 车辆整改接口
         /// <summary>

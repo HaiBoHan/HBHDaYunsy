@@ -30,6 +30,7 @@
     using HBH.DoNet.DevPlatform.U9Mapping;
     using UFIDA.U9.Cust.HBDY.API;
     using UFSoft.UBF.Business;
+    using UFIDA.U9.InvDoc.Enums;
 
 	/// <summary>
 	/// CreateShipSV partial 
@@ -136,59 +137,80 @@
                             {
                                 if (shiplinelist != null && shiplinelist.Count > 0)
                                 {
-                                    CreateShipSVProxy proxy = new CreateShipSVProxy();
-                                    proxy.ShipDTOs = (this.GetShipDTOList(shiplinelist));
-                                    shipidlist = proxy.Do();
-                                    if (shipidlist == null || shipidlist.Count <= 0)
-                                    {
-                                        //result.Add(new ShipBackDTO
-                                        //{
-                                        //    IsSuccess = false,
-                                        //    ErrorInfo = "生单失败：没有生成出货单",
-                                        //    Timestamp = System.DateTime.Now
-                                        //});
-                                        //result2 = result;
-                                        //return result2;
+                                    Ship ship = GetDMSShipNum(shiplinelist, shipidlist);
 
-                                        ShipBackDTO backDTO = new ShipBackDTO();
-                                        backDTO.IsSuccess = false;
-                                        backDTO.ErrorInfo = "生单失败：没有生成出货单";
-                                        backDTO.Timestamp = System.DateTime.Now;
-                                        HBHCommon.LoggerError(backDTO.ErrorInfo );
-                                        result.Add(backDTO);
-                                        return result;
+                                    // 如果没有传入过，那么创建；
+                                    if (ship == null)
+                                    {
+                                        CreateShipSVProxy proxy = new CreateShipSVProxy();
+                                        proxy.ShipDTOs = (this.GetShipDTOList(shiplinelist));
+                                        System.Collections.Generic.List<DocKeyDTOData> shipidlistCreated = proxy.Do();
+                                        if (shipidlistCreated == null || shipidlistCreated.Count <= 0)
+                                        {
+                                            //result.Add(new ShipBackDTO
+                                            //{
+                                            //    IsSuccess = false,
+                                            //    ErrorInfo = "生单失败：没有生成出货单",
+                                            //    Timestamp = System.DateTime.Now
+                                            //});
+                                            //result2 = result;
+                                            //return result2;
+
+                                            ShipBackDTO backDTO = new ShipBackDTO();
+                                            backDTO.IsSuccess = false;
+                                            backDTO.ErrorInfo = "生单失败：没有生成出货单";
+                                            backDTO.Timestamp = System.DateTime.Now;
+                                            HBHCommon.LoggerError(backDTO.ErrorInfo);
+                                            result.Add(backDTO);
+                                            return result;
+                                        }
+
+                                        HBHCommon.ApproveShipments(shipidlistCreated);
+
+                                        if (shipidlistCreated != null)
+                                        {
+                                            shipidlist.AddRange(shipidlistCreated);
+                                        }
                                     }
-                                    AuditShipSVProxy approveproxy = new AuditShipSVProxy();
-                                    approveproxy.ShipKeys = (shipidlist);
-                                    approveproxy.Do();
                                 }
                                 if (MiscShipmentLinelist != null && MiscShipmentLinelist.Count > 0)
                                 {
-                                    CommonCreateMiscShipProxy proxy2 = new CommonCreateMiscShipProxy();
-                                    proxy2.MiscShipmentDTOList = (this.GetMiscShipmentDTOList(MiscShipmentLinelist));
-                                    miscshiplist = proxy2.Do();
-                                    if (miscshiplist == null || miscshiplist.Count <= 0)
-                                    {
-                                        //result.Add(new ShipBackDTO
-                                        //{
-                                        //    IsSuccess = false,
-                                        //    ErrorInfo = "生单失败：没有生成杂发单",
-                                        //    Timestamp = System.DateTime.Now
-                                        //});
-                                        //result2 = result;
-                                        //return result2;
+                                    MiscShipment miscShip = GetDMSShipNum(MiscShipmentLinelist, miscshiplist);
 
-                                        ShipBackDTO backDTO = new ShipBackDTO();
-                                        backDTO.IsSuccess = false;
-                                        backDTO.ErrorInfo = "生单失败：没有生成杂发单";
-                                        backDTO.Timestamp = System.DateTime.Now;
-                                        HBHCommon.LoggerError(backDTO.ErrorInfo);
-                                        result.Add(backDTO);
-                                        return result;
+                                    // 如果没有传入过，那么创建；
+                                    if (miscShip == null)
+                                    {
+                                        CommonCreateMiscShipProxy proxy2 = new CommonCreateMiscShipProxy();
+                                        proxy2.MiscShipmentDTOList = (this.GetMiscShipmentDTOList(MiscShipmentLinelist));
+                                        System.Collections.Generic.List<CommonArchiveDataDTOData> miscshiplistCreated = proxy2.Do();
+                                        if (miscshiplistCreated == null || miscshiplistCreated.Count <= 0)
+                                        {
+                                            //result.Add(new ShipBackDTO
+                                            //{
+                                            //    IsSuccess = false,
+                                            //    ErrorInfo = "生单失败：没有生成杂发单",
+                                            //    Timestamp = System.DateTime.Now
+                                            //});
+                                            //result2 = result;
+                                            //return result2;
+
+                                            ShipBackDTO backDTO = new ShipBackDTO();
+                                            backDTO.IsSuccess = false;
+                                            backDTO.ErrorInfo = "生单失败：没有生成杂发单";
+                                            backDTO.Timestamp = System.DateTime.Now;
+                                            HBHCommon.LoggerError(backDTO.ErrorInfo);
+                                            result.Add(backDTO);
+                                            return result;
+                                        }
+                                        CommonApproveMiscShipSVProxy approveproxy2 = new CommonApproveMiscShipSVProxy();
+                                        approveproxy2.MiscShipmentKeyList = (miscshiplistCreated);
+                                        approveproxy2.Do();
+
+                                        if (miscshiplistCreated != null)
+                                        {
+                                            miscshiplist.AddRange(miscshiplistCreated);
+                                        }
                                     }
-                                    CommonApproveMiscShipSVProxy approveproxy2 = new CommonApproveMiscShipSVProxy();
-                                    approveproxy2.MiscShipmentKeyList = (miscshiplist);
-                                    approveproxy2.Do();
                                 }
                                 //trans.Commit();
                             }
@@ -272,6 +294,107 @@
             }
             //return result2;
             return result;
+        }
+
+        private MiscShipment GetDMSShipNum(List<ShipLineDTO> miscShipmentLinelist, List<CommonArchiveDataDTOData> miscshiplist)
+        {
+            if (miscshiplist == null)
+            {
+                miscshiplist = new List<CommonArchiveDataDTOData>();
+            }
+
+            string strDmsShipNum = string.Empty;
+
+            foreach (ShipLineDTO dto in miscShipmentLinelist)
+            {
+                if (dto != null
+                    && !dto.DMSShipNo.IsNull()
+                    )
+                {
+                    strDmsShipNum = dto.DMSShipNo;
+                }
+            }
+
+            if (!strDmsShipNum.IsNull())
+            {
+                MiscShipment ship = MiscShipment.Finder.Find("DescFlexField.PrivateDescSeg1 = @DmsShipNum"
+                    , new OqlParam(strDmsShipNum)
+                    );
+
+                if (ship != null)
+                {
+                    CommonArchiveDataDTOData shipKey = new CommonArchiveDataDTOData();
+
+                    shipKey.ID = ship.ID;
+                    shipKey.Code = ship.DocNo;
+                    shipKey.Name = ship.DocNo;
+
+                    miscshiplist.Add(shipKey);
+
+                    // 没有审核的，审核掉
+                    if (ship.Status != INVDocStatus.Approved)
+                    {
+                        CommonApproveMiscShipSVProxy approveproxy2 = new CommonApproveMiscShipSVProxy();
+                        approveproxy2.MiscShipmentKeyList = (miscshiplist);
+                        approveproxy2.Do();
+                    }
+                }
+
+                return ship;
+            }
+
+            return null;
+        }
+
+        private Ship GetDMSShipNum(List<ShipLineDTO> shiplinelist, System.Collections.Generic.List<DocKeyDTOData> lstShipKeyDTO)
+        {
+            if (lstShipKeyDTO == null)
+            {
+                lstShipKeyDTO = new List<DocKeyDTOData>();
+            }
+
+            string strDmsShipNum = string.Empty;
+
+            foreach (ShipLineDTO dto in shiplinelist)
+            {
+                if (dto != null
+                    && !dto.DMSShipNo.IsNull()
+                    )
+                {
+                    strDmsShipNum = dto.DMSShipNo;
+                }
+            }
+
+            if (!strDmsShipNum.IsNull())
+            {
+                Ship ship = Ship.Finder.Find("DescFlexField.PrivateDescSeg1 = @DmsShipNum"
+                    , new OqlParam(strDmsShipNum)
+                    );
+
+                if (ship != null)
+                {
+                    DocKeyDTOData shipKey = new DocKeyDTOData();
+
+                    shipKey.DocID = ship.ID;
+                    shipKey.DocNO = ship.DocNo;
+
+                    lstShipKeyDTO.Add(shipKey);
+
+
+                    if (ship.Status != ShipStateEnum.Approved)
+                    {
+                        //AuditShipSVProxy approveproxy = new AuditShipSVProxy();
+                        //approveproxy.ShipKeys = (lstShipKeyDTO);
+                        //approveproxy.Do();
+
+                        HBHCommon.ApproveShipments(lstShipKeyDTO);
+                    }
+                }
+
+                return ship;
+            }
+
+            return null;
         }
 
         // 传入参数非空校验
@@ -395,7 +518,8 @@
                     {
                         if (firstDTO.OrderType == "0")
                         {
-                            doctypecode = "CK-XJ";
+                            //doctypecode = "CK-XJ";
+                            doctypecode = HBHCommon.Const_ShipDocType_XJ;
                         }
                         else if (firstDTO.OrderType == "1")
                         {
@@ -403,7 +527,8 @@
                         }
                         else if (firstDTO.OrderType == "2")
                         {
-                            doctypecode = "CK-SB";
+                            //doctypecode = "CK-SB";
+                            doctypecode = HBHCommon.Const_ShipDocType_SB;
                         }
                     }
                     // 湖北大运
@@ -446,6 +571,9 @@
                             InvoiceAccording = doctype.InvoiceAccordingKey.ID;
                         }
                     }
+
+                    shipdto.Seller = (new CommonArchiveDataDTOData());
+                    shipdto.SaleDept = (new CommonArchiveDataDTOData());
                     Customer customer = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), firstDTO.DealerCode), new OqlParam[0]);
                     if (customer != null)
                     {
@@ -465,18 +593,47 @@
                         }
                         else
                         {
-                            shipdto.ShipmentRule.Code = ("C001");
+                            shipdto.ShipmentRule.Code = (HBHCommon.DefaultShipRuleCode);
                         }
                         if (customer.RecervalTerm != null)
                         {
                             string RecTerm = customer.RecervalTerm.Code;
                         }
+
+                        if (customer.SaleserKey != null)
+                        {
+                            shipdto.Seller.ID = customer.SaleserKey.ID;
+                            //Operators opeator = Operators.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), HBHCommon.DefaultShipOperatorCode), new OqlParam[0]);
+                            //if (opeator != null)
+                            //{
+                            //    shipdto.SaleDept.ID = (opeator.DeptKey.ID);
+                            //}
+                        }
+                        if (customer.DepartmentKey != null)
+                        {
+                            shipdto.SaleDept.ID = customer.DepartmentKey.ID;
+                        }
                     }
                     else
                     {
-                        shipdto.ShipmentRule.Code = ("C001");
+                        shipdto.ShipmentRule.Code = (HBHCommon.DefaultShipRuleCode);
                         shipdto.BargainMode = (0);
+
                     }
+
+                    if (shipdto.Seller.ID != null
+                        && shipdto.Seller.ID <= 0
+                        && shipdto.Seller.Code.IsNull()
+                        )
+                    {
+                        shipdto.Seller.Code = (HBHCommon.DefaultShipOperatorCode);
+                        Operators opeator = Operators.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), HBHCommon.DefaultShipOperatorCode), new OqlParam[0]);
+                        if (opeator != null)
+                        {
+                            shipdto.SaleDept.ID = (opeator.DeptKey.ID);
+                        }
+                    }
+
                     shipdto.SrcDocType = (0);
                     shipdto.ReceivableTerm = (new CommonArchiveDataDTOData());
                     if (ReceivableTerm > 0L)
@@ -485,7 +642,7 @@
                     }
                     else
                     {
-                        shipdto.ReceivableTerm.Code = ("01");
+                        shipdto.ReceivableTerm.Code = HBHCommon.DefaultRecTermCode;
                     }
                     shipdto.ConfirmTerm = (new CommonArchiveDataDTOData());
                     if (ConfirmTerm > 0L)
@@ -494,29 +651,21 @@
                     }
                     else
                     {
-                        shipdto.ConfirmTerm.Code = ("01");
+                        shipdto.ConfirmTerm.Code = HBHCommon.DefaultConfirmTermCode;
                     }
                     shipdto.ConfirmAccording = (new CommonArchiveDataDTOData());
                     shipdto.ConfirmAccording.ID = (ConfirmAccording);
                     shipdto.ConfirmMode = ((ConfirmMode < 0) ? 0 : ConfirmMode);
                     shipdto.InvoiceAccording = (new CommonArchiveDataDTOData());
                     shipdto.InvoiceAccording.ID = (InvoiceAccording);
-                    shipdto.Seller = (new CommonArchiveDataDTOData());
-                    shipdto.Seller.Code = (HBHCommon.DefaultShipOperatorCode);
-                    Operators opeator = Operators.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), HBHCommon.DefaultShipOperatorCode), new OqlParam[0]);
-                    if (opeator != null)
-                    {
-                        shipdto.SaleDept = (new CommonArchiveDataDTOData());
-                        shipdto.SaleDept.ID = (opeator.DeptKey.ID);
-                    }
                     shipdto.CreatedBy = (Context.LoginUser);
                     shipdto.CreatedOn = (System.DateTime.Now);
                     shipdto.OrderBy = (new CommonArchiveDataDTOData());
                     shipdto.OrderBy.Code = (firstDTO.DealerCode);
                     shipdto.AC = (new CommonArchiveDataDTOData());
-                    shipdto.AC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? "C001" : firstDTO.Currency);
+                    shipdto.AC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? HBHCommon.DefaultCurrencyCode : firstDTO.Currency);
                     shipdto.TC = (new CommonArchiveDataDTOData());
-                    shipdto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? "C001" : firstDTO.Currency);
+                    shipdto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? HBHCommon.DefaultCurrencyCode : firstDTO.Currency);
                     shipdto.DescFlexField = (new DescFlexSegmentsData());
                     shipdto.DescFlexField.PubDescSeg5 = (firstDTO.DmsSaleNo);
                     shipdto.DescFlexField.PrivateDescSeg1 = (firstDTO.DMSShipNo);
@@ -552,7 +701,7 @@
                         }
                         else
                         {
-                            shiplinedto.ConfirmTerm.Code = ("01");
+                            shiplinedto.ConfirmTerm.Code = HBHCommon.DefaultConfirmTermCode;
                         }
                         shiplinedto.InvoiceAccording = (new CommonArchiveDataDTOData());
                         shiplinedto.InvoiceAccording.ID = (InvoiceAccording);
@@ -563,11 +712,13 @@
                         }
                         else
                         {
-                            shiplinedto.ReceivableTerm.Code = ("01");
+                            shiplinedto.ReceivableTerm.Code = HBHCommon.DefaultRecTermCode;
                         }
                         shiplinedto.WH = (new CommonArchiveDataDTOData());
-                        shiplinedto.WH.Code = ("SHBJ");
-                        Warehouse whout = Warehouse.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), "SHBJ"), new OqlParam[0]);
+                        //shiplinedto.WH.Code = ("SHBJ");
+                        shiplinedto.WH.Code = linedto.WHOut;
+                        //Warehouse whout = Warehouse.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), "SHBJ"), new OqlParam[0]);
+                        Warehouse whout = Warehouse.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), linedto.WHOut), new OqlParam[0]);
                         if (whout != null && whout.DepositType == DepositTypeEnum.VMI)
                         {
                             shiplinedto.VMI = (true);
@@ -604,11 +755,21 @@
         {
             System.Collections.Generic.Dictionary<string, decimal> HaveWhqohqty = new System.Collections.Generic.Dictionary<string, decimal>();
             System.Text.StringBuilder errors = new System.Text.StringBuilder();
-            Warehouse whout = Warehouse.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), "SHBJ"), new OqlParam[0]);
+
+            Warehouse whout = null;
+            string whCode = string.Empty;
+            if (bpObj != null
+                && bpObj.ShipLineDTOs.Count > 0
+                && bpObj.ShipLineDTOs[0] != null
+                )
+            {
+                whCode = bpObj.ShipLineDTOs[0].WHOut;
+                whout = Warehouse.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), whCode), new OqlParam[0]);
+            }
             string result;
             if (whout == null)
             {
-                errors.Append("售后配件库U9系统中不存在，请同步");
+                errors.Append(string.Format("U9系统中不存在编码为[{0}]的仓库，请同步", whCode));
                 result = errors.ToString();
             }
             else
@@ -683,18 +844,18 @@
                     }
                     foreach (ShipLineDTO dto in bpObj.ShipLineDTOs)
                     {
-                        if (!HaveWhqohqty.ContainsKey(dto.ErpMaterialCode + "SHBJ" + dto.Lot + dto.MaterialCode) || !(HaveWhqohqty[dto.ErpMaterialCode + "SHBJ" + dto.Lot + dto.MaterialCode] >= dto.Number))
+                        if (!HaveWhqohqty.ContainsKey(dto.ErpMaterialCode + dto.WHOut + dto.Lot + dto.MaterialCode) || !(HaveWhqohqty[dto.ErpMaterialCode + dto.WHOut + dto.Lot + dto.MaterialCode] >= dto.Number))
                         {
                             errors.Append("料品【" + dto.ErpMaterialCode + "】");
                             errors.Append("在存储地点【售后配件仓】");
-                            if (HaveWhqohqty.ContainsKey(dto.ErpMaterialCode + "SHBJ" + dto.Lot + dto.MaterialCode) && HaveWhqohqty[dto.ErpMaterialCode + "SHBJ" + dto.Lot + dto.MaterialCode] < dto.Number)
+                            if (HaveWhqohqty.ContainsKey(dto.ErpMaterialCode + dto.WHOut + dto.Lot + dto.MaterialCode) && HaveWhqohqty[dto.ErpMaterialCode + dto.WHOut + dto.Lot + dto.MaterialCode] < dto.Number)
                             {
                                 errors.Append(string.Concat(new string[]
 								{
 									"的出库数量【",
 									dto.Number.ToString("G0"),
 									"】不可大于库存可用量【",
-									HaveWhqohqty[dto.ErpMaterialCode + "SHBJ" + dto.Lot + dto.MaterialCode].ToString(),
+									HaveWhqohqty[dto.ErpMaterialCode + dto.WHOut + dto.Lot + dto.MaterialCode].ToString(),
 									"】"
 								}));
                             }
@@ -738,7 +899,8 @@
 
                     IC_MiscShipmentDTOData misshipdto = new IC_MiscShipmentDTOData();
                     misshipdto.MiscShipDocType = (new CommonArchiveDataDTOData());
-                    misshipdto.MiscShipDocType.Code = ("ZF03");
+                    //misshipdto.MiscShipDocType.Code = ("ZF03");
+                    misshipdto.MiscShipDocType.Code = HBHCommon.DefaultMiscDocTypeCode;
                     misshipdto.DescFlexField = (new DescFlexSegmentsData());
                     misshipdto.DescFlexField.PubDescSeg5 = (firstDTO.DmsSaleNo);
                     misshipdto.DescFlexField.PrivateDescSeg3 = (firstDTO.DMSShipNo);
@@ -751,10 +913,11 @@
                         misshiplinedto.ItemInfo.ItemCode = (linedto.ErpMaterialCode);
                         misshiplinedto.StoreUOMQty = (linedto.Number);
                         misshiplinedto.BenefitDept = (new CommonArchiveDataDTOData());
-                        misshiplinedto.BenefitDept.Code = ("101404");
+                        //misshiplinedto.BenefitDept.Code = ("101404");
+                        misshiplinedto.BenefitDept.Code = HBHCommon.DefaultBenefitDeptCode;
                         misshiplinedto.Wh = (new CommonArchiveDataDTOData());
-                        misshiplinedto.Wh.Code = ("SHBJ");
-                        Warehouse whout = Warehouse.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), "SHBJ"), new OqlParam[0]);
+                        misshiplinedto.Wh.Code = (linedto.WHOut);
+                        Warehouse whout = Warehouse.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), linedto.WHOut), new OqlParam[0]);
                         if (whout != null && whout.DepositType == DepositTypeEnum.VMI)
                         {
                             misshiplinedto.IsVMI = (true);
