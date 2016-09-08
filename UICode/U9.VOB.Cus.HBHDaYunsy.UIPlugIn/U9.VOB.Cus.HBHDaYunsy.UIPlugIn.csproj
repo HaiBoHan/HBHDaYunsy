@@ -53,11 +53,18 @@
     <Reference Include="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP.Deploy">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP.Deploy.dll</HintPath>
     </Reference>
+    <Reference Include="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV.Agent">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV.Deploy.dll</HintPath>
+    </Reference>
     <Reference Include="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsy_UIProject.WebPart">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\U9.VOB.Cus.HBHDaYunsy.HBHDaYunsy_UIProject.WebPart.dll</HintPath>
     </Reference>
-    <Reference Include="U9.VOB.HBHCommon.HBHCommonUI.WebPart">
-      <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\HBHCommon\U9.VOB.HBHCommon.HBHCommonUI.WebPart.dll</HintPath>
+    <Reference Include="U9.VOB.HBHCommon.HBHCommonUI.WebPart, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\HBHCommon\U9.VOB.HBHCommon.HBHCommonUI.WebPart.dll</HintPath>
     </Reference>
     <Reference Include="U9.VOB.HBHCommon.U9CommonSV.Agent">
       <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\HBHCommon\U9.VOB.HBHCommon.U9CommonSV.Agent.dll</HintPath>
@@ -68,6 +75,9 @@
     <Reference Include="UBF.System, Version=21.5100.337.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UBF.System.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.Pub.SupplierItemUI.WebPart">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\UFIDA.U9.CBO.Pub.SupplierItemUI.WebPart.dll</HintPath>
     </Reference>
     <Reference Include="UFIDA.U9.Cust.HBH.Common.CommonHelper">
       <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.Component\Unconfiged\Component\UFIDA.U9.Cust.HBH.Common.CommonHelper.dll</HintPath>
@@ -238,6 +248,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDefAllocRateUIPlugin.cs" />
+    <Compile Include="SupplierItem_UIPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="U9.VOB.Cus.HBHDaYunsy.UIPlugIn.config">
