@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Component id="18b16e4c-81c0-47b3-a962-8759d6beaecb" name="DipatchOutWhAPISV" displayName="DipatchOutWhAPISV" description="" help="" type="SV" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV">
-  <Namespace id="1428ea59-1fdf-428e-bca2-e2e5f58de397" name="UFIDA.U9.Cust.HBDY.API" displayName="UFIDA.U9.Cust.HBDY.API" description="" help="">
+  <Namespace id="1428ea59-1fdf-428e-bca2-e2e5f58de397" name="UFIDA.U9.Cust.HBDY.API.DipatchOutWhAPISV" displayName="UFIDA.U9.Cust.HBDY.API.DipatchOutWhAPISV" description="" help="">
     <PropertyType id="cce59fa4-57d5-4cde-aaf5-04479a77dc8a" name="CarShipLineDTO" displayName="出货单行DTO" description="出货单行DTO" help="" mD_ParentClass_ID="" isFactEntity="False" isQuery="False" isPersistence="False">
       <Groups>
         <Group id="e568e532-3979-4ab9-9872-35a1741ce6f6" name="Misc" displayName="Misc" description="" help="" />

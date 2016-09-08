@@ -16,7 +16,9 @@
                 <BPComponents>
                     <BPComponent assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP.dll" assemblyID="996b4b7d-41e8-44c9-b113-d91d4f316355" />
                 </BPComponents>
-                <ServiceComponents />
+                <ServiceComponents>
+                    <ServiceComponent assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV.dll" assemblyID="c1f10b75-cdd9-4218-9c52-8aba8075a1e9" />
+                </ServiceComponents>
                 <UIComponents>
                     <UIComponent assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsy_UIProject.WebPart.dll" assemblyID="9df243d4-2f6d-4c5e-bb0d-135064da1be1" />
                 </UIComponents>
@@ -174,7 +176,7 @@
             <WorkflowComponents />
             <ReportComponents />
             <PrePlacedMenu />
-            <App id="3041" code="0301" shortName="HM" name="人事管理" uri="">
+            <App id="3041" code="0301" shortName="HM" name="人员管理" uri="">
                 <Pages />
                 <BEComponents />
                 <BPComponents />
@@ -545,7 +547,7 @@
                 <PrePlacedMenu />
             </App>
         </App>
-        <App id="99010" code="99010" shortName="JLYTC" name="贸易中心" uri="">
+        <App id="99010" code="99010" shortName="JLYTC" name="运营中心" uri="">
             <Pages />
             <BEComponents />
             <BPComponents />
@@ -554,7 +556,27 @@
             <WorkflowComponents />
             <ReportComponents />
             <PrePlacedMenu />
-            <App id="9901001" code="9901001" shortName="JLYTC01" name="贸易中心" uri="">
+            <App id="9901001" code="9901001" shortName="JLYTC01" name="运营中心" uri="">
+                <Pages />
+                <BEComponents />
+                <BPComponents />
+                <ServiceComponents />
+                <UIComponents />
+                <WorkflowComponents />
+                <ReportComponents />
+                <PrePlacedMenu />
+            </App>
+        </App>
+        <App id="99020" code="99020" shortName="EDaiInterface" name="接口平台" uri="">
+            <Pages />
+            <BEComponents />
+            <BPComponents />
+            <ServiceComponents />
+            <UIComponents />
+            <WorkflowComponents />
+            <ReportComponents />
+            <PrePlacedMenu />
+            <App id="9902001" code="9902001" shortName="EDaiInterface01" name="接口平台" uri="">
                 <Pages />
                 <BEComponents />
                 <BPComponents />

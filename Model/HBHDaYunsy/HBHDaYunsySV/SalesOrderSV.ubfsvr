@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Component id="cfc0f8c8-3826-426d-bb1d-d32b4d58436d" name="SalesOrderSV" displayName="SalesOrderSV" description="" help="" type="SV" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV">
-  <Namespace id="ce16aad3-3f0e-4a08-936f-0be979faa9bd" name="UFIDA.U9.Cust.HBDY.API" displayName="UFIDA.U9.Cust.HBDY.API" description="" help="">
+  <Namespace id="ce16aad3-3f0e-4a08-936f-0be979faa9bd" name="UFIDA.U9.Cust.HBDY.API.SalesOrderSV" displayName="UFIDA.U9.Cust.HBDY.API.SalesOrderSV" description="" help="">
     <PropertyType id="987cfc74-f279-45c7-87f2-d1f57c837563" name="SoLineDTO" displayName="订单行集合" description="订单行集合" help="" mD_ParentClass_ID="" isFactEntity="False" isQuery="False" isPersistence="False">
       <Groups>
         <Group id="49a7ee41-63bc-4e78-884c-d47d8f2f8c3f" name="Misc" displayName="Misc" description="" help="" />

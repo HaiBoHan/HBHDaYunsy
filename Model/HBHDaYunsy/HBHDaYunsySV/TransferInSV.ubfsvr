@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Component id="04b7eba6-1b26-408e-913c-afe9ddb7255f" name="TransferInSV" displayName="TransferInSV" description="" help="" type="SV" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV">
-  <Namespace id="ac284221-6494-4ab6-ba22-19ac75091cab" name="UFIDA.U9.Cust.HBDY.API" displayName="UFIDA.U9.Cust.HBDY.API" description="" help="">
+  <Namespace id="ac284221-6494-4ab6-ba22-19ac75091cab" name="UFIDA.U9.Cust.HBDY.API.TransferInSV" displayName="UFIDA.U9.Cust.HBDY.API.TransferInSV" description="" help="">
     <PropertyType id="1cb7947b-66f1-4637-8e4e-4f6b8ccd222d" name="TransInLineDTO" displayName="调入单DTO" description="调入单DTO" help="" mD_ParentClass_ID="" isFactEntity="False" isQuery="False" isPersistence="False">
       <Groups>
         <Group id="f3bdcb0f-bbd4-4494-9623-d26cfb79b12e" name="Misc" displayName="Misc" description="" help="" />

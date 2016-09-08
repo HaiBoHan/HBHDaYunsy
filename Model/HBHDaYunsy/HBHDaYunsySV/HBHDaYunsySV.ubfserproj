@@ -7,5 +7,7 @@
     <Item id="7dcb4d8c-6172-4c51-b6ef-7e7625958c3f" name="ShipSV.ubfsvr" displayName="ShipSV.ubfsvr" description="" help="" include="ShipSV.ubfsvr" type="BE" />
     <Item id="34556978-59d5-4c8f-81cc-6821268b50e9" name="TransferInSV.ubfsvr" displayName="TransferInSV.ubfsvr" description="" help="" include="TransferInSV.ubfsvr" type="BE" />
     <Item id="f9f1026c-dffb-4cb7-beac-6ce9aaa299c9" name="DipatchOutWhAPISV.ubfsvr" displayName="DipatchOutWhAPISV.ubfsvr" description="" help="" include="DipatchOutWhAPISV.ubfsvr" type="BE" />
+    <Item id="2ef2d454-eb5f-4f91-9fbe-58f7258f311d" name="PriceList2DMSSV.ubfsvr" displayName="PriceList2DMSSV.ubfsvr" description="" help="" include="PriceList2DMSSV.ubfsvr" type="BE" />
+    <Item id="a31cbe91-d188-41e1-83bc-a101600f4dd4" name="StoreQty2DMSSV.ubfsvr" displayName="StoreQty2DMSSV.ubfsvr" description="" help="" include="StoreQty2DMSSV.ubfsvr" type="BE" />
   </ItemGroup>
 </Project>

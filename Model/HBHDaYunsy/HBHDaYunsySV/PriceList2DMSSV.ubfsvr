@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Component id="af82735b-06d5-4eeb-9da5-b94b801acb0b" name="PriceList2DMSSV" displayName="PriceList2DMSSV" description="" help="" type="SV" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV">
+  <Namespace id="1f741232-b10a-47cf-a09d-4fd3686d826d" name="U9.VOB.Cus.HBHDaYunsy" displayName="U9.VOB.Cus.HBHDaYunsy" description="" help="">
+    <Operation id="5f0820ce-4952-47c4-92a1-c0eacef4edfc" name="PriceList2DMSSV" displayName="价表传DMS服务" description="价表传DMS服务" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="378d45b4-375d-4b5d-8748-abc9575c26b3" isService="True" isDefault="False" isEntityKey="False" transactionType="0" isAuthorization="True" isISV="False">
+      <Implements>
+        <Operation id="f759c62e-0211-46ad-8f53-27eaead5b189" name="Impement" displayName="实现" description="" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="378d45b4-375d-4b5d-8748-abc9575c26b3" isService="False" isDefault="True" isEntityKey="False" transactionType="2" isAuthorization="True" isISV="False" />
+      </Implements>
+    </Operation>
+    <Diagram id="5221634f-e667-4245-b920-34ea59107a71" name="PriceList2DMSSV" displayName="PriceList2DMSSV">
+      <Class Editable="True" ID="7b6b0059-c515-4969-9f35-13a1f4654215" Type="Service" ADID="5f0820ce-4952-47c4-92a1-c0eacef4edfc">
+        <Location X="127" Y="101" />
+        <Size width="120" height="58" />
+      </Class>
+    </Diagram>
+  </Namespace>
+</Component>

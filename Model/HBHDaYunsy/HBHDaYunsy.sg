@@ -3,6 +3,7 @@
   <ServiceGroupInfo id="427b2538-4dfc-4130-bfc4-8a967ce84166" name="HBHDaYunsy" displayName="HBHDaYunsy" description="" help="" fullPath="D:\U9Cust\UFIDA\U9Proj\U9AppCode\U9.VOB.Apps.Cus\CusApp\HBHDaYunSY\Model\HBHDaYunsy\HBHDaYunsy.sg" applicationID="" />
   <AssemblyGroup>
     <Assembly ID="9df243d4-2f6d-4c5e-bb0d-135064da1be1" name="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsy_UIProject" type="UI" path="" />
-    <Assembly ID="996b4b7d-41e8-44c9-b113-d91d4f316355" name="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsyBP" type="BP" path="" />
+    <Assembly ID="996b4b7d-41e8-44c9-b113-d91d4f316355" name="HBHDaYunsyBP" type="BP" path="" />
+    <Assembly ID="c1f10b75-cdd9-4218-9c52-8aba8075a1e9" name="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV" type="SV" path="" />
   </AssemblyGroup>
 </ServiceGroup>

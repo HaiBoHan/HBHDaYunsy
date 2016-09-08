@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Component id="fd44e1b2-5fbf-4e02-99cd-0b3c3e3d9ad3" name="StoreQty2DMSSV" displayName="StoreQty2DMSSV" description="" help="" type="SV" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV">
+  <Namespace id="97d147ed-4dcc-49ff-9ec7-3c04e07f54ae" name="U9.VOB.Cus.HBHDaYunsy" displayName="U9.VOB.Cus.HBHDaYunsy" description="" help="">
+    <Operation id="22bab878-1e81-433c-a730-538ec0600256" name="StoreQty2DMSSV" displayName="库存量传DMS服务" description="库存量传DMS服务" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="378d45b4-375d-4b5d-8748-abc9575c26b3" isService="True" isDefault="False" isEntityKey="False" transactionType="0" isAuthorization="True" isISV="False">
+      <Groups>
+        <Group id="567375ab-9398-4f8f-b0a8-9e047fab9670" name="Misc" displayName="Misc" description="" help="" />
+      </Groups>
+      <Attributes>
+        <Attribute id="0aeb36a2-aa80-40e1-aa15-56a952b53459" name="SupItems" displayName="供应商料品ID集合" description="" help="库存量传DMS服务.Misc.供应商料品ID集合" isCollection="True" dataTypeID="ba391065-6c27-4c82-acc8-b52b1c93a910" isKey="False" defaultValue="" length="50" precise="5" scale="0" isNullable="True" isReadOnly="False" isHide="False" isCalculation="False" valueExpression="" maxValue="" minValue="" sequence="0" isDefaultDimensionAttribute="False" isDefaultMeasureAttribute="False" isGlobalization="False" idGenerator="" groupName="Misc" isEntityKey="False" isEntityData="True" isSystem="False" isBusinessKey="False" isSyncDictionary="False" dictionaryKey="" isExtendCode="False" isQuery="True" isForAsso="True" isModifyControl="False" isDynamic="False" isImpressible="False" isInCache="False" isKeySerializable="False" isColumnDefine="True" isFilterDefine="True" isSortDefine="True" isDefaultColumn="True" forOBAImport="False" />
+        <Attribute id="9dbe8972-3390-43ce-9587-39744222ce69" name="TransferType" displayName="类型" description="" help="库存量传DMS服务.Misc.类型" dataTypeID="d7c6031e-d3fe-41aa-a397-5edd86c10cae" isKey="False" defaultValue="0" length="4" precise="10" scale="0" isNullable="True" isReadOnly="False" isHide="False" isCalculation="False" valueExpression="" maxValue="" minValue="" sequence="1" isDefaultDimensionAttribute="False" isDefaultMeasureAttribute="False" isGlobalization="False" idGenerator="" groupName="Misc" isEntityKey="False" isEntityData="True" isSystem="False" isBusinessKey="False" isSyncDictionary="False" dictionaryKey="" isExtendCode="False" isQuery="True" isForAsso="True" isModifyControl="False" isDynamic="False" isImpressible="False" isInCache="False" isKeySerializable="False" isColumnDefine="True" isFilterDefine="True" isSortDefine="True" isDefaultColumn="True" forOBAImport="False" />
+      </Attributes>
+      <Implements>
+        <Operation id="8c67b35c-46c3-456f-b57d-00cee9defc28" name="Impement" displayName="实现" description="" help="" mD_ParentClass_ID="" isFactEntity="False" returnTypeID="378d45b4-375d-4b5d-8748-abc9575c26b3" isService="False" isDefault="True" isEntityKey="False" transactionType="2" isAuthorization="True" isISV="False" />
+      </Implements>
+    </Operation>
+    <Diagram id="b27b868d-5997-453c-91e2-b6416057208f" name="StoreQty2DMSSV" displayName="StoreQty2DMSSV">
+      <Class Editable="True" ID="e504dc9c-58f8-495f-bd1e-4b3dd46f4c32" Type="Service" ADID="22bab878-1e81-433c-a730-538ec0600256">
+        <Location X="248" Y="138" />
+        <Size width="120" height="58" />
+      </Class>
+    </Diagram>
+  </Namespace>
+</Component>

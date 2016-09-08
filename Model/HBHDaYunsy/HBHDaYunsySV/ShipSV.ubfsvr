@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Component id="2419a649-ef4e-4c8e-a065-0dbe148fe39a" name="ShipSV" displayName="ShipSV" description="" help="" type="SV" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV">
-  <Namespace id="402c607c-554b-4fca-9e04-9e205189ef7d" name="UFIDA.U9.Cust.HBDY.API" displayName="UFIDA.U9.Cust.HBDY.API" description="" help="">
+  <Namespace id="402c607c-554b-4fca-9e04-9e205189ef7d" name="UFIDA.U9.Cust.HBDY.API.ShipSV" displayName="UFIDA.U9.Cust.HBDY.API.ShipSV" description="" help="">
     <PropertyType id="fdc69894-acb7-4fae-9e7b-dcdcc0154ccf" name="ShipLineDTO" displayName="出货行DTO" description="出货行DTO" help="" mD_ParentClass_ID="" isFactEntity="False" isQuery="False" isPersistence="False">
       <Groups>
         <Group id="71ad6de5-bf11-4d1e-bfee-cb15a1d89012" name="Misc" displayName="Misc" description="" help="" />

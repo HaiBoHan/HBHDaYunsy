@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Component id="0d92308c-2c33-4c84-8a4f-d672a9d0f1ba" name="RMASV" displayName="RMASV" description="" help="" type="SV" assemblyName="U9.VOB.Cus.HBHDaYunsy.HBHDaYunsySV">
-  <Namespace id="da917439-600c-46fa-abca-d4e8c744e072" name="UFIDA.U9.Cust.HBDY.API" displayName="UFIDA.U9.Cust.HBDY.API" description="" help="">
+  <Namespace id="da917439-600c-46fa-abca-d4e8c744e072" name="UFIDA.U9.Cust.HBDY.API.RMASV" displayName="UFIDA.U9.Cust.HBDY.API.RMASV" description="" help="">
     <PropertyType id="6ae697e4-f2e9-4570-987a-8e38184a5442" name="RMALineDTO" displayName="退回处理行DTO" description="退回处理行DTO" help="" mD_ParentClass_ID="" isFactEntity="False" isQuery="False" isPersistence="False">
       <Groups>
         <Group id="09236588-2177-4916-b4ad-9054a794dea2" name="Misc" displayName="Misc" description="" help="" />
