@@ -1,5 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <function-binding xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <!--<services url="10.3.11.227:9081"/>-->
-  <services url="http://10.3.21.115:8080/hbfcdms/ws"/>
+  <!--<services url="http://10.3.21.115:8080/hbfcdms/ws"/>-->
+  <servicesElectric url="http://10.3.11.227:9081/hbfcdms/ws"/>
+  <servicesHubei url="http://xxxx/dms/ws"/>
 </function-binding>

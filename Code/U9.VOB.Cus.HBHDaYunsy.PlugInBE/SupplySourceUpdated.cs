@@ -55,6 +55,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
         private static System.Collections.Generic.List<partBaseDto> GetUpdateDMSDTO(SupplySource supplierItem)
         {
+            // 如果修改供应商、和料品，那么删除旧的，新增新的；如果这两个不修改，就不需要更新DMS了；
             System.Collections.Generic.List<partBaseDto> lines = new System.Collections.Generic.List<partBaseDto>();
             partBaseDto linedto = new partBaseDto();
             if (supplierItem.OriginalData.SupplierInfo != null && supplierItem.OriginalData.SupplierInfo.SupplierKey != null)

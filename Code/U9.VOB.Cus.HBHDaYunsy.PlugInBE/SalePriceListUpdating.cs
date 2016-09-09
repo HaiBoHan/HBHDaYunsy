@@ -43,10 +43,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             {
                                                 if (System.DateTime.Now >= line.FromDate && (System.DateTime.Now < line.ToDate || line.ToDate.ToString() == "9999.12.31"))
                                                 {
-                                                    SupplierItem.EntityList supitemlist = SupplierItem.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
+                                                    //SupplierItem.EntityList supitemlist = SupplierItem.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
+                                                    SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
                                                     if (supitemlist != null && supitemlist.Count > 0)
                                                     {
-                                                        foreach (SupplierItem i in supitemlist)
+                                                        foreach (SupplySource i in supitemlist)
                                                         {
                                                             partBaseDto linedto = new partBaseDto();
                                                             linedto.suptCode = i.SupplierInfo.Supplier.Code;
@@ -99,10 +100,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                         }
                                         else if (line.Active && System.DateTime.Now >= line.FromDate && (System.DateTime.Now < line.ToDate || line.ToDate.ToString() == "9999.12.31"))
                                         {
-                                            SupplierItem.EntityList supitemlist = SupplierItem.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
+                                            //SupplierItem.EntityList supitemlist = SupplierItem.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
+                                            SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
                                             if (supitemlist != null && supitemlist.Count > 0)
                                             {
-                                                foreach (SupplierItem i in supitemlist)
+                                                foreach (SupplySource i in supitemlist)
                                                 {
                                                     partBaseDto linedto = new partBaseDto();
                                                     linedto.suptCode = i.SupplierInfo.Supplier.Code;

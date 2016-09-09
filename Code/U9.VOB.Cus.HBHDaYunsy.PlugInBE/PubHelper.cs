@@ -12,6 +12,7 @@ using UFIDA.U9.CBO.SCM.Supplier;
 using UFIDA.U9.SM.Ship;
 using UFIDA.U9.InvTrans.Trans;
 using UFSoft.UBF.PL;
+using UFSoft.UBF.Business;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -256,26 +257,47 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             return SalePriceLine.Finder.Find(opath);
         }
 
-		public static string GetAddress(string oldurl)
-		{
-			string str = HttpRuntime.AppDomainAppPath.ToString();
-			str += "\\bin\\DMSAPIServiceConfig.xml";
-			XmlDocument doc = new XmlDocument();
-			doc.Load(str);
-			XmlNodeList list = doc.GetElementsByTagName("services");
-			string newurl = list[0].Attributes["url"].Value;
-            //string strr = oldurl.Replace("http://", "");
-            //int t = strr.IndexOf("/");
-            //string h = strr.Substring(0, t);
-            //return oldurl.Replace(h, newurl);
+        public static string GetAddress(string oldurl)
+        {
+            string str = HttpRuntime.AppDomainAppPath.ToString();
+            str += "\\bin\\DMSAPIServiceConfig.xml";
+            XmlDocument doc = new XmlDocument();
+            doc.Load(str);
+            XmlNodeList list = null;
 
-            int index = oldurl.LastIndexOf("/");
-            string svName = oldurl.Substring(index);
+            //list = doc.GetElementsByTagName("services");
 
-            newurl += svName;
+            if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            {
+                list = doc.GetElementsByTagName("servicesElectric");
+            }
+            else if (Context.LoginOrg.Code == Const_OrgCode_Hubei
+                || Context.LoginOrg.Code == Const_OrgCode_Chengdu
+                )
+            {
+                list = doc.GetElementsByTagName("servicesHubei");
+            }
 
-            return newurl;
-		}
+            if (list != null)
+            {
+                string newurl = list[0].Attributes["url"].Value;
+                //string strr = oldurl.Replace("http://", "");
+                //int t = strr.IndexOf("/");
+                //string h = strr.Substring(0, t);
+                //return oldurl.Replace(h, newurl);
+
+                int index = oldurl.LastIndexOf("/");
+                string svName = oldurl.Substring(index);
+
+                newurl += svName;
+
+                return newurl;
+            }
+            else
+            {
+                throw new BusinessException("√ª”–≈‰÷√DMSµÿ÷∑!");
+            }
+        }
 
 		public static bool IsUsedDMSAPI()
 		{

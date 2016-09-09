@@ -75,9 +75,18 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     }
                                                     dto.amount = double.Parse(System.Math.Abs(entry.AccountedCr).ToString());
                                                     Customer cust = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), entry.Account.Segment3), new OqlParam[0]);
-                                                    if (cust != null && cust.CustomerCategoryKey != null)
+
+                                                    if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
                                                     {
-                                                        dto.customerType = cust.CustomerCategory.Code;
+                                                        // 电动车只有服务站
+                                                        dto.customerType = "101006";
+                                                    }
+                                                    else
+                                                    {
+                                                        if (cust != null && cust.CustomerCategoryKey != null)
+                                                        {
+                                                            dto.customerType = cust.CustomerCategory.Code;
+                                                        }
                                                     }
                                                     ILogger logger = LoggerManager.GetLogger(typeof(Voucher));
                                                     logger.Info(string.Format("删除 dealerCode={0},creadNo={1},invokeTime={2},UNineCreateUser={3},remark={4},changeType={5},operaTionType={6},amount={7},customerType={8}", new object[]

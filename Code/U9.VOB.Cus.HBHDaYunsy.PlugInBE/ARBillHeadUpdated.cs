@@ -40,10 +40,23 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                         if (IsUpdateDMS(shipline))
 										{
 											dto.dealerCode = ARbillhead.AccrueCust.Customer.Code;
-											if (ARbillhead.AccrueCust.Customer.CustomerCategoryKey != null)
-											{
-												dto.customerType = ARbillhead.AccrueCust.Customer.CustomerCategory.Code;
-											}
+                                            //if (ARbillhead.AccrueCust.Customer.CustomerCategoryKey != null)
+                                            //{
+                                            //    dto.customerType = ARbillhead.AccrueCust.Customer.CustomerCategory.Code;
+                                            //}
+
+                                            if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
+                                            {
+                                                // 电动车只有服务站
+                                                dto.customerType = "101006";
+                                            }
+                                            else
+                                            {
+                                                if (ARbillhead.AccrueCust.Customer.CustomerCategoryKey != null)
+                                                {
+                                                    dto.customerType = ARbillhead.AccrueCust.Customer.CustomerCategory.Code;
+                                                }
+                                            }
 											dto.DMSShipNo = shipline.Ship.DescFlexField.PrivateDescSeg1;
 											dto.dmsSaleNo = shipline.DescFlexField.PubDescSeg5;
 											dto.earnestMoney = shipline.DescFlexField.PubDescSeg13;
@@ -85,9 +98,22 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                 dto.deposit = srcline.RMA.DescFlexField.PubDescSeg21;
                                                 dto.shipMoney = srcline.RMA.DescFlexField.PubDescSeg14;
                                                 dto.UNineCreateUser = ARbillhead.CreatedBy;
-                                                if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                                //if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                                //{
+                                                //    dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                                //}
+
+                                                if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
                                                 {
-                                                    dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                                    // 电动车只有服务站
+                                                    dto.customerType = "101006";
+                                                }
+                                                else
+                                                {
+                                                    if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                                    {
+                                                        dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                                    }
                                                 }
                                                 dto.vin = srcline.RMA.DescFlexField.PubDescSeg12;
                                                 dto.amount += double.Parse((line.AROCMoney.NonTax + line.AROCMoney.GoodsTax).ToString());

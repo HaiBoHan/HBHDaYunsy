@@ -5,6 +5,7 @@ using U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI05;
 using UFIDA.U9.SM.RMA;
 using UFSoft.UBF.Business;
 using UFSoft.UBF.Eventing;
+using UFIDA.U9.Base;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class APBillHeadUpdated : IEventSubscriber
@@ -38,9 +39,22 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                         dto.earnestMoney = srcline.RMA.DescFlexField.PubDescSeg13;
                                         dto.deposit = srcline.RMA.DescFlexField.PubDescSeg21;
                                         dto.shipMoney = srcline.RMA.DescFlexField.PubDescSeg14;
-                                        if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                        //if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                        //{
+                                        //    dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                        //}
+
+                                        if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
                                         {
-                                            dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                            // 电动车只有服务站
+                                            dto.customerType = "101006";
+                                        }
+                                        else
+                                        {
+                                            if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                            {
+                                                dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                            }
                                         }
                                         dto.vin = srcline.RMA.DescFlexField.PubDescSeg12;
                                         dto.amount = double.Parse((line.APOCMoney.NonTax + line.APOCMoney.GoodsTax).ToString());
