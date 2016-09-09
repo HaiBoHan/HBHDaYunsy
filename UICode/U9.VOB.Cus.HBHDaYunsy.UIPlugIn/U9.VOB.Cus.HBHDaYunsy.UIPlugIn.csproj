@@ -76,8 +76,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.UBF\UBFStudio\Runtime\UBF.System.dll</HintPath>
     </Reference>
+    <Reference Include="UFIDA.U9.CBO.Pub.Customer.CustomerUI.WebPart">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\UFIDA.U9.CBO.Pub.Customer.CustomerUI.WebPart.dll</HintPath>
+    </Reference>
     <Reference Include="UFIDA.U9.CBO.Pub.Item.ItemUI.WebPart">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\UFIDA.U9.CBO.Pub.Item.ItemUI.WebPart.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.Pub.Supplier.SupplierUI.WebPart">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\UFIDA.U9.CBO.Pub.Supplier.SupplierUI.WebPart.dll</HintPath>
     </Reference>
     <Reference Include="UFIDA.U9.CBO.Pub.SupplierItemUI.WebPart">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\UFIDA.U9.CBO.Pub.SupplierItemUI.WebPart.dll</HintPath>
@@ -257,6 +263,8 @@
     <Compile Include="UserDefAllocRateUIPlugin.cs" />
     <Compile Include="ItemList_UIPlugin.cs" />
     <Compile Include="SupplySourceList_UIPlugin.cs" />
+    <Compile Include="SupplierList_UIPlugin.cs" />
+    <Compile Include="CustomerList_UIPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="U9.VOB.Cus.HBHDaYunsy.UIPlugIn.config">
