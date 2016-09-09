@@ -193,62 +193,163 @@
                             //        return results;
                             //    }
                             //}
-                            try
+
+                            // 如果已经生成了订单，则看看是否审核、没有审核 则 审核之；
+
+
+                            List<SO> lstSO;
+
+                            CommonCreateSOSRVProxy proxy = new CommonCreateSOSRVProxy();
+                            proxy.SOs = this.GetSaleOrderDTODataList(bpObj, out lstSO);
+
+                            if (proxy.SOs != null
+                                && proxy.SOs.Count > 0
+                                )
                             {
-                                CommonCreateSOSRVProxy proxy = new CommonCreateSOSRVProxy();
-                                proxy.SOs = (this.GetSaleOrderDTODataList(bpObj));
-                                //proxy.ContextDTO = (new ContextDTOData());
-                                //proxy.ContextDTO.OrgID = (Context.LoginOrg.ID);
-                                //proxy.ContextDTO.OrgCode = (Context.LoginOrg.Code);
-                                //proxy.ContextDTO.EntCode = (enterprise);
-                                //proxy.ContextDTO.UserCode = (usercode);
-                                //proxy.ContextDTO.CultureName = (Context.LoginLanguageCode);
-                                System.Collections.Generic.List<CommonArchiveDataDTOData> resultsolist = proxy.Do();
-                                if (resultsolist == null || resultsolist.Count == 0)
+                                try
                                 {
+                                    //proxy.ContextDTO = (new ContextDTOData());
+                                    //proxy.ContextDTO.OrgID = (Context.LoginOrg.ID);
+                                    //proxy.ContextDTO.OrgCode = (Context.LoginOrg.Code);
+                                    //proxy.ContextDTO.EntCode = (enterprise);
+                                    //proxy.ContextDTO.UserCode = (usercode);
+                                    //proxy.ContextDTO.CultureName = (Context.LoginLanguageCode);
+                                    System.Collections.Generic.List<CommonArchiveDataDTOData> resultsolist = proxy.Do();
+                                    if (resultsolist == null || resultsolist.Count == 0)
+                                    {
+                                        result.IsSuccess = false;
+                                        result.ErrorInfo = "没有生成销售订单";
+                                        result.Timestamp = System.DateTime.Now.ToString();
+                                        results.Add(result);
+                                        //result2 = results;
+
+                                        HBHCommon.LoggerError(result.ErrorInfo);
+                                        return results;
+                                    }
+                                    SOStatusTransferBPProxy bp = new SOStatusTransferBPProxy();
+                                    bp.SOKeyDTOList = new System.Collections.Generic.List<SM.SO.SOKeyDTOData>();
+                                    foreach (CommonArchiveDataDTOData d in resultsolist)
+                                    {
+                                        SM.SO.SOKeyDTOData dto = new SM.SO.SOKeyDTOData();
+                                        dto.SOkey = (d.ID);
+                                        dto.TargetStatus = (2);
+                                        bp.SOKeyDTOList.Add(dto);
+                                    }
+                                    statusDTOs = bp.Do();
+                                    bp = new SOStatusTransferBPProxy();
+                                    bp.SOKeyDTOList = (new System.Collections.Generic.List<SM.SO.SOKeyDTOData>());
+                                    foreach (SOStatusDTOData dt in statusDTOs)
+                                    {
+                                        SM.SO.SOKeyDTOData dto = new SM.SO.SOKeyDTOData();
+                                        dto.SOkey = (dt.SOID);
+                                        dto.SOSysVersion = (dt.SysVersion);
+                                        dto.TargetStatus = (3);
+                                        bp.SOKeyDTOList.Add(dto);
+                                    }
+                                    statusDTOs = bp.Do();
+                                    //trans.Commit();
+                                }
+                                catch (System.Exception e)
+                                {
+                                    //trans.Rollback();
                                     result.IsSuccess = false;
-                                    result.ErrorInfo = "没有生成销售订单";
+                                    result.ErrorInfo = e.Message;
                                     result.Timestamp = System.DateTime.Now.ToString();
                                     results.Add(result);
                                     //result2 = results;
-
-                                    HBHCommon.LoggerError(result.ErrorInfo);
+                                    //return result2;
+                                    HBHCommon.LoggerError(result.ErrorInfo + "/r/n" + e.StackTrace);
                                     return results;
                                 }
+                            }
+
+                            // 已经存在的订单，试着审核
+                            if (lstSO != null
+                                && lstSO.Count > 0
+                                )
+                            {
+
                                 SOStatusTransferBPProxy bp = new SOStatusTransferBPProxy();
                                 bp.SOKeyDTOList = new System.Collections.Generic.List<SM.SO.SOKeyDTOData>();
-                                foreach (CommonArchiveDataDTOData d in resultsolist)
+                                foreach (SO so in lstSO)
                                 {
-                                    SM.SO.SOKeyDTOData dto = new SM.SO.SOKeyDTOData();
-                                    dto.SOkey = (d.ID);
-                                    dto.TargetStatus = (2);
-                                    bp.SOKeyDTOList.Add(dto);
+                                    if (so != null
+                                        && so.Status == SODocStatusEnum.Open
+                                        )
+                                    {
+                                        SM.SO.SOKeyDTOData dto = new SM.SO.SOKeyDTOData();
+                                        dto.SOkey = so.ID;
+                                        dto.TargetStatus = (2);
+                                        bp.SOKeyDTOList.Add(dto);
+                                    }
                                 }
-                                statusDTOs = bp.Do();
+                                if (bp.SOKeyDTOList != null
+                                    && bp.SOKeyDTOList.Count > 0
+                                    )
+                                {
+                                    bp.Do();
+
+                                    // 重新取订单，可以取到最新的订单状态
+                                    foreach (SM.SO.SOKeyDTOData dto in bp.SOKeyDTOList)
+                                    {
+                                        if (dto != null
+                                            && dto.SOkey > 0
+                                            )
+                                        {
+                                            for (int i = 0; i < lstSO.Count; i++)
+                                            {
+                                                SO so = lstSO[i];
+
+                                                if (so != null
+                                                    && so.ID == dto.SOkey
+                                                    )
+                                                {
+                                                    lstSO[i] = SO.Finder.FindByID(dto.SOkey);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                                 bp = new SOStatusTransferBPProxy();
                                 bp.SOKeyDTOList = (new System.Collections.Generic.List<SM.SO.SOKeyDTOData>());
-                                foreach (SOStatusDTOData dt in statusDTOs)
+                                foreach (SO so in lstSO)
                                 {
-                                    SM.SO.SOKeyDTOData dto = new SM.SO.SOKeyDTOData();
-                                    dto.SOkey = (dt.SOID);
-                                    dto.SOSysVersion = (dt.SysVersion);
-                                    dto.TargetStatus = (3);
-                                    bp.SOKeyDTOList.Add(dto);
+                                    if (so != null
+                                        && so.Status == SODocStatusEnum.Open
+                                        )
+                                    {
+                                        SM.SO.SOKeyDTOData dto = new SM.SO.SOKeyDTOData();
+                                        dto.SOkey = so.ID;
+                                        dto.SOSysVersion = (so.SysVersion);
+                                        dto.TargetStatus = (3);
+                                        bp.SOKeyDTOList.Add(dto);
+                                    }
                                 }
-                                statusDTOs = bp.Do();
-                                //trans.Commit();
-                            }
-                            catch (System.Exception e)
-                            {
-                                //trans.Rollback();
-                                result.IsSuccess = false;
-                                result.ErrorInfo = e.Message;
-                                result.Timestamp = System.DateTime.Now.ToString();
-                                results.Add(result);
-                                //result2 = results;
-                                //return result2;
-                                HBHCommon.LoggerError(result.ErrorInfo + "/r/n" + e.StackTrace);
-                                return results;
+                                if (bp.SOKeyDTOList != null
+                                    && bp.SOKeyDTOList.Count > 0
+                                    )
+                                {
+                                    bp.Do();
+                                }
+
+                                if (statusDTOs == null)
+                                {
+                                    statusDTOs = new List<SOStatusDTOData>();
+                                }
+
+                                // 组织创建结果DTO
+                                foreach (SO so in lstSO)
+                                {
+                                    if (so != null
+                                        )
+                                    {
+                                        SOStatusDTOData resultDTO = new SOStatusDTOData();
+                                        resultDTO.SOID = so.ID;
+
+                                        statusDTOs.Add(resultDTO);
+                                    }
+                                }
                             }
                         }
                         if (statusDTOs != null && statusDTOs.Count > 0)
@@ -349,8 +450,10 @@
         /// </summary>
         /// <param name="bpObj"></param>
         /// <returns></returns>
-        private System.Collections.Generic.List<SaleOrderDTOData> GetSaleOrderDTODataList(CreateApprovedSaleOrderSV bpObj)
+        private System.Collections.Generic.List<SaleOrderDTOData> GetSaleOrderDTODataList(CreateApprovedSaleOrderSV bpObj,out List<SO> lstExist)
         {
+            lstExist = new List<SO>();
+
             System.Collections.Generic.List<SaleOrderDTOData> list = new System.Collections.Generic.List<SaleOrderDTOData>();
             System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<SoLineDTO>> dic = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<SoLineDTO>>();
             foreach (SoLineDTO solinedto in bpObj.SoLineDto)
@@ -371,94 +474,107 @@
                 {
                     SoLineDTO firstDTO = listLineDTO.GetFirst<SoLineDTO>();
 
-                    SaleOrderDTOData sodto = new SaleOrderDTOData();
-                    sodto.DocumentType = (new CommonArchiveDataDTOData());
-                    sodto.DocumentType.Code = (firstDTO.OrderType);
-                    sodto.OrderBy = (new CustomerMISCInfoData());
-                    sodto.OrderBy.Code = (firstDTO.DealerCode);
-                    sodto.SOSrcType = (SOSourceTypeEnum.Manual.Value);
-                    sodto.TC = (new CommonArchiveDataDTOData());
-                    //sodto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? "C001" : firstDTO.Currency);
-                    sodto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? HBHCommon.DefaultCurrencyCode : firstDTO.Currency);
-                    sodto.DescFlexField = (new DescFlexSegmentsData());
-                    sodto.DescFlexField.PubDescSeg5 = (firstDTO.DmsSaleNo);
-                    //string RecTerm = "01";
-                    string RecTerm = HBHCommon.DefaultRecTermCode;
-                    Customer customer = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, firstDTO.DealerCode), new OqlParam[0]);
-                    if (customer != null)
+                    SO so = SO.Finder.Find("DescFlexField.PubDescSeg5=@DmsSaleNum"
+                        , new OqlParam(firstDTO.DmsSaleNo)
+                        );
+
+                    // 订单存在，添加到订单清单里
+                    if (so != null)
                     {
-                        sodto.ConfirmTerm = (new CommonArchiveDataDTOData());
-                        if (customer.ARConfirmTerm != null)
+                        lstExist.Add(so);
+                    }
+                    // 
+                    else
+                    {
+                        SaleOrderDTOData sodto = new SaleOrderDTOData();
+                        sodto.DocumentType = (new CommonArchiveDataDTOData());
+                        sodto.DocumentType.Code = (firstDTO.OrderType);
+                        sodto.OrderBy = (new CustomerMISCInfoData());
+                        sodto.OrderBy.Code = (firstDTO.DealerCode);
+                        sodto.SOSrcType = (SOSourceTypeEnum.Manual.Value);
+                        sodto.TC = (new CommonArchiveDataDTOData());
+                        //sodto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? "C001" : firstDTO.Currency);
+                        sodto.TC.Code = (string.IsNullOrEmpty(firstDTO.Currency) ? HBHCommon.DefaultCurrencyCode : firstDTO.Currency);
+                        sodto.DescFlexField = (new DescFlexSegmentsData());
+                        sodto.DescFlexField.PubDescSeg5 = (firstDTO.DmsSaleNo);
+                        //string RecTerm = "01";
+                        string RecTerm = HBHCommon.DefaultRecTermCode;
+                        Customer customer = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, firstDTO.DealerCode), new OqlParam[0]);
+                        if (customer != null)
                         {
-                            sodto.ConfirmTerm.Code = (customer.ARConfirmTerm.Code);
-                        }
-                        else
-                        {
-                            sodto.ConfirmTerm.Code = HBHCommon.DefaultConfirmTermCode;  // ("01");
-                        }
-                        sodto.BargainMode = (customer.Bargain.Value);
-                        sodto.ShipRule = (new CommonArchiveDataDTOData());
-                        if (customer.ShippmentRuleKey != null)
-                        {
-                            sodto.ShipRule.Code = (customer.ShippmentRule.Code);
+                            sodto.ConfirmTerm = (new CommonArchiveDataDTOData());
+                            if (customer.ARConfirmTerm != null)
+                            {
+                                sodto.ConfirmTerm.Code = (customer.ARConfirmTerm.Code);
+                            }
+                            else
+                            {
+                                sodto.ConfirmTerm.Code = HBHCommon.DefaultConfirmTermCode;  // ("01");
+                            }
+                            sodto.BargainMode = (customer.Bargain.Value);
+                            sodto.ShipRule = (new CommonArchiveDataDTOData());
+                            if (customer.ShippmentRuleKey != null)
+                            {
+                                sodto.ShipRule.Code = (customer.ShippmentRule.Code);
+                            }
+                            else
+                            {
+                                sodto.ShipRule.Code = HBHCommon.DefaultShipRuleCode;    // ("C001");
+                            }
+                            if (customer.RecervalTermKey != null)
+                            {
+                                RecTerm = customer.RecervalTerm.Code;
+                            }
                         }
                         else
                         {
                             sodto.ShipRule.Code = HBHCommon.DefaultShipRuleCode;    // ("C001");
+                            sodto.BargainMode = HBHCommon.DefaultBargainMode;    // (0);
+                            sodto.ConfirmTerm = (new CommonArchiveDataDTOData());
+                            sodto.ConfirmTerm.Code = HBHCommon.DefaultConfirmTermCode;  // ("01");
                         }
-                        if (customer.RecervalTermKey != null)
+                        sodto.SOLines = new List<ISV.SM.SOLineDTOData>();
+                        foreach (SoLineDTO srcsolinedto in dic[key])
                         {
-                            RecTerm = customer.RecervalTerm.Code;
+                            UFIDA.U9.ISV.SM.SOLineDTOData solinedto2 = new UFIDA.U9.ISV.SM.SOLineDTOData();
+                            solinedto2.ItemInfo = (new ItemInfoData());
+                            solinedto2.ItemInfo.ItemCode = (srcsolinedto.ErpMaterialCode);
+                            if (!string.IsNullOrEmpty(srcsolinedto.FinalPrice))
+                            {
+                                solinedto2.FinallyPriceTC = (decimal.Parse(srcsolinedto.FinalPrice));
+                            }
+                            if (!string.IsNullOrEmpty(srcsolinedto.Number))
+                            {
+                                solinedto2.OrderByQtyPU = (decimal.Parse(srcsolinedto.Number));
+                            }
+                            else
+                            {
+                                solinedto2.OrderByQtyPU = (1m);
+                            }
+                            if (!string.IsNullOrEmpty(srcsolinedto.Money))
+                            {
+                                solinedto2.TotalMoneyTC = (decimal.Parse(srcsolinedto.Money));
+                            }
+                            solinedto2.Project = (new CommonArchiveDataDTOData());
+                            solinedto2.Project.Code = (srcsolinedto.DmsSaleNo);
+                            solinedto2.SrcDocType = (SOSourceTypeEnum.Manual.Value);
+                            solinedto2.RecTerm = (new CommonArchiveDataDTOData());
+                            solinedto2.RecTerm.Code = (RecTerm);
+                            solinedto2.DescFlexField = (new DescFlexSegmentsData());
+                            solinedto2.DescFlexField.PrivateDescSeg1 = (srcsolinedto.MaterialCode);
+                            solinedto2.SOShiplines = (new System.Collections.Generic.List<SOShipLineDTOData>());
+                            SOShipLineDTOData soshipliendto = new SOShipLineDTOData();
+                            soshipliendto.Project = (new CommonArchiveDataDTOData());
+                            soshipliendto.Project.Code = (srcsolinedto.DmsSaleNo);
+                            soshipliendto.ItemInfo = (new ItemInfoData());
+                            soshipliendto.ItemInfo.ItemCode = (srcsolinedto.ErpMaterialCode);
+                            soshipliendto.IsMRPRequire = (true);
+                            soshipliendto.RequireDate = (string.IsNullOrEmpty(srcsolinedto.DeliveryDate) ? System.DateTime.Now : System.Convert.ToDateTime(srcsolinedto.DeliveryDate));
+                            solinedto2.SOShiplines.Add(soshipliendto);
+                            sodto.SOLines.Add(solinedto2);
                         }
+                        list.Add(sodto);
                     }
-                    else
-                    {
-                        sodto.ShipRule.Code = HBHCommon.DefaultShipRuleCode;    // ("C001");
-                        sodto.BargainMode = HBHCommon.DefaultBargainMode;    // (0);
-                        sodto.ConfirmTerm = (new CommonArchiveDataDTOData());
-                        sodto.ConfirmTerm.Code = HBHCommon.DefaultConfirmTermCode;  // ("01");
-                    }
-                    sodto.SOLines = new List<ISV.SM.SOLineDTOData>();
-                    foreach (SoLineDTO srcsolinedto in dic[key])
-                    {
-                        UFIDA.U9.ISV.SM.SOLineDTOData solinedto2 = new UFIDA.U9.ISV.SM.SOLineDTOData();
-                        solinedto2.ItemInfo = (new ItemInfoData());
-                        solinedto2.ItemInfo.ItemCode = (srcsolinedto.ErpMaterialCode);
-                        if (!string.IsNullOrEmpty(srcsolinedto.FinalPrice))
-                        {
-                            solinedto2.FinallyPriceTC = (decimal.Parse(srcsolinedto.FinalPrice));
-                        }
-                        if (!string.IsNullOrEmpty(srcsolinedto.Number))
-                        {
-                            solinedto2.OrderByQtyPU = (decimal.Parse(srcsolinedto.Number));
-                        }
-                        else
-                        {
-                            solinedto2.OrderByQtyPU = (1m);
-                        }
-                        if (!string.IsNullOrEmpty(srcsolinedto.Money))
-                        {
-                            solinedto2.TotalMoneyTC = (decimal.Parse(srcsolinedto.Money));
-                        }
-                        solinedto2.Project = (new CommonArchiveDataDTOData());
-                        solinedto2.Project.Code = (srcsolinedto.DmsSaleNo);
-                        solinedto2.SrcDocType = (SOSourceTypeEnum.Manual.Value);
-                        solinedto2.RecTerm = (new CommonArchiveDataDTOData());
-                        solinedto2.RecTerm.Code = (RecTerm);
-                        solinedto2.DescFlexField = (new DescFlexSegmentsData());
-                        solinedto2.DescFlexField.PrivateDescSeg1 = (srcsolinedto.MaterialCode);
-                        solinedto2.SOShiplines = (new System.Collections.Generic.List<SOShipLineDTOData>());
-                        SOShipLineDTOData soshipliendto = new SOShipLineDTOData();
-                        soshipliendto.Project = (new CommonArchiveDataDTOData());
-                        soshipliendto.Project.Code = (srcsolinedto.DmsSaleNo);
-                        soshipliendto.ItemInfo = (new ItemInfoData());
-                        soshipliendto.ItemInfo.ItemCode = (srcsolinedto.ErpMaterialCode);
-                        soshipliendto.IsMRPRequire = (true);
-                        soshipliendto.RequireDate = (string.IsNullOrEmpty(srcsolinedto.DeliveryDate) ? System.DateTime.Now : System.Convert.ToDateTime(srcsolinedto.DeliveryDate));
-                        solinedto2.SOShiplines.Add(soshipliendto);
-                        sodto.SOLines.Add(solinedto2);
-                    }
-                    list.Add(sodto);
                 }
             }
             return list;

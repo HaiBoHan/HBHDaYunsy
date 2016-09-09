@@ -411,6 +411,7 @@
                 {
                     errormessage += string.Format("[{0}]DMS销售订单的[订单类型]不可为空,", linedto.DmsSaleNo);
                 }
+                // OrderType
                 if (linedto.OrderType == "3")
                 {
                     MiscShipmentLinelist.Add(linedto);

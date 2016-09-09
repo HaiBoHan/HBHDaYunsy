@@ -390,6 +390,13 @@ namespace U9.VOB.Cus.HBHDaYunsy
                     onePage.Clear();
                 }
             }
+
+            // 最后一页没有满，仍有数据，添加到集合里;
+            if (onePage.Count > 0)
+            {
+                pageList.Add(onePage);
+            }
+
             return pageList;
         }
 	}
