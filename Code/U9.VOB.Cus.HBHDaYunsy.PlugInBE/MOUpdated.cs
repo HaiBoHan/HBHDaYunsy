@@ -25,11 +25,18 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 							{
 								SI09ImplService service = new SI09ImplService();
 								// service.Url = PubHelper.GetAddress(service.Url);
-								vehicleChangeInfoDto d = service.Do(new vehicleChangeInfoDto
-								{
-									vin = mo.DescFlexField.PubDescSeg12,
-									docStatus = 5
-								});
+                                //vehicleChangeInfoDto d = service.Do(new vehicleChangeInfoDto
+                                //{
+                                //    vin = mo.DescFlexField.PubDescSeg12,
+                                //    docStatus = 5
+                                //});
+
+                                vehicleChangeInfoDto vehicleDTO = new vehicleChangeInfoDto();
+                                //单台作业计划状态;  等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6, 车辆整改7
+                                vehicleDTO.docStatus = 5;
+                                vehicleDTO.vin = mo.DescFlexField.PubDescSeg12;
+
+                                vehicleChangeInfoDto d = service.Do(vehicleDTO);
 								if (d != null && d.flag == 0)
 								{
 									throw new System.ApplicationException(d.errMsg);

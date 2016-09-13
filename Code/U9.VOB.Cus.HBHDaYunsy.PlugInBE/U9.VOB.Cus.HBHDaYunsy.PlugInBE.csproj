@@ -456,7 +456,9 @@
     <WCFMetadataStorage Include="Service References\DMSAsync_SI08\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DMSAPIServiceConfig.xml" />
+    <Content Include="DMSAPIServiceConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Service References\DMSAsync_PI07\configuration91.svcinfo" />
     <None Include="Service References\DMSAsync_PI07\configuration.svcinfo" />
     <None Include="Service References\DMSAsync_PI07\Reference.svcmap">
@@ -497,6 +499,7 @@
       Copy $(TargetDir)\$(TargetName).pdb $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\
       Copy $(TargetDir)\$(TargetName).sub.xml $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\
       Copy $(TargetDir)\$(TargetName).dll.config $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\
+      Copy $(TargetDir)\DMSAPIServiceConfig.xml $(ProjectDir)\.\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\Unconfiged\Component\\
 
 </PostBuildEvent>
   </PropertyGroup>

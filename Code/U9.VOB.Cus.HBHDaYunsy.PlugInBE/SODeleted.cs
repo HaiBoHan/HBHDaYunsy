@@ -29,11 +29,18 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									System.Collections.Generic.List<orderInfoDto> list = new System.Collections.Generic.List<orderInfoDto>();
 									SI02ImplService service = new SI02ImplService();
 									// service.Url = PubHelper.GetAddress(service.Url);
-									list.Add(new orderInfoDto
-									{
-										docStatus = "2",
-										dmsSaleNo = so.DescFlexField.PubDescSeg5
-									});
+                                    //list.Add(new orderInfoDto
+                                    //{
+                                    //    // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
+                                    //    docStatus = "2",
+                                    //    dmsSaleNo = so.DescFlexField.PubDescSeg5
+                                    //});
+                                    orderInfoDto orderDTO = new orderInfoDto();
+                                    // 0新增，1修改，2删除，3排产
+									orderDTO.docStatus = "2";
+                                    orderDTO.dmsSaleNo = so.DescFlexField.PubDescSeg5;
+                                    list.Add(orderDTO);
+
 									service.Do(list.ToArray());
 								}
 								catch (System.Exception e)

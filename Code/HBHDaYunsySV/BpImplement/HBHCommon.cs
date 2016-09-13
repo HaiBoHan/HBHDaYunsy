@@ -11,6 +11,12 @@ namespace UFIDA.U9.Cust.HBDY.API
 {
     internal class HBHCommon
     {
+        // 新能源组织
+        /// <summary>
+        /// 新能源组织
+        /// </summary>
+        public const string Const_ElectricOrgCode = "70";
+
         /// <summary>
         /// 默认币种编码
         /// </summary>
@@ -102,7 +108,6 @@ namespace UFIDA.U9.Cust.HBDY.API
             logger.Error(msg, new object[0]);
         }
 
-        public const string Const_ElectricOrgCode = "70";
 
 
 

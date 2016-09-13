@@ -1,4 +1,4 @@
-﻿namespace UFIDA.U9.Cust.HBDY.API.DipatchOutWhAPISV
+﻿namespace UFIDA.U9.Cust.HBDY.DipatchOutWhAPISV
 {
 	using System;
 	using System.Collections.Generic;
@@ -129,6 +129,8 @@
                                 CreateShipSVProxy proxy = new CreateShipSVProxy();
                                 proxy.ShipDTOs = (this.GetShipDTOList(shiplist));
                                 shipidlist = proxy.Do();
+
+                                // 整车生成开立的出货单；
                             }
                             catch (System.Exception e)
                             {
@@ -370,7 +372,9 @@
         private System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipDTOForIndustryChainData> GetShipDTOList(System.Collections.Generic.List<CarShipLineDTO> shiplist)
         {
             System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipDTOForIndustryChainData> list = new System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipDTOForIndustryChainData>();
-            string opeatorstr = "DMSTESTUSER";
+            //string opeatorstr = "DMSTESTUSER";
+            //string opeatorstr = "DMS";
+            string opeatorstr = HBHCommon.DefaultShipOperatorCode;
             System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<CarShipLineDTO>> dic = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<CarShipLineDTO>>();
             foreach (CarShipLineDTO dtoline in shiplist)
             {

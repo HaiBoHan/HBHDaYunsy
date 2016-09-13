@@ -31,6 +31,7 @@
     using UFIDA.U9.Cust.HBDY.API;
     using UFSoft.UBF.Business;
     using UFIDA.U9.InvDoc.Enums;
+    using UFIDA.U9.SPR.SalePriceList;
 
 	/// <summary>
 	/// CreateShipSV partial 
@@ -453,7 +454,7 @@
                     LotMaster Lot = LotMaster.Finder.Find(string.Format("LotCode='{0}'", linedto.Lot), new OqlParam[0]);
                     if (Lot == null)
                     {
-                        errormessage += string.Format("[{0}]DMS销售出库单的批号[{1}]在U9系统中找不到对应的存储地点档案,请同步,", linedto.DMSShipNo, linedto.Lot);
+                        errormessage += string.Format("[{0}]DMS销售出库单的批号[{1}]在U9系统中找不到,请同步,", linedto.DMSShipNo, linedto.Lot);
                     }
                 }
                 if (string.IsNullOrEmpty(linedto.MaterialCode))
@@ -465,7 +466,7 @@
                     Supplier supplier = Supplier.Finder.Find(string.Format("Code='{0}' and Org={1}", linedto.MaterialCode, Context.LoginOrg.ID.ToString()), new OqlParam[0]);
                     if (supplier == null)
                     {
-                        errormessage += string.Format("[{0}]DMS销售出库单的供应商[{1}]在U9系统中找不到对应的存储地点档案,请同步,", linedto.DMSShipNo, linedto.MaterialCode);
+                        errormessage += string.Format("[{0}]DMS销售出库单的供应商[{1}]在U9系统中不存在,请同步,", linedto.DMSShipNo, linedto.MaterialCode);
                     }
                 }
                 if (linedto.Number <= 0m)
@@ -682,6 +683,19 @@
 
                     // 默认价格含税
                     shipdto.IsPriceIncludeTax = true;
+                    if (Context.LoginOrg.Code == HBHCommon.Const_ElectricOrgCode)
+                    {
+                        SalePriceList priceList = SalePriceList.Finder.Find("Code=@Code"
+                            , new OqlParam(HBHCommon.Const_ElectricPartPriceListCode)
+                            );
+
+                        if (priceList != null)
+                        {
+                            shipdto.PriceList = priceList.ID;
+                            shipdto.PriceListNo = priceList.Code;
+                            shipdto.PriceListName = priceList.Name;
+                        }
+                    }
 
                     shipdto.ShipLines = (new System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipLineDTOForIndustryChainData>());
                     foreach (ShipLineDTO linedto in listLineDTO)

@@ -13,6 +13,7 @@ using UFIDA.U9.SM.Ship;
 using UFIDA.U9.InvTrans.Trans;
 using UFSoft.UBF.PL;
 using UFSoft.UBF.Business;
+using UFIDA.U9.CBO.SCM.Customer;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -115,7 +116,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 if (lstDMSShipDocType.Count == 0)
                 {
                     lstDMSShipDocType.Add(Const_ShipDocType_XJ);
-                    lstDMSShipDocType.Add(Const_ShipDocType_XJ);
+                    lstDMSShipDocType.Add(Const_ShipDocType_SB);
                 }
 
                 return lstDMSShipDocType;
@@ -214,6 +215,49 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         );
             }
 
+            return false;
+        }
+
+        public static bool IsUpdateDMS(Customer customer)
+        {
+            if (customer != null
+                && customer.CustomerCategory != null
+                )
+            {
+                return (customer.CustomerCategoryKey != null && (customer.CustomerCategory.Code == "101007" || customer.CustomerCategory.Code == "101006"))
+                    // 新的湖北的DMS经销商 设置方式
+                    || (customer.CustomerCategory != null
+                        && customer.CustomerCategory.DescFlexField != null
+                        && customer.CustomerCategory.DescFlexField.PrivateDescSeg1.GetBool()
+                        );
+            }
+
+            return false;
+        }
+
+        public static bool IsUpdateDMS(ShipLine shipline)
+        {
+            if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
+            {
+                if (shipline != null
+                    && shipline.Ship != null
+                    && shipline.Ship.DocumentType != null
+                    && PubHelper.IsUpdateDMS_Electric(shipline.Ship.DocumentType)
+                    )
+                {
+                    return true;
+                }
+            }
+            else if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Chengdu
+                || Context.LoginOrg.Code == PubHelper.Const_OrgCode_Hubei
+                )
+            {
+                if (shipline != null && (shipline.Ship.DocumentType.Code == "XM10" || shipline.Ship.DocumentType.Code == "XM12" || shipline.Ship.DocumentType.Code == "XM1" || shipline.Ship.DocumentType.Code == "XM7" || shipline.Ship.DocumentType.Code == "XM4")
+                    )
+                {
+                    return true;
+                }
+            }
             return false;
         }
 

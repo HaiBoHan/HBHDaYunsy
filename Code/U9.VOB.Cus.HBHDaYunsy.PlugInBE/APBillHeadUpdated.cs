@@ -6,6 +6,8 @@ using UFIDA.U9.SM.RMA;
 using UFSoft.UBF.Business;
 using UFSoft.UBF.Eventing;
 using UFIDA.U9.Base;
+using UFIDA.U9.SM.Ship;
+using HBH.DoNet.DevPlatform.EntityMapping;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class APBillHeadUpdated : IEventSubscriber
@@ -32,44 +34,60 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                     RMALine srcline = RMALine.Finder.FindByID(line.SrcBillLineID);
                                     if (srcline != null)
                                     {
-                                        accountReturnDto dto = new accountReturnDto();
-                                        dto.dealerCode = srcline.RMA.Customer.Customer.Code;
-                                        dto.DMSShipNo = srcline.RMA.DescFlexField.PrivateDescSeg1;
-                                        dto.dmsSaleNo = srcline.RMA.DescFlexField.PubDescSeg5;
-                                        dto.earnestMoney = srcline.RMA.DescFlexField.PubDescSeg13;
-                                        dto.deposit = srcline.RMA.DescFlexField.PubDescSeg21;
-                                        dto.shipMoney = srcline.RMA.DescFlexField.PubDescSeg14;
-                                        //if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
-                                        //{
-                                        //    dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
-                                        //}
+                                        ShipLine shipline = null;
+                                        if (srcline.SrcShipLine != null
+                                            )
+                                        {
+                                            shipline = srcline.SrcShipLine;
+                                        }
 
-                                        if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
+                                        if ((shipline == null
+                                            && srcline.RMA.DescFlexField.PubDescSeg5.IsNotNullOrWhiteSpace()
+                                            )
+                                            || (shipline != null
+                                                && PubHelper.IsUpdateDMS(shipline)
+                                                )
+                                            )
                                         {
-                                            // 电动车只有服务站
-                                            dto.customerType = "101006";
-                                        }
-                                        else
-                                        {
-                                            if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                            accountReturnDto dto = new accountReturnDto();
+                                            dto.dealerCode = srcline.RMA.Customer.Customer.Code;
+                                            dto.DMSShipNo = srcline.RMA.DescFlexField.PrivateDescSeg1;
+                                            dto.dmsSaleNo = srcline.RMA.DescFlexField.PubDescSeg5;
+                                            dto.earnestMoney = srcline.RMA.DescFlexField.PubDescSeg13;
+                                            dto.deposit = srcline.RMA.DescFlexField.PubDescSeg21;
+                                            dto.shipMoney = srcline.RMA.DescFlexField.PubDescSeg14;
+                                            //if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                            //{
+                                            //    dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                            //}
+
+                                            if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
                                             {
-                                                dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                                // 电动车只有服务站
+                                                dto.customerType = "101006";
                                             }
-                                        }
-                                        dto.vin = srcline.RMA.DescFlexField.PubDescSeg12;
-                                        dto.amount = double.Parse((line.APOCMoney.NonTax + line.APOCMoney.GoodsTax).ToString());
-                                        dto.operaTionType = "1";
-                                        try
-                                        {
-                                            accountReturnDto c = service.Do(dto);
-                                            if (c != null && c.flag == 0)
+                                            else
                                             {
-                                                throw new System.ApplicationException(c.errMsg);
+                                                if (srcline.RMA.Customer.Customer.CustomerCategoryKey != null)
+                                                {
+                                                    dto.customerType = srcline.RMA.Customer.Customer.CustomerCategory.Code;
+                                                }
                                             }
-                                        }
-                                        catch (System.Exception e)
-                                        {
-                                            throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                                            dto.vin = srcline.RMA.DescFlexField.PubDescSeg12;
+                                            dto.amount = double.Parse((line.APOCMoney.NonTax + line.APOCMoney.GoodsTax).ToString());
+                                            dto.operaTionType = "1";
+                                            try
+                                            {
+                                                accountReturnDto c = service.Do(dto);
+                                                if (c != null && c.flag == 0)
+                                                {
+                                                    throw new System.ApplicationException(c.errMsg);
+                                                }
+                                            }
+                                            catch (System.Exception e)
+                                            {
+                                                throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                                            }
                                         }
                                     }
                                 }

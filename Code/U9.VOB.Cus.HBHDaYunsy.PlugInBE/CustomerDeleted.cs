@@ -31,7 +31,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                             //        )
                             //    )
                             if(
-                                CustomerInserted.IsUpdateDMS(customer)
+                                PubHelper.IsUpdateDMS(customer)
                                 )
 							{
 								try

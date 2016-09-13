@@ -772,9 +772,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
         #endregion
 
-        // 整车订单同步接口
+        // 订单状态跟踪接口
         /// <summary>
-        /// 整车订单同步接口
+        /// 订单状态跟踪接口
         /// </summary>
         /// <param name="service"></param>
         /// <param name="param"></param>
@@ -783,7 +783,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         {
             service.Url = PubHelper.GetAddress(service.Url);
 
-            string entityName = "整车订单同步接口";
+            string entityName = "订单状态跟踪接口";
             long svID = -1;
             if (IsLog)
             {
@@ -829,9 +829,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             return null;
         }
 
-        // 整车订单同步接口
+        // 车辆状态跟踪接口
         /// <summary>
-        /// 整车订单同步接口
+        /// 车辆状态跟踪接口
         /// </summary>
         /// <param name="service"></param>
         /// <param name="param"></param>
@@ -840,7 +840,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         {
             service.Url = PubHelper.GetAddress(service.Url);
 
-            string entityName = "整车订单同步接口";
+            string entityName = "车辆状态跟踪接口";
             long svID = -1;
             if (IsLog)
             {

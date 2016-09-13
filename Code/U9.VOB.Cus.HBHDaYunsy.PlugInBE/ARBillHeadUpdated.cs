@@ -26,7 +26,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 						bool flag = PubHelper.IsUsedDMSAPI();
 						if (flag)
 						{
-							if (ARbillhead.OriginalData.DocStatus == BillStatusEnum.Approving && ARbillhead.DocStatus == BillStatusEnum.Approved)
+                            //if (ARbillhead.OriginalData.DocStatus == BillStatusEnum.Approving && ARbillhead.DocStatus == BillStatusEnum.Approved)
+                            int approveStatus = GetOperaTionType(ARbillhead);
+                            if (approveStatus > -1 )
 							{
 								SI05ImplService service = new SI05ImplService();
 								// service.Url = PubHelper.GetAddress(service.Url);
@@ -37,7 +39,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									if (line.SrcDocType == ARBillSrcDocTypeEnum.ShipmentBill && line.SrcBillLineID > 0)
 									{
 										ShipLine shipline = ShipLine.Finder.FindByID(line.SrcBillLineID);
-                                        if (IsUpdateDMS(shipline))
+                                        if (PubHelper.IsUpdateDMS(shipline))
 										{
 											dto.dealerCode = ARbillhead.AccrueCust.Customer.Code;
                                             //if (ARbillhead.AccrueCust.Customer.CustomerCategoryKey != null)
@@ -64,8 +66,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 											dto.deposit = shipline.DescFlexField.PubDescSeg21;
 											dto.shipMoney = shipline.DescFlexField.PubDescSeg14;
 											dto.UNineCreateUser = ARbillhead.CreatedBy;
-											dto.amount += double.Parse((line.AROCMoney.NonTax + line.AROCMoney.GoodsTax).ToString());
-											dto.operaTionType = "0";
+                                            dto.amount += double.Parse((line.AROCMoney.NonTax + line.AROCMoney.GoodsTax).ToString());
+                                            // 0是发运扣款、1是退回退款
+                                            //dto.operaTionType = "0";
+                                            dto.operaTionType = approveStatus.ToString();
 											flag2 = true;
 										}
 									}
@@ -75,18 +79,17 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 										if (srcline != null)
                                         {
                                             ShipLine shipline = null;
-                                            if (srcline.SrcDocLine != null
-                                                && srcline.SrcDocLine.ID > 0
+                                            if (srcline.SrcShipLine != null
                                                 )
                                             {
-                                                shipline = ShipLine.Finder.FindByID(srcline.SrcDocLine.ID);
+                                                shipline = srcline.SrcShipLine;
                                             }
 
                                             if ((shipline == null
                                                 && srcline.RMA.DescFlexField.PubDescSeg5.IsNotNullOrWhiteSpace()
                                                 )
                                                 || (shipline != null
-                                                    && IsUpdateDMS(shipline)
+                                                    && PubHelper.IsUpdateDMS(shipline)
                                                     )
                                                 )
                                             {
@@ -117,31 +120,39 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                 }
                                                 dto.vin = srcline.RMA.DescFlexField.PubDescSeg12;
                                                 dto.amount += double.Parse((line.AROCMoney.NonTax + line.AROCMoney.GoodsTax).ToString());
-                                                dto.operaTionType = "1";
+                                                // 0是发运扣款、1是退回退款
+                                                //dto.operaTionType = "1";
+                                                // 退货，取反
+                                                dto.operaTionType = (approveStatus == 1 ? 0 : (approveStatus == 0 ? 1 : -1)).ToString();
                                                 flag2 = true;
                                             }
 										}
 									}
 								}
-								if (dto.amount != 0.0)
-								{
-									dto.amount = System.Math.Round(dto.amount, 2);
-								}
-								try
-								{
-									if (flag2)
-									{
-										accountReturnDto c = service.Do(dto);
-										if (c != null && c.flag == 0)
-										{
-											throw new System.ApplicationException(c.errMsg);
-										}
-									}
-								}
-								catch (System.Exception e)
-								{
-									throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
-								}
+                                if (dto.amount != 0.0)
+                                {
+                                    dto.amount = System.Math.Round(dto.amount, 2);
+
+                                    // 有DMS单号
+                                    if (dto.DMSShipNo.IsNotNullOrWhiteSpace())
+                                    {
+                                        try
+                                        {
+                                            if (flag2)
+                                            {
+                                                accountReturnDto c = service.Do(dto);
+                                                if (c != null && c.flag == 0)
+                                                {
+                                                    throw new System.ApplicationException(c.errMsg);
+                                                }
+                                            }
+                                        }
+                                        catch (System.Exception e)
+                                        {
+                                            throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                                        }
+                                    }
+                                }
 							}
 						}
 					}
@@ -149,30 +160,25 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 			}
 		}
 
-        private static bool IsUpdateDMS(ShipLine shipline)
+        private int GetOperaTionType(ARBillHead ARbillhead)
         {
-            if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
-            {
-                if (shipline != null
-                    && shipline.Ship != null
-                    && shipline.Ship.DocumentType != null
-                    && PubHelper.IsUpdateDMS_Electric(shipline.Ship.DocumentType)
-                    )
-                {
-                    return true;
-                }
-            }
-            else if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Chengdu
-                || Context.LoginOrg.Code == PubHelper.Const_OrgCode_Hubei
+            // 0是发运扣款、1是退回退款
+            int approveType = -1;
+
+            if (ARbillhead.OriginalData.DocStatus == BillStatusEnum.Approving 
+                && ARbillhead.DocStatus == BillStatusEnum.Approved
                 )
             {
-                if (shipline != null && (shipline.Ship.DocumentType.Code == "XM10" || shipline.Ship.DocumentType.Code == "XM12" || shipline.Ship.DocumentType.Code == "XM1" || shipline.Ship.DocumentType.Code == "XM7" || shipline.Ship.DocumentType.Code == "XM4")
-                    )
-                {
-                    return true;
-                }
+                approveType = 0;
             }
-            return false;
+            else if (ARbillhead.OriginalData.DocStatus == BillStatusEnum.Approved 
+                && ARbillhead.DocStatus == BillStatusEnum.Opened
+                )
+            {
+                approveType = 1;
+            }
+
+            return approveType;
         }
 	}
 }

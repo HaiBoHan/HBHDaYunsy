@@ -45,64 +45,67 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									{
                                         //if (entry.AccountedCr != 0)
                                         // Cr贷、Dr借
-										if (entry.AccountedCr != 0
+                                        if (entry.AccountedCr != 0
                                             // || entry.AccountedDr != 0
                                             )
-										{
-											try
-											{
-												accountInfoDto dto = new accountInfoDto();
-												dto.dealerCode = entry.Account.Segment3;
-												dto.creadNo = voucher.VoucherDisplayCode;
-												dto.invokeTime = System.DateTime.Now;
-												dto.UNineCreateUser = voucher.CreatedBy;
-												dto.remark = entry.Abstracts;
-												dto.changeType = ((entry.AccountedCr > 0) ? 1 : 0);
-                                                // operaTionType账户类型；现金、三包
-                                                // 现金，DJ(定金)；三包，SBXY(三包信用)
-                                                //if (entry.Account.Segment1.StartsWith("22410401") || entry.Account.Segment1 == "1122010302")
-                                                //{
-                                                //    dto.operaTionType = "DJ";
-                                                //}
-                                                //else if (entry.Account.Segment1.StartsWith("1122010101"))
-                                                //{
-                                                //    dto.operaTionType = "FCK";
-                                                //}
-                                                //else if (entry.Account.Segment1 == "1122010301")
-                                                //{
-                                                //    dto.operaTionType = "CBXY";
-                                                //}
-                                                //else if (entry.Account.Segment1 == "2241030801" || entry.Account.Segment1 == "2241030803")
-                                                //{
-                                                //    dto.operaTionType = "BZJ";
-                                                //}
-                                                //else if (entry.Account.Segment1 == "12210203")
-                                                //{
-                                                //    dto.operaTionType = "SBXY";
-                                                //}
-                                                //else
-                                                //{
-                                                //    dto.operaTionType = "FL";
-                                                //}
-                                                dto.operaTionType = dmsOperationType;
+                                        {
+                                            Customer cust = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), entry.Account.Segment3), new OqlParam[0]);
 
-												dto.amount = double.Parse(System.Math.Abs(entry.AccountedCr).ToString());
-												Customer cust = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), entry.Account.Segment3), new OqlParam[0]);
+                                            if (PubHelper.IsUpdateDMS(cust))
+                                            {
+                                                try
+                                                {
+                                                    accountInfoDto dto = new accountInfoDto();
+                                                    dto.dealerCode = entry.Account.Segment3;
+                                                    dto.creadNo = voucher.VoucherDisplayCode;
+                                                    dto.invokeTime = System.DateTime.Now;
+                                                    dto.UNineCreateUser = voucher.CreatedBy;
+                                                    dto.remark = entry.Abstracts;
+                                                    dto.changeType = ((entry.AccountedCr > 0) ? 1 : 0);
+                                                    // operaTionType账户类型；现金、三包
+                                                    // 现金，DJ(定金)；三包，SBXY(三包信用)
+                                                    //if (entry.Account.Segment1.StartsWith("22410401") || entry.Account.Segment1 == "1122010302")
+                                                    //{
+                                                    //    dto.operaTionType = "DJ";
+                                                    //}
+                                                    //else if (entry.Account.Segment1.StartsWith("1122010101"))
+                                                    //{
+                                                    //    dto.operaTionType = "FCK";
+                                                    //}
+                                                    //else if (entry.Account.Segment1 == "1122010301")
+                                                    //{
+                                                    //    dto.operaTionType = "CBXY";
+                                                    //}
+                                                    //else if (entry.Account.Segment1 == "2241030801" || entry.Account.Segment1 == "2241030803")
+                                                    //{
+                                                    //    dto.operaTionType = "BZJ";
+                                                    //}
+                                                    //else if (entry.Account.Segment1 == "12210203")
+                                                    //{
+                                                    //    dto.operaTionType = "SBXY";
+                                                    //}
+                                                    //else
+                                                    //{
+                                                    //    dto.operaTionType = "FL";
+                                                    //}
+                                                    dto.operaTionType = dmsOperationType;
 
-                                                if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
-                                                {
-                                                    // 电动车只有服务站
-                                                    dto.customerType = "101006";
-                                                }
-                                                else
-                                                {
-                                                    if (cust != null && cust.CustomerCategoryKey != null)
+                                                    dto.amount = double.Parse(System.Math.Abs(entry.AccountedCr).ToString());
+
+                                                    if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
                                                     {
-                                                        dto.customerType = cust.CustomerCategory.Code;
+                                                        // 电动车只有服务站
+                                                        dto.customerType = "101006";
                                                     }
-                                                }
-												ILogger logger = LoggerManager.GetLogger(typeof(Voucher));
-												logger.Info(string.Format("审核 dealerCode={0},creadNo={1},invokeTime={2},UNineCreateUser={3},remark={4},changeType={5},operaTionType={6},amount={7},customerType={8}", new object[]
+                                                    else
+                                                    {
+                                                        if (cust != null && cust.CustomerCategoryKey != null)
+                                                        {
+                                                            dto.customerType = cust.CustomerCategory.Code;
+                                                        }
+                                                    }
+                                                    ILogger logger = LoggerManager.GetLogger(typeof(Voucher));
+                                                    logger.Info(string.Format("审核 dealerCode={0},creadNo={1},invokeTime={2},UNineCreateUser={3},remark={4},changeType={5},operaTionType={6},amount={7},customerType={8}", new object[]
 												{
 													dto.dealerCode,
 													dto.creadNo,
@@ -114,17 +117,18 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 													dto.amount.ToString(),
 													dto.customerType
 												}), new object[0]);
-												accountInfoDto c = service.Do(dto);
-												if (c != null && c.flag == 0)
-												{
-													throw new System.ApplicationException(c.errMsg);
-												}
-											}
-											catch (System.Exception e)
-											{
-												throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
-											}
-										}
+                                                    accountInfoDto c = service.Do(dto);
+                                                    if (c != null && c.flag == 0)
+                                                    {
+                                                        throw new System.ApplicationException(c.errMsg);
+                                                    }
+                                                }
+                                                catch (System.Exception e)
+                                                {
+                                                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                                                }
+                                            }
+                                        }
 									}
 								}
 							}
@@ -145,63 +149,67 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                     //if (IsUpdateDMS(entry))
                                     if (dmsOperationType.IsNotNullOrWhiteSpace())
 									{
-										if (entry.AccountedCr != 0)
-										{
-											try
-											{
-												accountInfoDto dto = new accountInfoDto();
-												dto.dealerCode = entry.Account.Segment3;
-												dto.creadNo = voucher.VoucherDisplayCode;
-												dto.invokeTime = System.DateTime.Now;
-												dto.UNineCreateUser = voucher.CreatedBy;
-												dto.remark = entry.Abstracts;
-												dto.changeType = ((entry.AccountedCr > 0) ? 0 : 1);
-                                                //if (entry.Account.Segment1.StartsWith("22410401") || entry.Account.Segment1 == "1122010302")
-                                                //{
-                                                //    dto.operaTionType = "DJ";
-                                                //}
-                                                //else if (entry.Account.Segment1.StartsWith("1122010101"))
-                                                //{
-                                                //    dto.operaTionType = "FCK";
-                                                //}
-                                                //else if (entry.Account.Segment1 == "1122010301")
-                                                //{
-                                                //    dto.operaTionType = "CBXY";
-                                                //}
-                                                //else if (entry.Account.Segment1 == "2241030801" || entry.Account.Segment1 == "2241030803")
-                                                //{
-                                                //    dto.operaTionType = "BZJ";
-                                                //}
-                                                //else if (entry.Account.Segment1 == "12210203")
-                                                //{
-                                                //    dto.operaTionType = "SBXY";
-                                                //}
-                                                //else
-                                                //{
-                                                //    dto.operaTionType = "FL";
-                                                //}
-                                                dto.operaTionType = dmsOperationType;
-												dto.amount = double.Parse(System.Math.Abs(entry.AccountedCr).ToString());
-												Customer cust = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), entry.Account.Segment3), new OqlParam[0]);
-                                                //if (cust != null && cust.CustomerCategoryKey != null)
-                                                //{
-                                                //    dto.customerType = cust.CustomerCategory.Code;
-                                                //}
+                                        if (entry.AccountedCr != 0)
+                                        {
+                                            Customer cust = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), entry.Account.Segment3), new OqlParam[0]);
 
-                                                if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
+                                            if (PubHelper.IsUpdateDMS(cust))
+                                            {
+                                                try
                                                 {
-                                                    // 电动车只有服务站
-                                                    dto.customerType = "101006";
-                                                }
-                                                else
-                                                {
-                                                    if (cust != null && cust.CustomerCategoryKey != null)
+                                                    accountInfoDto dto = new accountInfoDto();
+                                                    dto.dealerCode = entry.Account.Segment3;
+                                                    dto.creadNo = voucher.VoucherDisplayCode;
+                                                    dto.invokeTime = System.DateTime.Now;
+                                                    dto.UNineCreateUser = voucher.CreatedBy;
+                                                    dto.remark = entry.Abstracts;
+                                                    dto.changeType = ((entry.AccountedCr > 0) ? 0 : 1);
+                                                    //if (entry.Account.Segment1.StartsWith("22410401") || entry.Account.Segment1 == "1122010302")
+                                                    //{
+                                                    //    dto.operaTionType = "DJ";
+                                                    //}
+                                                    //else if (entry.Account.Segment1.StartsWith("1122010101"))
+                                                    //{
+                                                    //    dto.operaTionType = "FCK";
+                                                    //}
+                                                    //else if (entry.Account.Segment1 == "1122010301")
+                                                    //{
+                                                    //    dto.operaTionType = "CBXY";
+                                                    //}
+                                                    //else if (entry.Account.Segment1 == "2241030801" || entry.Account.Segment1 == "2241030803")
+                                                    //{
+                                                    //    dto.operaTionType = "BZJ";
+                                                    //}
+                                                    //else if (entry.Account.Segment1 == "12210203")
+                                                    //{
+                                                    //    dto.operaTionType = "SBXY";
+                                                    //}
+                                                    //else
+                                                    //{
+                                                    //    dto.operaTionType = "FL";
+                                                    //}
+                                                    dto.operaTionType = dmsOperationType;
+                                                    dto.amount = double.Parse(System.Math.Abs(entry.AccountedCr).ToString());
+                                                    //Customer cust = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), entry.Account.Segment3), new OqlParam[0]);
+                                                    //if (cust != null && cust.CustomerCategoryKey != null)
+                                                    //{
+                                                    //    dto.customerType = cust.CustomerCategory.Code;
+                                                    //}
+
+                                                    if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
                                                     {
-                                                        dto.customerType = cust.CustomerCategory.Code;
+                                                        // 电动车只有服务站
+                                                        dto.customerType = "101006";
                                                     }
-                                                }
-												ILogger logger = LoggerManager.GetLogger(typeof(Voucher));
-												logger.Info(string.Format("弃审 dealerCode={0},creadNo={1},invokeTime={2},UNineCreateUser={3},remark={4},changeType={5},operaTionType={6},amount={7},customerType={8}", new object[]
+                                                    else
+                                                    {
+                                                        if (cust != null && cust.CustomerCategoryKey != null)
+                                                        {
+                                                            dto.customerType = cust.CustomerCategory.Code;
+                                                        }
+                                                    }
+                                                    ILogger logger = LoggerManager.GetLogger(typeof(Voucher));
+                                                    logger.Info(string.Format("弃审 dealerCode={0},creadNo={1},invokeTime={2},UNineCreateUser={3},remark={4},changeType={5},operaTionType={6},amount={7},customerType={8}", new object[]
 												{
 													dto.dealerCode,
 													dto.creadNo,
@@ -213,17 +221,18 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 													dto.amount.ToString(),
 													dto.customerType
 												}), new object[0]);
-												accountInfoDto c = service.Do(dto);
-												if (c != null && c.flag == 0)
-												{
-													throw new System.ApplicationException(c.errMsg);
-												}
-											}
-											catch (System.Exception e)
-											{
-												throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
-											}
-										}
+                                                    accountInfoDto c = service.Do(dto);
+                                                    if (c != null && c.flag == 0)
+                                                    {
+                                                        throw new System.ApplicationException(c.errMsg);
+                                                    }
+                                                }
+                                                catch (System.Exception e)
+                                                {
+                                                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                                                }
+                                            }
+                                        }
 									}
 								}
 							}

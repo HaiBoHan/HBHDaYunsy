@@ -28,7 +28,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 							{
 								throw new System.ApplicationException("分类不可为空");
 							}
-                            if (IsUpdateDMS(customer)
+                            if (PubHelper.IsUpdateDMS(customer)
                                 )
 							{
 								try
@@ -68,21 +68,5 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				}
 			}
 		}
-
-        public static bool IsUpdateDMS(Customer customer)
-        {
-            if (customer != null
-                && customer.CustomerCategory != null
-                )
-            {
-                return (customer.CustomerCategoryKey != null && (customer.CustomerCategory.Code == "101007" || customer.CustomerCategory.Code == "101006"))
-                                                || (customer.CustomerCategory != null
-                                                    && customer.CustomerCategory.DescFlexField != null
-                                                    && customer.CustomerCategory.DescFlexField.PrivateDescSeg1.GetBool()
-                                                    );
-            }
-
-            return false;
-        }
 	}
 }
