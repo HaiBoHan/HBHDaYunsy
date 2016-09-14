@@ -14,6 +14,7 @@ using UFIDA.U9.InvTrans.Trans;
 using UFSoft.UBF.PL;
 using UFSoft.UBF.Business;
 using UFIDA.U9.CBO.SCM.Customer;
+using UFIDA.U9.SPR.SalePriceAdjustment;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -124,14 +125,27 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             }
         }
 
-        public static bool IsOrg_Customer2DMS()
+        public static bool IsOrg_Customer2DMS(Customer customer)
         {
-            return PubHelper.SaleOrg2DMS.Contains(Context.LoginOrg.Code);
+            if (customer != null
+                && customer.Org != null
+                )
+            {
+                return PubHelper.SaleOrg2DMS.Contains(customer.Org.Code);
+            }
+            return false;
         }
 
-        public static bool IsOrg_Supplier2DMS()
+        public static bool IsOrg_Supplier2DMS(Supplier supplier)
         {
-            return PubHelper.MfgOrg2DMS.Contains(Context.LoginOrg.Code);
+            if (supplier != null
+                && supplier.Org != null
+                )
+            {
+                return PubHelper.MfgOrg2DMS.Contains(supplier.Org.Code);
+            }
+
+            return false;
         }
 
         public static bool IsOrg_SupplierItem2DMS()
@@ -139,9 +153,28 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             return PubHelper.MfgOrg2DMS.Contains(Context.LoginOrg.Code);
         }
 
-        public static bool IsOrg_SalePriceList2DMS()
+        public static bool IsOrg_SalePriceList2DMS(SalePriceList priceList)
         {
-            return PubHelper.SaleOrg2DMS.Contains(Context.LoginOrg.Code);
+            //return PubHelper.SaleOrg2DMS.Contains(Context.LoginOrg.Code);
+            if (priceList != null
+                && priceList.Org != null
+                )
+            {
+                return PubHelper.SaleOrg2DMS.Contains(priceList.Org.Code);
+            }
+            return false;
+        }
+
+        public static bool IsOrg_SalePriceList2DMS(SalePriceAdjustment priceAdjust)
+        {
+            //return PubHelper.SaleOrg2DMS.Contains(Context.LoginOrg.Code);
+            if (priceAdjust != null
+                && priceAdjust.Org != null
+                )
+            {
+                return PubHelper.SaleOrg2DMS.Contains(priceAdjust.Org.Code);
+            }
+            return false;
         }
 
         public static bool IsOrg_Finance2DMS()
@@ -153,6 +186,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         {
             if (wh != null)
             {
+                // 2016-09-14 熊彬，全部改成扩展字段配置
                 if (wh.DescFlexField != null
                     && wh.DescFlexField.PrivateDescSeg3.GetBool()
                     )
@@ -160,10 +194,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                     return true;
                 }
 
-                if (wh.Code.StartsWith("SHBJ"))
-                {
-                    return true;
-                }
+                // 2016-09-14 熊彬，全部改成扩展字段配置
+                //if (wh.Code.StartsWith("SHBJ"))
+                //{
+                //    return true;
+                //}
             }
 
             return false;
@@ -209,8 +244,14 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 && supplier.Category != null
                 )
             {
-                return supplier.Category.Code == "001"
-                    || (supplier.Category != null
+                //return supplier.Category.Code == "001"
+                //    || (supplier.Category != null
+                //        && supplier.Category.DescFlexField != null
+                //        && supplier.Category.DescFlexField.PrivateDescSeg1.GetBool()
+                //        );
+
+                // 2016-09-14 熊彬，全部改成扩展字段配置
+                return (supplier.Category != null
                         && supplier.Category.DescFlexField != null
                         && supplier.Category.DescFlexField.PrivateDescSeg1.GetBool()
                         );
@@ -225,9 +266,16 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 && customer.CustomerCategory != null
                 )
             {
-                return (customer.CustomerCategoryKey != null && (customer.CustomerCategory.Code == "101007" || customer.CustomerCategory.Code == "101006"))
-                    // 新的湖北的DMS经销商 设置方式
-                    || (customer.CustomerCategory != null
+                //return (customer.CustomerCategoryKey != null && (customer.CustomerCategory.Code == "101007" || customer.CustomerCategory.Code == "101006"))
+                //    // 新的湖北的DMS经销商 设置方式
+                //    || (customer.CustomerCategory != null
+                //        && customer.CustomerCategory.DescFlexField != null
+                //        && customer.CustomerCategory.DescFlexField.PrivateDescSeg1.GetBool()
+                //        );
+
+                // 2016-09-14 熊彬，全部改成扩展字段配置
+                return 
+                        (customer.CustomerCategory != null
                         && customer.CustomerCategory.DescFlexField != null
                         && customer.CustomerCategory.DescFlexField.PrivateDescSeg1.GetBool()
                         );

@@ -19,7 +19,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				if (!(key == null))
 				{
 					Customer customer = key.GetEntity() as Customer;
-					if (PubHelper.IsOrg_Customer2DMS())
+                    if (PubHelper.IsOrg_Customer2DMS(customer))
 					{
 						bool flag = PubHelper.IsUsedDMSAPI();
 						if (flag)

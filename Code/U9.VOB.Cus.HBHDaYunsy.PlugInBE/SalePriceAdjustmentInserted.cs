@@ -17,7 +17,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				if (!(key == null))
 				{
 					SalePriceAdjustment SalepriceAdjustment = key.GetEntity() as SalePriceAdjustment;
-                    if (PubHelper.IsOrg_SalePriceList2DMS())
+                    if (PubHelper.IsOrg_SalePriceList2DMS(SalepriceAdjustment))
 					{
 						bool flag = PubHelper.IsUsedDMSAPI();
 						if (flag)

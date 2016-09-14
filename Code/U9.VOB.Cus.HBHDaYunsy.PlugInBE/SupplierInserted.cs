@@ -19,7 +19,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				if (!(key == null))
 				{
                     Supplier supplier = key.GetEntity() as Supplier;
-                    if (PubHelper.IsOrg_Supplier2DMS())
+                    if (PubHelper.IsOrg_Supplier2DMS(supplier))
 					{
 						bool flag = PubHelper.IsUsedDMSAPI();
                         if (flag)
