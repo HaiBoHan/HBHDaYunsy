@@ -516,7 +516,7 @@
                     shipdto.DocumentType = (new CommonArchiveDataDTOData());
                     // 风驰电动车
                     //if (Context.LoginOrg.Code == "70")
-                    if (Context.LoginOrg.Code == HBHCommon.Const_ElectricOrgCode)
+                    if (Context.LoginOrg.Code == HBHCommon.Const_OrgCode_Electric)
                     {
                         if (firstDTO.OrderType == "0")
                         {
@@ -683,7 +683,7 @@
 
                     // 默认价格含税
                     shipdto.IsPriceIncludeTax = true;
-                    if (Context.LoginOrg.Code == HBHCommon.Const_ElectricOrgCode)
+                    if (Context.LoginOrg.Code == HBHCommon.Const_OrgCode_Electric)
                     {
                         SalePriceList priceList = SalePriceList.Finder.Find("Code=@Code"
                             , new OqlParam(HBHCommon.Const_ElectricPartPriceListCode)
@@ -696,6 +696,7 @@
                             shipdto.PriceListName = priceList.Name;
                         }
                     }
+                    //shipdto.IsModPriceList 
 
                     shipdto.ShipLines = (new System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipLineDTOForIndustryChainData>());
                     foreach (ShipLineDTO linedto in listLineDTO)

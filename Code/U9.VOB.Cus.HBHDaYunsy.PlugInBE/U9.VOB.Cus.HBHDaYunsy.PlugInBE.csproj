@@ -159,6 +159,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ShipInserted.cs" />
     <Compile Include="SingleWorkPlanCreated.cs" />
     <Compile Include="SingleWorkPlanUpdated.cs" />
     <Compile Include="SODeleted.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="SupplySourceInserted.cs" />
     <Compile Include="SupplySourceDeleted.cs" />
     <Compile Include="SupplySourceUpdated.cs" />
+    <Compile Include="CompleteRptRcvLineInserted.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

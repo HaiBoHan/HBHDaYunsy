@@ -15,7 +15,17 @@ namespace UFIDA.U9.Cust.HBDY.API
         /// <summary>
         /// 新能源组织
         /// </summary>
-        public const string Const_ElectricOrgCode = "70";
+        public const string Const_OrgCode_Electric = "70";
+        // 湖北大运汽车有限公司
+        /// <summary>
+        /// 湖北大运汽车有限公司
+        /// </summary>
+        public const string Const_OrgCode_Hubei = "20";
+        // 成都大运十堰分公司
+        /// <summary>
+        /// 成都大运十堰分公司
+        /// </summary>
+        public const string Const_OrgCode_Chengdu = "10";
 
         /// <summary>
         /// 默认币种编码

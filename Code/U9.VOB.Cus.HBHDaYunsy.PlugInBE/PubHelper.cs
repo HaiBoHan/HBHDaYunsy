@@ -104,6 +104,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         /// 三包
         /// </summary>
         public const string Const_ShipDocType_SB = "CK-SB";
+
         // 生产组织转DMS
         private static List<string> lstDMSShipDocType = new List<string>();
         /// <summary>
