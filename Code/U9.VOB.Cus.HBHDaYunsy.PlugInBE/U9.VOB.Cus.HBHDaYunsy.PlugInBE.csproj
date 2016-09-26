@@ -159,7 +159,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ShipInserted.cs" />
+    <Compile Include="Ship_BeforeDefaultValue.cs" />
     <Compile Include="SingleWorkPlanCreated.cs" />
     <Compile Include="SingleWorkPlanUpdated.cs" />
     <Compile Include="SODeleted.cs" />
@@ -487,6 +487,7 @@
     </None>
     <Content Include="U9.VOB.Cus.HBHDaYunsy.PlugInBE.sub.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
