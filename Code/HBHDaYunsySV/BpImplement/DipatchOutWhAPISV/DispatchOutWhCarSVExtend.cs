@@ -552,9 +552,25 @@
                         }
                         shiplinedto.WH = (new CommonArchiveDataDTOData());
                         string whcode = string.Empty;
+                        /*  OrderType
+                        401102;//预测订单
+                        401101;//追加订单
+                        401103;//监控车订单
+                        401104;//储备订单
+                         */
+                        /*
+                        0080	储运整车库
+                        0081	储运车库2
+                        0090	储运二类底盘库
+                         */
+                        /*
+                        是不是 监控车订单，从 储运车库2 (0081) 发车；
+底盘，从 储运二类底盘库 (0090) 发车；
+其他订单，从  储运整车库 (0080) 发车？
+                         */
                         if (firstDTO.OrderType == 401103 && firstDTO.IsSale)
                         {
-                            whcode = "0080";
+                            whcode = "0081";
                         }
                         else if (firstDTO.VehicleOrChassis == 400102)
                         {
@@ -569,6 +585,7 @@
                         if (whout != null && whout.DepositType == DepositTypeEnum.VMI)
                         {
                             shiplinedto.VMI = (true);
+                            //shiplinedto.VMI = whout.DepositType == DepositTypeEnum.VMI;
                             if (whout.Supplier != null)
                             {
                                 shiplinedto.Supplier = (new CommonArchiveDataDTOData());

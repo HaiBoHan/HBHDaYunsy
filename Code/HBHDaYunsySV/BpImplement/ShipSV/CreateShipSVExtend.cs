@@ -525,7 +525,9 @@
                         }
                         else if (firstDTO.OrderType == "1")
                         {
-                            throw new BusinessException("电动车无储备订单出库业务!");
+                            //throw new BusinessException("电动车无储备订单出库业务!");
+                            //doctypecode = "CK-CH";
+                            doctypecode = HBHCommon.Const_ShipDocType_PH;
                         }
                         else if (firstDTO.OrderType == "2")
                         {

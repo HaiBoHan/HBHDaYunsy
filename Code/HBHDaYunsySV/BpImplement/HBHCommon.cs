@@ -83,12 +83,19 @@ namespace UFIDA.U9.Cust.HBDY.API
         /// <summary>
         /// 现金
         /// </summary>
-        public const string Const_ShipDocType_XJ = "CK-XJ";
+        public const string Const_ShipDocType_XJ = "CK-XJ"; 
         // 三包
         /// <summary>
         /// 三包
         /// </summary>
         public const string Const_ShipDocType_SB = "CK-SB";
+        
+        // 出货(储备订单)
+        /// <summary>
+        /// 出货(储备订单)
+        /// </summary>
+        public const string Const_ShipDocType_PH = "CK-PH";
+
         // 生产组织转DMS
         private static List<string> lstDMSShipDocType = new List<string>();
         /// <summary>
