@@ -431,6 +431,29 @@
                             errormessage += string.Format("[{0}]DMS销售订单的[经销商代码({1})]在U9系统中找不到对应的客户档案,请同步,", linedto.DmsSaleNo, linedto.DealerCode);
                         }
                     }
+
+                    // 校验价格是否与价表一致
+
+                    SalePriceLine priceline = SalePriceLine.Finder.Find("SalePriceList.Code=@Code and Org=@Org and @Date between FromDate and ToDate and ItemInfo.ItemCode=@ItemCode"
+                        , new OqlParam(HBHCommon.Const_ElectricPartPriceListCode)
+                        , new OqlParam(Context.LoginOrg != null ? Context.LoginOrg.ID : -1)
+                        , new OqlParam(DateTime.Today)
+                        , new OqlParam(linedto.ErpMaterialCode)
+                        );
+
+                    if (priceline != null)
+                    {
+                        if (priceline.Price * linedto.Number != linedto.Money)
+                        {
+                            errormessage += string.Format("[{0}]DMS销售出库单的ERP料号[{1}]的 价表价格[{2}]乘以数量[{3}]，不等于总金额[{4}]!"
+                                , linedto.DMSShipNo
+                                , linedto.ErpMaterialCode
+                                , priceline.Price.ToString("G0")
+                                , linedto.Number.ToString("G0")
+                                , linedto.Money.ToString("G0")
+                                );
+                        }
+                    }
                     shiplinelist.Add(linedto);
                 }
                 if (string.IsNullOrEmpty(linedto.ErpMaterialCode))
