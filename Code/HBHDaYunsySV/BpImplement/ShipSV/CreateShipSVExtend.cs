@@ -425,35 +425,45 @@
                     }
                     else
                     {
+                        // 客户配置价表，取客户配置价表；否则取电动车价表；
+                        //string priceListCode = HBHCommon.Const_ElectricPartPriceListCode;
+                        string priceListCode = HBHCommon.GetPartPriceListCode();
                         Customer customer = Customer.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID.ToString(), linedto.DealerCode), new OqlParam[0]);
                         if (customer == null)
                         {
                             errormessage += string.Format("[{0}]DMS销售订单的[经销商代码({1})]在U9系统中找不到对应的客户档案,请同步,", linedto.DmsSaleNo, linedto.DealerCode);
                         }
-                    }
-
-                    // 校验价格是否与价表一致
-
-                    SalePriceLine priceline = SalePriceLine.Finder.Find("SalePriceList.Code=@Code and Org=@Org and @Date between FromDate and ToDate and ItemInfo.ItemCode=@ItemCode"
-                        , new OqlParam(HBHCommon.Const_ElectricPartPriceListCode)
-                        , new OqlParam(Context.LoginOrg != null ? Context.LoginOrg.ID : -1)
-                        , new OqlParam(DateTime.Today)
-                        , new OqlParam(linedto.ErpMaterialCode)
-                        );
-
-                    if (priceline != null)
-                    {
-                        if (priceline.Price * linedto.Number != linedto.Money)
+                        else
                         {
-                            errormessage += string.Format("[{0}]DMS销售出库单的ERP料号[{1}]的 价表价格[{2}]乘以数量[{3}]，不等于总金额[{4}]!"
-                                , linedto.DMSShipNo
-                                , linedto.ErpMaterialCode
-                                , priceline.Price.ToString("G0")
-                                , linedto.Number.ToString("G0")
-                                , linedto.Money.ToString("G0")
+                            priceListCode = customer.PriceListCode;
+                        }
+
+                        if (priceListCode.IsNotNullOrWhiteSpace())
+                        {
+                            // 校验价格是否与价表一致
+                            SalePriceLine priceline = SalePriceLine.Finder.Find("SalePriceList.Code=@Code and Org=@Org and @Date between FromDate and ToDate and ItemInfo.ItemCode=@ItemCode"
+                                , new OqlParam(priceListCode)
+                                , new OqlParam(Context.LoginOrg != null ? Context.LoginOrg.ID : -1)
+                                , new OqlParam(DateTime.Today)
+                                , new OqlParam(linedto.ErpMaterialCode)
                                 );
+
+                            if (priceline != null)
+                            {
+                                if (priceline.Price * linedto.Number != linedto.Money)
+                                {
+                                    errormessage += string.Format("[{0}]DMS销售出库单的ERP料号[{1}]的 价表价格[{2}]乘以数量[{3}]，不等于总金额[{4}]!"
+                                        , linedto.DMSShipNo
+                                        , linedto.ErpMaterialCode
+                                        , priceline.Price.ToString("G0")
+                                        , linedto.Number.ToString("G0")
+                                        , linedto.Money.ToString("G0")
+                                        );
+                                }
+                            }
                         }
                     }
+
                     shiplinelist.Add(linedto);
                 }
                 if (string.IsNullOrEmpty(linedto.ErpMaterialCode))
@@ -708,10 +718,25 @@
 
                     // 默认价格含税
                     shipdto.IsPriceIncludeTax = true;
-                    if (Context.LoginOrg.Code == HBHCommon.Const_OrgCode_Electric)
+                    //if (Context.LoginOrg.Code == HBHCommon.Const_OrgCode_Electric)
+                    //{
+                    //    SalePriceList priceList = SalePriceList.Finder.Find("Code=@Code"
+                    //        , new OqlParam(HBHCommon.Const_ElectricPartPriceListCode)
+                    //        );
+
+                    //    if (priceList != null)
+                    //    {
+                    //        shipdto.PriceList = priceList.ID;
+                    //        shipdto.PriceListNo = priceList.Code;
+                    //        shipdto.PriceListName = priceList.Name;
+                    //    }
+                    //}
+
+                    string priceListCode = HBHCommon.GetPartPriceListCode();
+                    if (priceListCode.IsNotNullOrWhiteSpace())
                     {
                         SalePriceList priceList = SalePriceList.Finder.Find("Code=@Code"
-                            , new OqlParam(HBHCommon.Const_ElectricPartPriceListCode)
+                            , new OqlParam(priceListCode)
                             );
 
                         if (priceList != null)
@@ -721,6 +746,7 @@
                             shipdto.PriceListName = priceList.Name;
                         }
                     }
+
                     //shipdto.IsModPriceList 
 
                     shipdto.ShipLines = (new System.Collections.Generic.List<UFIDA.U9.ISV.SM.ShipLineDTOForIndustryChainData>());

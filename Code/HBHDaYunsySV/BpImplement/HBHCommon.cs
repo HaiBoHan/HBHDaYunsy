@@ -6,6 +6,7 @@ using UFSoft.UBF.Util.Log;
 using UFIDA.U9.ISV.SM.Proxy;
 using UFIDA.U9.ISV.SM;
 using UFSoft.UBF.Transactions;
+using UFIDA.U9.Base;
 
 namespace UFIDA.U9.Cust.HBDY.API
 {
@@ -78,6 +79,30 @@ namespace UFIDA.U9.Cust.HBDY.API
         /// </summary>
         public const string Const_ElectricPartPriceListCode = "SPL2016050007";
 
+        // 湖北大运,配件,价表编码
+        /// <summary>
+        /// 湖北大运,配件,价表编码
+        /// </summary>
+        public const string Const_HuBeiPartPriceListCode = "SPL2015070003";
+
+        // 获得价表编码
+        /// <summary>
+        /// 获得价表编码
+        /// </summary>
+        /// <returns></returns>
+        public static string GetPartPriceListCode()
+        {
+            if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            {
+                return Const_ElectricPartPriceListCode;
+            }
+            else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
+            {
+                return Const_HuBeiPartPriceListCode;
+            }
+
+            return string.Empty;
+        }
 
         // 现金
         /// <summary>
@@ -154,21 +179,30 @@ namespace UFIDA.U9.Cust.HBDY.API
 
     internal enum DaYun2DMSTransferTypeEnum
     {
+        // 库存
         /// <summary>
         /// 库存
         /// </summary>
         Whqoh = 0,
+        // 配件主数据
         /// <summary>
         /// 配件主数据
         /// </summary>
         SupplySource = 1,
+        // 供应商
         /// <summary>
         /// 供应商
         /// </summary>
         Supplier = 2,
+        // 客户(经销商)
         /// <summary>
         /// 客户(经销商)
         /// </summary>
         Customer = 3,
+        // 价表
+        /// <summary>
+        /// 价表
+        /// </summary>
+        PriceList = 4,
     }
 }

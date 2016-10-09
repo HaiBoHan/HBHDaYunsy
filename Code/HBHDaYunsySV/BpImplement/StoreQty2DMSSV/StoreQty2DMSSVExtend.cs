@@ -76,6 +76,11 @@ namespace U9.VOB.Cus.HBHDaYunsy
                             UpdateDMS_Customer(bpObj);
                         }
                         break;
+                    case (int)DaYun2DMSTransferTypeEnum.PriceList:
+                        {
+                            UpdateDMS_PriceList(bpObj);
+                        }
+                        break;
                 }
             }
 
@@ -252,6 +257,57 @@ namespace U9.VOB.Cus.HBHDaYunsy
                     {
                         //PubExtend.BatchSend2DMS_Async(lst, 2);
                         PubExtend.BatchSend2DMS_Async(page, 2);
+                    }
+                }
+            }
+        }
+
+        private void UpdateDMS_PriceList(StoreQty2DMSSV bpObj)
+        {
+            string opath = "1=1 and SalePriceList.Code = @Code and SalePriceList.Org=@Org  @AddSuptOpath ";
+
+            if (bpObj.SupItems != null
+                && bpObj.SupItems.Count > 0
+                )
+            {
+                string ids = bpObj.SupItems.GetOpathFromList();
+
+                opath = opath.Replace("@AddSuptOpath"
+                    , string.Format(" and ID in ({0})", ids)
+                    );
+            }
+            else
+            {
+                // 不选，就不同步
+                opath = opath.Replace("@AddSuptOpath"
+                    , " and 1=0 "
+                    );
+            }
+
+            string priceListCode = HBHCommon.GetPartPriceListCode();
+
+            if (priceListCode.IsNotNullOrWhiteSpace())
+            {
+                SalePriceLine.EntityList lst = SalePriceLine.Finder.FindAll(opath
+                    , new OqlParam(priceListCode)
+                    , new OqlParam(Context.LoginOrg.ID)
+                    );
+
+                if (lst != null
+                    && lst.Count > 0
+                    )
+                {
+                    List<List<SalePriceLine>> pageList = PageList<SalePriceLine>(lst);
+
+                    if (pageList != null
+                        && pageList.Count > 0
+                        )
+                    {
+                        foreach (List<SalePriceLine> page in pageList)
+                        {
+                            //PubExtend.BatchSend2DMS_Async(lst, 2);
+                            PubExtend.BatchSend2DMS_Async(page, 2);
+                        }
                     }
                 }
             }
