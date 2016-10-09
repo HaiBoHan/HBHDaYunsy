@@ -120,6 +120,9 @@
     <Reference Include="UFIDA.U9.SCM.PM.ReceivementUI.WebPart">
       <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.PM.ReceivementUI.WebPart.dll</HintPath>
     </Reference>
+    <Reference Include="UFIDA.U9.SCM.SD.SalePriceListUI.WebPart">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\UFIDA.U9.SCM.SD.SalePriceListUI.WebPart.dll</HintPath>
+    </Reference>
     <Reference Include="UFIDA.U9.SCM.SD.ShipUI.WebPart">
       <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.SD.ShipUI.WebPart.dll</HintPath>
     </Reference>
@@ -265,10 +268,12 @@
     <Compile Include="SupplySourceList_UIPlugin.cs" />
     <Compile Include="SupplierList_UIPlugin.cs" />
     <Compile Include="CustomerList_UIPlugin.cs" />
+    <Compile Include="SalePriceListBList_UIPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="U9.VOB.Cus.HBHDaYunsy.UIPlugIn.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
