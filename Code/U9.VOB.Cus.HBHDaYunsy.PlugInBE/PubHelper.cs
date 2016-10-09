@@ -26,6 +26,30 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         /// </summary>
         public const string Const_ElectricPartPriceListCode = "SPL2016050007";
 
+        // 湖北大运,配件,价表编码
+        /// <summary>
+        /// 湖北大运,配件,价表编码
+        /// </summary>
+        public const string Const_HuBeiPartPriceListCode = "SPL2015070003";
+
+        // 获得价表编码
+        /// <summary>
+        /// 获得价表编码
+        /// </summary>
+        /// <returns></returns>
+        public static string GetPartPriceListCode()
+        {
+            if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            {
+                return Const_ElectricPartPriceListCode;
+            }
+            else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
+            {
+                return Const_HuBeiPartPriceListCode;
+            }
+
+            return string.Empty;
+        }
 
         private static List<string> lstPriceList2DMS = new List<string>();
         public static List<string> PriceList2DMS
@@ -34,11 +58,24 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             {
                 if (lstPriceList2DMS.Count == 0)
                 {
-                    lstPriceList2DMS.Add(Const_ElectricPartPriceListCode);
+                    lstPriceList2DMS.Add(
+                        GetPriceListKey(Const_OrgCode_Electric, Const_ElectricPartPriceListCode)
+                        );
+                    lstPriceList2DMS.Add(
+                        GetPriceListKey(Const_OrgCode_Hubei, Const_HuBeiPartPriceListCode)
+                        );
                 }
 
                 return lstPriceList2DMS;
             }
+        }
+
+        public static string GetPriceListKey(string orgCode, string pricelistCode)
+        {
+            return string.Format("{0}--{1}"
+                , orgCode
+                , pricelistCode
+                );
         }
 
         // 新能源组织
@@ -325,27 +362,39 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         public static SalePriceLine GetSalePriceList(SupplierItem supplierItem)
         {
             string opath = string.Format("SalePriceList.Org={0} and ItemInfo.ItemID={1} and Active=1 and '{2}' between FromDate and ToDate ", Context.LoginOrg.ID.ToString(), supplierItem.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString());
-            if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            //if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            //{
+            //    opath += string.Format(" and SalePriceList.Code='{0}'", Const_ElectricPartPriceListCode);
+            //}
+            //else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
+            //{
+            //    //opath += string.Format(" and SalePriceList.Code={0}", Const_SalePartPriceListCode);
+            //}
+
+            string pricelistCode = GetPartPriceListCode();
+            if (pricelistCode.IsNotNullOrWhiteSpace())
             {
-                opath += string.Format(" and SalePriceList.Code='{0}'", Const_ElectricPartPriceListCode);
+                opath += string.Format(" and SalePriceList.Code='{0}'", pricelistCode);
             }
-            else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
-            {
-                //opath += string.Format(" and SalePriceList.Code={0}", Const_SalePartPriceListCode);
-            }
+
             return SalePriceLine.Finder.Find(opath);
         }
 
         public static SalePriceLine GetSalePriceList(SupplySource supplierItem)
         {
             string opath = string.Format("SalePriceList.Org={0} and ItemInfo.ItemID={1} and Active=1 and '{2}' between FromDate and ToDate ", Context.LoginOrg.ID.ToString(), supplierItem.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString());
-            if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            //if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            //{
+            //    opath += string.Format(" and SalePriceList.Code='{0}'", Const_ElectricPartPriceListCode);
+            //}
+            //else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
+            //{
+            //    //opath += string.Format(" and SalePriceList.Code={0}", Const_SalePartPriceListCode);
+            //}
+            string pricelistCode = GetPartPriceListCode();
+            if (pricelistCode.IsNotNullOrWhiteSpace())
             {
-                opath += string.Format(" and SalePriceList.Code='{0}'", Const_ElectricPartPriceListCode);
-            }
-            else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
-            {
-                //opath += string.Format(" and SalePriceList.Code={0}", Const_SalePartPriceListCode);
+                opath += string.Format(" and SalePriceList.Code='{0}'", pricelistCode);
             }
             return SalePriceLine.Finder.Find(opath);
         }

@@ -112,7 +112,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
         public static bool IsUpdateDMS(SalePriceList SalepriceList)
         {
-            return PubHelper.PriceList2DMS.Contains(SalepriceList.Code);
+            string pricelistKey = PubHelper.GetPriceListKey(Context.LoginOrg.Code, SalepriceList.Code);
+            return PubHelper.PriceList2DMS.Contains(pricelistKey);
         }
 	}
 }

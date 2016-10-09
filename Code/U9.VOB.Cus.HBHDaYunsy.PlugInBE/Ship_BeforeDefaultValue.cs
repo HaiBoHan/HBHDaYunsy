@@ -30,44 +30,44 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         && entity.DescFlexField.PrivateDescSeg1.IsNotNullOrWhiteSpace()
                         )
                     {
-                        if (entity.SysState == UFSoft.UBF.PL.Engine.ObjectState.Inserted)
-                        {
-                            if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
-                            {
-                                if (entity.DocumentType != null)
-                                {
-                                    if (entity.DocumentType.Code == PubHelper.Const_ShipDocType_XJ
-                                        || entity.DocumentType.Code == PubHelper.Const_ShipDocType_SB
-                                        )
-                                    {
-                                        if (entity.PriceList <= 0)
-                                        {
-                                            SalePriceList priceList = SalePriceList.Finder.Find("Code=@Code"
-                                                , new OqlParam(PubHelper.Const_ElectricPartPriceListCode)
-                                                );
+                        //if (entity.SysState == UFSoft.UBF.PL.Engine.ObjectState.Inserted)
+                        //{
+                        //    if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
+                        //    {
+                        //        if (entity.DocumentType != null)
+                        //        {
+                        //            if (entity.DocumentType.Code == PubHelper.Const_ShipDocType_XJ
+                        //                || entity.DocumentType.Code == PubHelper.Const_ShipDocType_SB
+                        //                )
+                        //            {
+                        //                if (entity.PriceList <= 0)
+                        //                {
+                        //                    SalePriceList priceList = SalePriceList.Finder.Find("Code=@Code"
+                        //                        , new OqlParam(PubHelper.Const_ElectricPartPriceListCode)
+                        //                        );
 
-                                            if (priceList != null)
-                                            {
-                                                entity.PriceList = priceList.ID;
-                                                entity.PriceListNo = priceList.Code;
-                                                entity.PriceListName = priceList.Name;
+                        //                    if (priceList != null)
+                        //                    {
+                        //                        entity.PriceList = priceList.ID;
+                        //                        entity.PriceListNo = priceList.Code;
+                        //                        entity.PriceListName = priceList.Name;
 
-                                                foreach (ShipLine line in entity.ShipLines)
-                                                {
-                                                    line.PriceList = priceList.ID;
-                                                    line.PriceListCode = priceList.Code;
-                                                    line.PriceListName = priceList.Name;
+                        //                        foreach (ShipLine line in entity.ShipLines)
+                        //                        {
+                        //                            line.PriceList = priceList.ID;
+                        //                            line.PriceListCode = priceList.Code;
+                        //                            line.PriceListName = priceList.Name;
 
-                                                    line.PriceSource = PriceSourceEnum.PriceList;
-                                                }
+                        //                            line.PriceSource = PriceSourceEnum.PriceList;
+                        //                        }
 
-                                            }
-                                        }
+                        //                    }
+                        //                }
 
-                                    }
-                                }
-                            }
-                        }
+                        //            }
+                        //        }
+                        //    }
+                        //}
                     }
                 }
             }

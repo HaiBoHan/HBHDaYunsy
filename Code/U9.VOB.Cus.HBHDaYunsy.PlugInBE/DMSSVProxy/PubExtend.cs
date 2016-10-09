@@ -280,6 +280,86 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             }
         }
 
+        public static void BatchSend2DMS_Async(IList<SalePriceLine> lstErpData, int actionType)
+        {
+            if (lstErpData != null
+                && lstErpData.Count > 0
+                )
+            {
+                DMSAsync_PI06.PI06Client service = PubExtend.GetPI06Async();
+
+                System.Collections.Generic.List<DMSAsync_PI06.partBaseDto> lines = new System.Collections.Generic.List<DMSAsync_PI06.partBaseDto>();
+                foreach (SalePriceLine line in lstErpData)
+                {
+                    if (line.Active && System.DateTime.Now >= line.FromDate && (System.DateTime.Now < line.ToDate || line.ToDate.ToString() == "9999.12.31"))
+                    {
+                        SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()));
+                        if (supitemlist != null && supitemlist.Count > 0)
+                        {
+                            foreach (SupplySource i in supitemlist)
+                            {
+                                DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                                linedto.suptCode = i.SupplierInfo.Supplier.Code;
+                                linedto.partCode = line.ItemInfo.ItemID.Code;
+                                linedto.partName = line.ItemInfo.ItemID.Name;
+                                if (line.ItemInfo.ItemID.InventoryUOM != null)
+                                {
+                                    linedto.unit = line.ItemInfo.ItemID.InventoryUOM.Name;
+                                }
+                                if (line.ItemInfo.ItemID.PurchaseInfo != null)
+                                {
+                                    linedto.miniPack = ((line.ItemInfo.ItemID.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(line.ItemInfo.ItemID.PurchaseInfo.MinRcvQty) : 1);
+                                }
+                                linedto.salePrice = float.Parse(line.Price.ToString());
+                                linedto.unitPrace = linedto.salePrice;
+                                linedto.isDanger = "0";
+                                linedto.isReturn = "1";
+                                linedto.isSale = "1";
+                                linedto.isFlag = "1";
+                                linedto.isEffective = line.Active.ToString();
+                                linedto.actionType = 1;
+                                lines.Add(linedto);
+                            }
+                        }
+                        else
+                        {
+                            DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                            linedto.partCode = line.ItemInfo.ItemID.Code;
+                            linedto.partName = line.ItemInfo.ItemID.Name;
+                            if (line.ItemInfo.ItemID.InventoryUOM != null)
+                            {
+                                linedto.unit = line.ItemInfo.ItemID.InventoryUOM.Name;
+                            }
+                            if (line.ItemInfo.ItemID.PurchaseInfo != null)
+                            {
+                                linedto.miniPack = ((line.ItemInfo.ItemID.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(line.ItemInfo.ItemID.PurchaseInfo.MinRcvQty) : 1);
+                            }
+                            linedto.salePrice = float.Parse(line.Price.ToString());
+                            linedto.unitPrace = linedto.salePrice;
+                            linedto.isDanger = "0";
+                            linedto.isReturn = "1";
+                            linedto.isSale = "1";
+                            linedto.isFlag = "1";
+                            linedto.isEffective = line.Active.ToString();
+                            linedto.actionType = 1;
+                            lines.Add(linedto);
+                        }
+                    }
+                }
+
+                // service.Do(lines);
+
+                try
+                {
+                    PubExtend.Do(service, lines.ToArray());
+                }
+                catch (System.Exception e)
+                {
+                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                }
+            }
+        }
+
         #endregion
 
         // 库存同步接口(同步)
