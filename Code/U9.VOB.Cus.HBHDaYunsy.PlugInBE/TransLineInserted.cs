@@ -152,27 +152,49 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 //    Supplier supt = Supplier.Finder.Find("Code=@Code"
                 //        , new OqlParam(suptCode)
                 //        );
-                    
+
                 //    if (PubHelper.IsUpdateDMS(supt))
                 //    {
                 //        return true;
                 //    }
                 //}
 
-                // 如果存在货源表
-                bool bl = PubHelper.IsUpdateDMS(transline.LotInfo,out supt);
-
-                if (bl)
+                // 如果不是DMS的出货单，才更新DMS；
+                if (!IsDMSShipment(transline))
                 {
-                    SupplySource supplySource = SupplySource.Finder.Find("ItemInfo.ItemID=@ItemID and SupplierInfo.Supplier=@SuptID"
-                        , new OqlParam(transline.ItemInfo.ItemIDKey.ID)
-                        , new OqlParam(supt.ID)
-                        );
+                    // 如果存在货源表
+                    bool bl = PubHelper.IsUpdateDMS(transline.LotInfo, out supt);
 
-                    if (supplySource != null)
+                    if (bl)
                     {
-                        return SupplySourceInserted.IsUpdateDMS(supplySource);
+                        SupplySource supplySource = SupplySource.Finder.Find("ItemInfo.ItemID=@ItemID and SupplierInfo.Supplier=@SuptID"
+                            , new OqlParam(transline.ItemInfo.ItemIDKey.ID)
+                            , new OqlParam(supt.ID)
+                            );
+
+                        if (supplySource != null)
+                        {
+                            return SupplySourceInserted.IsUpdateDMS(supplySource);
+                        }
                     }
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsDMSShipment(TransLine transline)
+        {
+            if (transline.SrcDocLine != null
+                && transline.SrcDocLine.EntityID > 0
+                && transline.SrcDocLine.EntityType == typeof(ShipLine).FullName
+                )
+            {
+                ShipLine shipline = ShipLine.Finder.FindByID(transline.SrcDocLine.EntityID);
+
+                if (PubHelper.IsUpdateDMS(shipline))
+                {
+                    return true;
                 }
             }
 

@@ -327,8 +327,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             {
                 if (shipline != null
                     && shipline.Ship != null
-                    && shipline.Ship.DocumentType != null
-                    && PubHelper.IsUpdateDMS_Electric(shipline.Ship.DocumentType)
+                    // 由单据类型改为 DMS出货单号
+                    //&& shipline.Ship.DocumentType != null
+                    //&& PubHelper.IsUpdateDMS_Electric(shipline.Ship.DocumentType)
+                    && shipline.Ship.DescFlexField != null
+                    && shipline.Ship.DescFlexField.PrivateDescSeg1.IsNotNullOrWhiteSpace()
                     )
                 {
                     return true;
@@ -338,7 +341,19 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 || Context.LoginOrg.Code == PubHelper.Const_OrgCode_Hubei
                 )
             {
-                if (shipline != null && (shipline.Ship.DocumentType.Code == "XM10" || shipline.Ship.DocumentType.Code == "XM12" || shipline.Ship.DocumentType.Code == "XM1" || shipline.Ship.DocumentType.Code == "XM7" || shipline.Ship.DocumentType.Code == "XM4")
+                //if (shipline != null && (shipline.Ship.DocumentType.Code == "XM10" || shipline.Ship.DocumentType.Code == "XM12" || shipline.Ship.DocumentType.Code == "XM1" || shipline.Ship.DocumentType.Code == "XM7" || shipline.Ship.DocumentType.Code == "XM4")
+                //    )
+                //{
+                //    return true;
+                //}
+
+                if (shipline != null
+                    && shipline.Ship != null
+                    // 由单据类型改为 DMS出货单号
+                    //&& shipline.Ship.DocumentType != null
+                    //&& PubHelper.IsUpdateDMS_Electric(shipline.Ship.DocumentType)
+                    && shipline.Ship.DescFlexField != null
+                    && shipline.Ship.DescFlexField.PrivateDescSeg1.IsNotNullOrWhiteSpace()
                     )
                 {
                     return true;
