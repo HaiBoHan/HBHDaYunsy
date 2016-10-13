@@ -144,6 +144,8 @@
                                     if (ship == null)
                                     {
                                         CreateShipSVProxy proxy = new CreateShipSVProxy();
+                                        proxy.TargetOrgCode = Context.LoginOrg.Code;
+                                        proxy.TargetOrgName = Context.LoginOrg.Name;
                                         proxy.ShipDTOs = (this.GetShipDTOList(shiplinelist));
                                         System.Collections.Generic.List<DocKeyDTOData> shipidlistCreated = proxy.Do();
                                         if (shipidlistCreated == null || shipidlistCreated.Count <= 0)
