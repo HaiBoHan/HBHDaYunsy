@@ -441,7 +441,7 @@
                         if (priceListCode.IsNotNullOrWhiteSpace())
                         {
                             // 校验价格是否与价表一致
-                            SalePriceLine priceline = SalePriceLine.Finder.Find("SalePriceList.Code=@Code and SalePriceList.Org=@Org and @Date between FromDate and ToDate and ItemInfo.ItemCode=@ItemCode"
+                            SalePriceLine priceline = SalePriceLine.Finder.Find("SalePriceList.Code=@Code and SalePriceList.Org=@Org and @Date between FromDate and ToDate and ItemInfo.ItemCode=@ItemCode and Active=1"
                                 , new OqlParam(priceListCode)
                                 , new OqlParam(Context.LoginOrg != null ? Context.LoginOrg.ID : -1)
                                 , new OqlParam(DateTime.Today)
@@ -452,9 +452,11 @@
                             {
                                 if (priceline.Price * linedto.Number != linedto.Money)
                                 {
-                                    errormessage += string.Format("[{0}]DMS销售出库单的ERP料号[{1}]的 价表价格[{2}]乘以数量[{3}]，不等于总金额[{4}]!"
+                                    errormessage += string.Format("[{0}]DMS销售出库单的ERP料号[{1}]的 价表[{2}]行[{3}]的价格[{4}]乘以数量[{5}]，不等于总金额[{6}]!"
                                         , linedto.DMSShipNo
                                         , linedto.ErpMaterialCode
+                                        , priceline.SalePriceList.Name + "," + priceline.SalePriceList.Code
+                                        , priceline.DocLineNo
                                         , priceline.Price.ToString("G0")
                                         , linedto.Number.ToString("G0")
                                         , linedto.Money.ToString("G0")
