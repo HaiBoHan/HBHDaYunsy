@@ -30,8 +30,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         && entity.DescFlexField.PrivateDescSeg1.IsNotNullOrWhiteSpace()
                         )
                     {
-                        //if (entity.SysState == UFSoft.UBF.PL.Engine.ObjectState.Inserted)
-                        //{
+                        if (entity.SysState == UFSoft.UBF.PL.Engine.ObjectState.Inserted)
+                        {
                         //    if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
                         //    {
                         //        if (entity.DocumentType != null)
@@ -67,7 +67,24 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         //            }
                         //        }
                         //    }
-                        //}
+
+                            string createdby = Context.LoginUser;
+                            if (entity.CreatedBy != createdby)
+                            {
+                                entity.CreatedBy = createdby;
+                            }
+
+                            foreach (ShipLine line in entity.ShipLines)
+                            {
+                                if (line != null)
+                                {
+                                    if (line.CreatedBy != createdby)
+                                    {
+                                        line.CreatedBy = createdby;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
