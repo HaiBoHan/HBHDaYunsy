@@ -185,12 +185,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
         private static bool IsDMSShipment(TransLine transline)
         {
-            if (transline.SrcDocLine != null
-                && transline.SrcDocLine.EntityID > 0
-                && transline.SrcDocLine.EntityType == typeof(ShipLine).FullName
+            if (transline.DocLine != null
+                && transline.DocLine.EntityID > 0
+                && transline.DocLine.EntityType == typeof(ShipLine).FullName
                 )
             {
-                ShipLine shipline = ShipLine.Finder.FindByID(transline.SrcDocLine.EntityID);
+                ShipLine shipline = ShipLine.Finder.FindByID(transline.DocLine.EntityID);
 
                 if (PubHelper.IsUpdateDMS(shipline))
                 {
