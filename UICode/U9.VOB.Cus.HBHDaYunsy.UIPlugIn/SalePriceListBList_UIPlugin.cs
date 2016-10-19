@@ -60,7 +60,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
             part.IsDataBinding = true;
 
             StoreQty2DMSSVProxy proxy = new StoreQty2DMSSVProxy();
-            proxy.TransferType = (int)DaYun2DMSTransferTypeEnum.Whqoh;
+            proxy.TransferType = (int)DaYun2DMSTransferTypeEnum.PriceList;
 
             long[] selected = _strongPart.Model.SalePriceList.GetSelectedRecordIDs();
 
