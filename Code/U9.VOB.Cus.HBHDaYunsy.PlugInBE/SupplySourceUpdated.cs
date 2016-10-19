@@ -142,7 +142,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 lines.Add(linedto);
             }
             // UI更新，不管是否关键字段，都更新DMS（熊彬想实现手动同步dms操作）
-            else if(supplierItem.ActiveType == ActivityTypeEnum.SrvUpdate)
+            else // if(supplierItem.ActiveType == ActivityTypeEnum.SrvUpdate)
             {
                 partBaseDto linedto = new partBaseDto();
                 if (supplierItem.OriginalData.SupplierInfo != null && supplierItem.OriginalData.SupplierInfo.SupplierKey != null)

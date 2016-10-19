@@ -43,12 +43,31 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             {
                 return Const_ElectricPartPriceListCode;
             }
-            else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
+            else // if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
             {
                 return Const_HuBeiPartPriceListCode;
             }
 
             return string.Empty;
+        }
+
+        // 获得价表组织编码
+        /// <summary>
+        /// 获得价表组织编码
+        /// </summary>
+        /// <returns></returns>
+        public static string GetPartPriceListOrgCode()
+        {
+            if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            {
+                return Const_OrgCode_Electric;
+            }
+            else // if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
+            {
+                return Const_OrgCode_Hubei;
+            }
+
+            //return string.Empty;
         }
 
         private static List<string> lstPriceList2DMS = new List<string>();
@@ -397,7 +416,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
         public static SalePriceLine GetSalePriceList(SupplySource supplierItem)
         {
-            string opath = string.Format("SalePriceList.Org={0} and ItemInfo.ItemID={1} and Active=1 and '{2}' between FromDate and ToDate ", Context.LoginOrg.ID.ToString(), supplierItem.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString());
+            string opath = string.Format("SalePriceList.Org.Code={0} and ItemInfo.ItemCode='{1}' and Active=1 and '{2}' between FromDate and ToDate "
+                //, Context.LoginOrg.ID.ToString()
+                , GetPartPriceListOrgCode()
+                , supplierItem.ItemInfo.ItemCode
+                , System.DateTime.Now.ToString());
             //if (Context.LoginOrg.Code == Const_OrgCode_Electric)
             //{
             //    opath += string.Format(" and SalePriceList.Code='{0}'", Const_ElectricPartPriceListCode);
