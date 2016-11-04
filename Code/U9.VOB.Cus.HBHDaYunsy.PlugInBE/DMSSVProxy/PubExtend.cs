@@ -975,7 +975,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         {
             service.Url = PubHelper.GetAddress(service.Url);
 
-            string entityName = "资金同步接口";
+            string entityName = "打款接口";
             long svID = -1;
             if (IsLog)
             {
@@ -1030,7 +1030,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         {
             service.Url = PubHelper.GetAddress(service.Url);
 
-            string entityName = "打款同步接口";
+            string entityName = "资金同步接口";
             long svID = -1;
             if (IsLog)
             {
