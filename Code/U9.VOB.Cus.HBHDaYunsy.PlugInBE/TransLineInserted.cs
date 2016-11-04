@@ -15,6 +15,7 @@ using System.ServiceModel;
 using HBH.DoNet.DevPlatform.EntityMapping;
 using UFIDA.U9.CBO.SCM.Supplier;
 using UFSoft.UBF.PL;
+using UFIDA.U9.Base.Doc;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class TransLineInserted : IEventSubscriber
@@ -159,25 +160,76 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 //    }
                 //}
 
-                // 如果不是DMS的出货单，才更新DMS；
-                if (!IsDMSShipment(transline))
+                // 刨除VMI结算
+                if (IsUpdateWhqoh(transline))
                 {
-                    // 如果存在货源表
-                    bool bl = PubHelper.IsUpdateDMS(transline.LotInfo, out supt);
-
-                    if (bl)
+                    // 如果不是DMS的出货单，才更新DMS；
+                    if (!IsDMSShipment(transline))
                     {
-                        SupplySource supplySource = SupplySource.Finder.Find("ItemInfo.ItemID=@ItemID and SupplierInfo.Supplier=@SuptID"
-                            , new OqlParam(transline.ItemInfo.ItemIDKey.ID)
-                            , new OqlParam(supt.ID)
-                            );
+                        // 如果存在货源表
+                        bool bl = PubHelper.IsUpdateDMS(transline.LotInfo, out supt);
 
-                        if (supplySource != null)
+                        if (bl)
                         {
-                            return SupplySourceInserted.IsUpdateDMS(supplySource);
+                            SupplySource supplySource = SupplySource.Finder.Find("ItemInfo.ItemID=@ItemID and SupplierInfo.Supplier=@SuptID"
+                                , new OqlParam(transline.ItemInfo.ItemIDKey.ID)
+                                , new OqlParam(supt.ID)
+                                );
+
+                            if (supplySource != null)
+                            {
+                                return SupplySourceInserted.IsUpdateDMS(supplySource);
+                            }
                         }
                     }
                 }
+            }
+
+            return false;
+        }
+
+        // 是否更新库存(刨除VMI结算)
+        /// <summary>
+        /// 是否更新库存(刨除VMI结算)
+        /// </summary>
+        /// <param name="transline"></param>
+        /// <returns></returns>
+        public static bool IsUpdateWhqoh(TransLine transline)
+        {
+            // QtyPriceDealFlg 数量价值处理       (消耗汇总,为4；不知道价值数量怎么取的，所以没用这个判断)
+            /*
+            NotWorthAndQty	不处理数量和价值	3
+            Qty	只处理数量	1
+            QtyAndWorth	处理数量和价值	0
+            Worth	只处理价值	2
+            WorthAndWorthQty	处理价值及价值数量	4
+             */
+
+            /* UFIDA.U9.InvTrans.Trans.TransLine   UFIDA.U9.InvTrans.InvTransBE.dll            
+		public bool IsAffectQoh
+		{
+			get
+			{
+				if ((this.QtyPriceDealFlg == QtyPriceDealFlgEnum.QtyAndWorth && !this.IsIPVChanged()) || this.QtyPriceDealFlg == QtyPriceDealFlgEnum.Qty)
+				{
+					this.isAffectQoh = true;
+				}
+				return this.isAffectQoh;
+			}
+			set
+			{
+				this.isAffectQoh = value;
+			}
+		}
+             */
+            if (transline != null
+                //// PM035	VMI采购结算	322
+                //&& transline.DocBizType != BusinessTypeEnum.PM035
+                // 改成用 异动行公共方法
+                && transline.IsAffectQoh
+                )
+            {
+                return true;
             }
 
             return false;
