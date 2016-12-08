@@ -22,6 +22,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				BusinessEntity.EntityKey key = ((EntityEvent)args[0]).EntityKey;
                 if (!(key == null))
                 {
+                    dicAccountDTO = new Dictionary<long, accountReturnDto>();
+
                     APBillHead APbillhead = key.GetEntity() as APBillHead;
                     //if (voucher.Org.Code == "20")
                     if (PubHelper.IsOrg_Finance2DMS())
