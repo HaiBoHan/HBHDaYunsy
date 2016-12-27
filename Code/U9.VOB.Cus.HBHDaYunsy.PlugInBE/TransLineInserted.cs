@@ -171,9 +171,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
                         if (bl)
                         {
-                            SupplySource supplySource = SupplySource.Finder.Find("ItemInfo.ItemID=@ItemID and SupplierInfo.Supplier=@SuptID"
-                                , new OqlParam(transline.ItemInfo.ItemIDKey.ID)
-                                , new OqlParam(supt.ID)
+                            SupplySource supplySource = SupplySource.Finder.Find("ItemInfo.ItemID.Code=@ItemCode and SupplierInfo.Supplier.Code=@SuptCode"
+                                , new OqlParam(transline.ItemInfo.ItemID.Code)
+                                , new OqlParam(supt.Code)
                                 );
 
                             if (supplySource != null)
