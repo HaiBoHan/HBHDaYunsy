@@ -83,6 +83,7 @@
             return result2;
         }
 
+        // 创建发运单
         private List<ShipBackDTO> CreateShip(CreateShipSV bpObj)
         {
             System.Collections.Generic.List<ShipBackDTO> result = new System.Collections.Generic.List<ShipBackDTO>();
@@ -167,7 +168,7 @@
                                             result.Add(backDTO);
                                             return result;
                                         }
-
+                                        
                                         HBHCommon.ApproveShipments(shipidlistCreated);
 
                                         if (shipidlistCreated != null)
@@ -205,9 +206,13 @@
                                             result.Add(backDTO);
                                             return result;
                                         }
-                                        CommonApproveMiscShipSVProxy approveproxy2 = new CommonApproveMiscShipSVProxy();
-                                        approveproxy2.MiscShipmentKeyList = (miscshiplistCreated);
-                                        approveproxy2.Do();
+
+                                        //CommonApproveMiscShipSVProxy approveproxy2 = new CommonApproveMiscShipSVProxy();
+                                        //approveproxy2.MiscShipmentKeyList = (miscshiplistCreated);
+                                        //approveproxy2.Do();
+                                        
+                                        // 事务，防止审核不过，但是状态变了；
+                                        HBHCommon.ApproveMiscShips(miscshiplistCreated);
 
                                         if (miscshiplistCreated != null)
                                         {
@@ -299,6 +304,7 @@
             return result;
         }
 
+        // 通过DMS发运单号  获得杂发单
         private MiscShipment GetDMSShipNum(List<ShipLineDTO> miscShipmentLinelist, List<CommonArchiveDataDTOData> miscshiplist)
         {
             if (miscshiplist == null)
@@ -349,6 +355,7 @@
             return null;
         }
 
+        // 通过DMS发运单号  获得出货单
         private Ship GetDMSShipNum(List<ShipLineDTO> shiplinelist, System.Collections.Generic.List<DocKeyDTOData> lstShipKeyDTO)
         {
             if (lstShipKeyDTO == null)
@@ -415,7 +422,10 @@
                     errormessage += string.Format("[{0}]DMS销售订单的[订单类型]不可为空,", linedto.DmsSaleNo);
                 }
                 // OrderType
-                if (linedto.OrderType == "3")
+                if (linedto.OrderType == "31"
+                    || linedto.OrderType == "32"
+                    || linedto.OrderType == "33"
+                    )
                 {
                     MiscShipmentLinelist.Add(linedto);
                 }
@@ -571,6 +581,12 @@
                             //doctypecode = "CK-SB";
                             doctypecode = HBHCommon.Const_ShipDocType_SB;
                         }
+                        else
+                        {
+                            throw new BusinessException(string.Format("无法识别的订单类型:[{0}]"
+                                , firstDTO.OrderType
+                                ));
+                        }
                     }
                     // 湖北大运
                     else
@@ -586,6 +602,12 @@
                         else if (firstDTO.OrderType == "2")
                         {
                             doctypecode = "XM12";
+                        }
+                        else
+                        {
+                            throw new BusinessException(string.Format("无法识别的订单类型:[{0}]"
+                                , firstDTO.OrderType
+                                ));
                         }
                     }
                     shipdto.DocumentType.Code = (doctypecode);
@@ -817,6 +839,8 @@
             }
             return list;
         }
+
+        // 校验库存可用量
         /// <summary>
         /// 校验库存可用量
         /// </summary>
@@ -941,8 +965,10 @@
             }
             return result;
         }
+
+        // 创建杂发单DTO
         /// <summary>
-        /// 得到杂发单dto
+        /// 创建杂发单DTO
         /// </summary>
         /// <param name="bpObj"></param>
         /// <returns></returns>
@@ -971,7 +997,23 @@
                     IC_MiscShipmentDTOData misshipdto = new IC_MiscShipmentDTOData();
                     misshipdto.MiscShipDocType = (new CommonArchiveDataDTOData());
                     //misshipdto.MiscShipDocType.Code = ("ZF03");
-                    misshipdto.MiscShipDocType.Code = HBHCommon.DefaultMiscDocTypeCode;
+
+                    if (firstDTO.OrderType == "31")
+                    {
+                        misshipdto.MiscShipDocType.Code = "ZF03";
+                    }
+                    else if (firstDTO.OrderType == "32")
+                    {
+                        misshipdto.MiscShipDocType.Code = "ZF24";
+                    }
+                    else if (firstDTO.OrderType == "33")
+                    {
+                        misshipdto.MiscShipDocType.Code = "ZF13";
+                    }
+                    else
+                    {
+                        misshipdto.MiscShipDocType.Code = HBHCommon.DefaultMiscDocTypeCode;
+                    }
                     misshipdto.DescFlexField = (new DescFlexSegmentsData());
                     misshipdto.DescFlexField.PubDescSeg5 = (firstDTO.DmsSaleNo);
                     misshipdto.DescFlexField.PrivateDescSeg3 = (firstDTO.DMSShipNo);

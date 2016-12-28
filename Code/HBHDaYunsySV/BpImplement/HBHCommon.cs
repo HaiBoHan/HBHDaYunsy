@@ -7,6 +7,8 @@ using UFIDA.U9.ISV.SM.Proxy;
 using UFIDA.U9.ISV.SM;
 using UFSoft.UBF.Transactions;
 using UFIDA.U9.Base;
+using UFIDA.U9.CBO.Pub.Controller;
+using UFIDA.U9.ISV.MiscShipISV.Proxy;
 
 namespace UFIDA.U9.Cust.HBDY.API
 {
@@ -150,9 +152,8 @@ namespace UFIDA.U9.Cust.HBDY.API
             logger.Error(msg, new object[0]);
         }
 
-
-
-
+        
+        // 事务，防止审核不过，但是状态变了；
         public static void ApproveShipments(System.Collections.Generic.List<DocKeyDTOData> shipKeyList)
         {
             using (UBFTransactionScope aTransact = new UBFTransactionScope(TransactionOption.Required))
@@ -162,6 +163,30 @@ namespace UFIDA.U9.Cust.HBDY.API
                     AuditShipSVProxy approveproxy = new AuditShipSVProxy();
                     approveproxy.ShipKeys = shipKeyList;
                     approveproxy.Do();
+
+                    aTransact.Commit();
+                }
+                catch (Exception ex)
+                {
+                    aTransact.Rollback();
+
+                    throw ex;
+                }
+            }
+        }
+
+
+
+        // 事务，防止审核不过，但是状态变了；（2016-12-28 熊彬 测试，就有AAi生成失败，报错，但是单子已审核；）
+        public static void ApproveMiscShips(System.Collections.Generic.List<CommonArchiveDataDTOData> miscshiplistCreated)
+        {
+            using (UBFTransactionScope aTransact = new UBFTransactionScope(TransactionOption.Required))
+            {
+                try
+                {
+                    CommonApproveMiscShipSVProxy approveproxy2 = new CommonApproveMiscShipSVProxy();
+                    approveproxy2.MiscShipmentKeyList = (miscshiplistCreated);
+                    approveproxy2.Do();
 
                     aTransact.Commit();
                 }
