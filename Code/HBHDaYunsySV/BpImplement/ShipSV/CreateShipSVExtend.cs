@@ -32,6 +32,7 @@
     using UFSoft.UBF.Business;
     using UFIDA.U9.InvDoc.Enums;
     using UFIDA.U9.SPR.SalePriceList;
+    using UFIDA.U9.Base.UserRole;
 
 	/// <summary>
 	/// CreateShipSV partial 
@@ -111,7 +112,8 @@
                 {
                     System.Collections.Generic.List<ShipLineDTO> shiplinelist = new System.Collections.Generic.List<ShipLineDTO>();
                     System.Collections.Generic.List<ShipLineDTO> MiscShipmentLinelist = new System.Collections.Generic.List<ShipLineDTO>();
-                    string errormessage = this.ValidateParamNullOrEmpty(bpObj, ref shiplinelist, ref MiscShipmentLinelist);
+                    string strDMSUserCode;
+                    string errormessage = this.ValidateParamNullOrEmpty(bpObj, ref shiplinelist, ref MiscShipmentLinelist, out strDMSUserCode);
                     if (!string.IsNullOrEmpty(errormessage))
                     {
                         //result.Add(new ShipBackDTO
@@ -137,6 +139,8 @@
                         {
                             try
                             {
+                                UpdateLoginUser(strDMSUserCode);
+
                                 if (shiplinelist != null && shiplinelist.Count > 0)
                                 {
                                     Ship ship = GetDMSShipNum(shiplinelist, shipidlist);
@@ -304,6 +308,67 @@
             return result;
         }
 
+        private static void UpdateLoginUser(string strDMSUserCode)
+        {
+            // 重置用户上下文
+            if (strDMSUserCode.IsNotNullOrWhiteSpace())
+            {
+                User user = User.FindByCode(strDMSUserCode);
+
+                if (user != null)
+                {
+                    bool isUpdate = true;
+                    UFIDA.U9.CBO.Pub.Controller.ContextDTO contextDTO = new UFIDA.U9.CBO.Pub.Controller.ContextDTO();
+
+                    string strEnterpriseCode = PubClass.GetString(UFIDA.U9.Base.Context.GetAttribute("EnterpriseCode"));
+                    if (!strEnterpriseCode.IsNull())
+                    {
+                        contextDTO.EntCode = strEnterpriseCode;
+                    }
+                    else
+                    {
+                        strEnterpriseCode = PubClass.GetString(UFIDA.U9.Base.Context.GetAttribute("EnterpriseID"));
+                        if (!strEnterpriseCode.IsNull())
+                        {
+                            contextDTO.EntCode = strEnterpriseCode;
+                        }
+                        else
+                        {
+                            isUpdate = false;
+                        }
+                    }
+
+                    string strOrgCode = Context.LoginOrg.Code;
+                    if (!strOrgCode.IsNull())
+                    {
+                        contextDTO.OrgCode = strOrgCode;
+                    }
+                    else
+                    {
+                        contextDTO.OrgCode = Context.LoginOrg.Code;
+                        isUpdate = false;
+                    }
+
+                    string strUserCode = user.Code;
+                    if (!strUserCode.IsNull())
+                    {
+                        contextDTO.UserCode = strUserCode;
+                    }
+                    else
+                    {
+                        contextDTO.UserID = Context.LoginUserID.GetLong();
+                        isUpdate = false;
+                    }
+
+                    // 有一个参数为空，就不更新，因为会报错
+                    if (isUpdate)
+                    {
+                        contextDTO.WriteToContext();
+                    }
+                }
+            }
+        }
+
         // 通过DMS发运单号  获得杂发单
         private MiscShipment GetDMSShipNum(List<ShipLineDTO> miscShipmentLinelist, List<CommonArchiveDataDTOData> miscshiplist)
         {
@@ -412,11 +477,19 @@
         /// 传入参数非空校验
         /// </summary>
         /// <param name="bpObj"></param>
-        private string ValidateParamNullOrEmpty(CreateShipSV bpObj, ref System.Collections.Generic.List<ShipLineDTO> shiplinelist, ref System.Collections.Generic.List<ShipLineDTO> MiscShipmentLinelist)
+        private string ValidateParamNullOrEmpty(CreateShipSV bpObj, ref System.Collections.Generic.List<ShipLineDTO> shiplinelist, ref System.Collections.Generic.List<ShipLineDTO> MiscShipmentLinelist, out string strUserCode)
         {
             string errormessage = string.Empty;
+            strUserCode = string.Empty;
             foreach (ShipLineDTO linedto in bpObj.ShipLineDTOs)
             {
+                if (strUserCode.IsNull()
+                    && linedto.Currency.IsNotNullOrWhiteSpace()
+                    )
+                {
+                    strUserCode = linedto.Currency.Trim();
+                }
+
                 if (string.IsNullOrEmpty(linedto.OrderType))
                 {
                     errormessage += string.Format("[{0}]DMS销售订单的[订单类型]不可为空,", linedto.DmsSaleNo);
