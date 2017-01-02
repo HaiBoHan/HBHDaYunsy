@@ -440,7 +440,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         public static string GetAddress(string oldurl)
         {
             string str = HttpRuntime.AppDomainAppPath.ToString();
-            str += "\\bin\\DMSAPIServiceConfig.xml";
+            string xmlAddress = "\\bin\\DMSAPIServiceConfig.xml";
+            str += xmlAddress;
             XmlDocument doc = new XmlDocument();
             doc.Load(str);
             XmlNodeList list = null;
@@ -458,7 +459,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 list = doc.GetElementsByTagName("servicesHubei");
             }
 
-            if (list != null)
+            if (list != null
+                && list.Count > 0
+                && list[0] != null
+                )
             {
                 string newurl = list[0].Attributes["url"].Value;
                 //string strr = oldurl.Replace("http://", "");
@@ -475,7 +479,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             }
             else
             {
-                throw new BusinessException("没有配置DMS地址!");
+                throw new BusinessException(string.Format("没有找到组织[{0}]对应的DMS地址,请检查配置文件[{1}]!"
+                    , Context.LoginOrg.Code
+                    , xmlAddress
+                    ));
             }
         }
 

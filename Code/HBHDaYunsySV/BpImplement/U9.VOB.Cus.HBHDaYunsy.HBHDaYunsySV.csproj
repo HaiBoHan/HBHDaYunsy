@@ -67,11 +67,17 @@
     <Reference Include="UFIDA.U9.CBO.PubBE.Deploy">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubBE.Deploy.dll</HintPath>
     </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubBP">
+      <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubBP.dll</HintPath>
+    </Reference>
     <Reference Include="UFIDA.U9.CBO.PubBP.Agent">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubBP.Agent.dll</HintPath>
     </Reference>
     <Reference Include="UFIDA.U9.CBO.PubBP.Deploy">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubBP.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubSV">
+      <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubSV.dll</HintPath>
     </Reference>
     <Reference Include="UFIDA.U9.CBO.PubSV.Agent">
       <HintPath>..\..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.CBO.PubSV.Agent.dll</HintPath>
