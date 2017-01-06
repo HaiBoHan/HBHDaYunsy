@@ -15,6 +15,8 @@ using UFSoft.UBF.PL;
 using UFSoft.UBF.Business;
 using UFIDA.U9.CBO.SCM.Customer;
 using UFIDA.U9.SPR.SalePriceAdjustment;
+using System.Net;
+using System.IO;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -442,45 +444,62 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             string str = HttpRuntime.AppDomainAppPath.ToString();
             string xmlAddress = "\\bin\\DMSAPIServiceConfig.xml";
             str += xmlAddress;
-            XmlDocument doc = new XmlDocument();
-            doc.Load(str);
-            XmlNodeList list = null;
 
-            //list = doc.GetElementsByTagName("services");
-
-            if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            if (File.Exists(str))
             {
-                list = doc.GetElementsByTagName("servicesElectric");
-            }
-            else if (Context.LoginOrg.Code == Const_OrgCode_Hubei
-                || Context.LoginOrg.Code == Const_OrgCode_Chengdu
-                )
-            {
-                list = doc.GetElementsByTagName("servicesHubei");
-            }
+                XmlDocument doc = new XmlDocument();
+                doc.Load(str);
+                XmlNodeList list = null;
 
-            if (list != null
-                && list.Count > 0
-                && list[0] != null
-                )
-            {
-                string newurl = list[0].Attributes["url"].Value;
-                //string strr = oldurl.Replace("http://", "");
-                //int t = strr.IndexOf("/");
-                //string h = strr.Substring(0, t);
-                //return oldurl.Replace(h, newurl);
+                //list = doc.GetElementsByTagName("services");
 
-                int index = oldurl.LastIndexOf("/");
-                string svName = oldurl.Substring(index);
+                if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+                {
+                    list = doc.GetElementsByTagName("servicesElectric");
+                }
+                else if (Context.LoginOrg.Code == Const_OrgCode_Hubei
+                    || Context.LoginOrg.Code == Const_OrgCode_Chengdu
+                    )
+                {
+                    list = doc.GetElementsByTagName("servicesHubei");
+                }
 
-                newurl += svName;
+                if (list != null
+                    && list.Count > 0
+                    && list[0] != null
+                    )
+                {
+                    string newurl = list[0].Attributes["url"].Value;
+                    //string strr = oldurl.Replace("http://", "");
+                    //int t = strr.IndexOf("/");
+                    //string h = strr.Substring(0, t);
+                    //return oldurl.Replace(h, newurl);
 
-                return newurl;
+                    int index = oldurl.LastIndexOf("/");
+                    string svName = oldurl.Substring(index);
+
+                    newurl += svName;
+
+                    return newurl;
+                }
+                else
+                {
+                    string strIP = GetInternalIP();
+
+                    throw new BusinessException(string.Format("没有找到服务器[{0}]组织[{1}]对应的DMS地址,请检查配置文件内容[{2}]!"
+                        , strIP
+                        , Context.LoginOrg.Name + "," + Context.LoginOrg.Code
+                        , xmlAddress
+                        ));
+                }
             }
             else
             {
-                throw new BusinessException(string.Format("没有找到组织[{0}]对应的DMS地址,请检查配置文件[{1}]!"
-                    , Context.LoginOrg.Code
+                string strIP = GetInternalIP();
+
+                throw new BusinessException(string.Format("没有找到服务器[{0}]组织[{1}]对应的DMS配置文件,请检查配置文件是否存在[{2}]!"
+                    , strIP
+                    , Context.LoginOrg.Name + "," + Context.LoginOrg.Code
                     , xmlAddress
                     ));
             }
@@ -499,6 +518,27 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 			return !(returnvalue.ToLower() == "false");
 		}
 
-
+        //获取内网IP
+        private static string GetInternalIP()
+        {
+            IPHostEntry host;
+            string localIP = "?";
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            if (host != null
+                && host.AddressList != null
+                && host.AddressList.Length > 0
+                )
+            {
+                foreach (IPAddress ip in host.AddressList)
+                {
+                    if (ip.AddressFamily.ToString() == "InterNetwork")
+                    {
+                        localIP = ip.ToString();
+                        break;
+                    }
+                }
+            }
+            return localIP;
+        }
 	}
 }
