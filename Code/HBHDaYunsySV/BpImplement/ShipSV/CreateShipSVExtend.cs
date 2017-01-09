@@ -135,7 +135,7 @@
                     {
                         System.Collections.Generic.List<DocKeyDTOData> shipidlist = new System.Collections.Generic.List<DocKeyDTOData>();
                         System.Collections.Generic.List<CommonArchiveDataDTOData> miscshiplist = new System.Collections.Generic.List<CommonArchiveDataDTOData>();
-                        //using (UBFTransactionScope trans = new UBFTransactionScope(TransactionOption.Required))
+                        using (UBFTransactionScope trans = new UBFTransactionScope(TransactionOption.Required))
                         {
                             try
                             {
@@ -224,11 +224,11 @@
                                         }
                                     }
                                 }
-                                //trans.Commit();
+                                trans.Commit();
                             }
                             catch (System.Exception e)
                             {
-                                //trans.Rollback();
+                                trans.Rollback();
                                 //result.Add(new ShipBackDTO
                                 //{
                                 //    IsSuccess = false,
@@ -240,7 +240,7 @@
 
                                 ShipBackDTO backDTO = new ShipBackDTO();
                                 backDTO.IsSuccess = false;
-                                backDTO.ErrorInfo = "生单失败：" + e.Message;
+                                backDTO.ErrorInfo = "出货单创建或审核失败：" + e.Message;
                                 backDTO.Timestamp = System.DateTime.Now;
                                 HBHCommon.LoggerError(backDTO.ErrorInfo + "/r/n" + e.StackTrace);
                                 result.Add(backDTO);
