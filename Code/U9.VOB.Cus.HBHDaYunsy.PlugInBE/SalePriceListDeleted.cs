@@ -18,6 +18,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				if (!(key == null))
 				{
 					SalePriceList SalepriceList = key.GetEntity() as SalePriceList;
+
+
+                    // 不处理删除了，只处理生效就好了
+                    return;
+
                     if (PubHelper.IsOrg_SalePriceList2DMS(SalepriceList))
 					{
 						bool flag = PubHelper.IsUsedDMSAPI();
