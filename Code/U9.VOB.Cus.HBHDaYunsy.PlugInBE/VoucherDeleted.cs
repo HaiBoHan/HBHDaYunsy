@@ -17,6 +17,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 			if (args != null && args.Length != 0 && args[0] is EntityEvent)
 			{
 				BusinessEntity.EntityKey key = ((EntityEvent)args[0]).EntityKey;
+
+                // 删除不作处理，审核、弃审才处理
+                return;
 				if (!(key == null))
 				{
                     Voucher voucher = key.GetEntity() as Voucher;

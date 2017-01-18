@@ -26,7 +26,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 						bool flag = PubHelper.IsUsedDMSAPI();
 						if (flag)
 						{
-							if (voucher.OriginalData.VoucherStatus == VoucherStatus.Approving && voucher.VoucherStatus == VoucherStatus.Approved)
+							if ((voucher.OriginalData.VoucherStatus == VoucherStatus.Approving
+                                || voucher.OriginalData.VoucherStatus == VoucherStatus.Open 
+                                )
+                                && voucher.VoucherStatus == VoucherStatus.Approved)
 							{
 								SI04ImplService service = new SI04ImplService();
 								// service.Url = PubHelper.GetAddress(service.Url);
@@ -132,7 +135,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									}
 								}
 							}
-							else if (voucher.OriginalData.VoucherStatus == VoucherStatus.Approved && voucher.VoucherStatus == VoucherStatus.Approving)
+							else if (voucher.OriginalData.VoucherStatus == VoucherStatus.Approved 
+                                && (voucher.VoucherStatus == VoucherStatus.Approving
+                                    || voucher.VoucherStatus == VoucherStatus.Open
+                                    )
+                                )
 							{
 								SI04ImplService service = new SI04ImplService();
 								// service.Url = PubHelper.GetAddress(service.Url);
@@ -242,6 +249,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 			}
 		}
 
+        // 账户类型
+        /// <summary>
+        /// 账户类型
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
         private static string GetDMSOperationType(Entry entry)
         {
             if (entry != null
@@ -251,6 +264,13 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             {
                 if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Electric)
                 {
+                    /*
+                    科目名称	科目编码	说明	DMS类型
+                    保证金账户	22410306	备件	BZJ
+                    现金配件	1122020301	备件	DJ
+                    三包配件	1122020302	备件	SBXY
+                    铺货配件	1122020303	备件	CBXY
+                     */
                     // 1、现金销售业务
                     // 扣款，借     现金配件款   1122020301
                     // 打款，借     库存现金或者银行存款    1001/1002
@@ -267,40 +287,77 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                     {
                         return "DJ";
                     }
+                    // 三包配件
                     else if (entry.Account.Segment1.StartsWith("1122020302"))
                     {
                         return "SBXY";
+                    }
+                    // 保证金账户
+                    else if (entry.Account.Segment1.StartsWith("22410306"))
+                    {
+                        return "BZJ";
+                    }
+                    // 铺货配件
+                    else if (entry.Account.Segment1.StartsWith("1122020303"))
+                    {
+                        return "CBXY";
                     }
                 }
                 else if (Context.LoginOrg.Code == PubHelper.Const_OrgCode_Chengdu
                     || Context.LoginOrg.Code == PubHelper.Const_OrgCode_Hubei
                     )
                 {
+                    /*
+                    定金账户	22410401	通用车
+                    发车款账户	1122010101	通用车
+                    监控车信用账户	待定	通用车
+                    保证金账户	2241030801	通用车
+                    授信保证金账户	2241030901	通用车
+                    保证金账户	2241030803	备件
+                    现金配件	1122010302	备件
+                    三包配件	1122010303	备件
+                    铺货配件	1122010301	备件
+                     */
                     // operaTionType账户类型；现金、三包
                     // 现金，DJ(定金)；三包，CBXY(三包信用)
-                    if (entry.Account.Segment1.StartsWith("22410401") || entry.Account.Segment1 == "1122010302")
+                    if (entry.Account.Segment1.StartsWith("22410401") 
+                        || entry.Account.Segment1.StartsWith("1122010302")
+                        )
                     {
                         return "DJ";
                     }
+                    // 发车款账户
                     else if (entry.Account.Segment1.StartsWith("1122010101"))
                     {
                         return "FCK";
                     }
+                    // 三包配件
                     else if (entry.Account.Segment1 == "1122010301")
                     {
                         return "CBXY";
                     }
+                    // 保证金账户
                     else if (entry.Account.Segment1 == "2241030801" || entry.Account.Segment1 == "2241030803")
                     {
                         return "BZJ";
                     }
-                    else if (entry.Account.Segment1 == "12210203")
+                    // 三包配件
+                    // 2017-01-16 wf 按熊彬给的DMS科目 修改
+                    //else if (entry.Account.Segment1 == "12210203")
+                    else if (entry.Account.Segment1 == "1122010303")
                     {
                         return "SBXY";
                     }
-                    else
+                    // 授信保证金账户
+                    else if (entry.Account.Segment1 == "2241030901")
                     {
                         return "FL";
+                    }
+                    else
+                    {
+                        //return "FL";
+
+                        return string.Empty;
                     }
                 }
             }
