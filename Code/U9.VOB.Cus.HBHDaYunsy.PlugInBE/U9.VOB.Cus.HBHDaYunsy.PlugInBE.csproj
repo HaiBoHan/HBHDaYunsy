@@ -57,6 +57,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="U9.VOB.Cus.DaYun.QCBE">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\DaYunsy\U9.VOB.Cus.DaYun.QCBE.dll</HintPath>
+    </Reference>
     <Reference Include="UFIDA.U9.Base.BaseBP.Agent">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\UBF\UFIDA.U9.Base.BaseBP.Agent.dll</HintPath>
     </Reference>
@@ -97,6 +100,9 @@
     </Reference>
     <Reference Include="UFIDA.U9.GL.GLBE.Deploy">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.GL.GLBE.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.HHKK.KkpmBE">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\DaYunsy\UFIDA.U9.HHKK.KkpmBE.dll</HintPath>
     </Reference>
     <Reference Include="UFIDA.U9.InvDoc.InvDocBE">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocBE.dll</HintPath>
@@ -229,6 +235,9 @@
     <Compile Include="SupplySourceDeleted.cs" />
     <Compile Include="SupplySourceUpdated.cs" />
     <Compile Include="CompleteRptRcvLineInserted.cs" />
+    <Compile Include="PurchaseOrder_BeforeDefaultValue.cs" />
+    <Compile Include="Receivement_BeforeDefaultValue.cs" />
+    <Compile Include="ArrivalDoc_BeforeDefaultValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -236,6 +245,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="QCDoc_BeforeDefaultValue.cs" />
     <None Include="Service References\DMSAsync_PI06\PI06ImplService.wsdl" />
     <None Include="Service References\DMSAsync_PI06\U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMSAsync_PI06.partBaseDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
