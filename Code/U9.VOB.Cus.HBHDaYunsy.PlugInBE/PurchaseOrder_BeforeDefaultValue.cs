@@ -92,6 +92,13 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
         public static SupplySource GetSupplySource(DateTime docDate, string newSuptCode, string newItemCode)
         {
+            if (docDate == null
+                || docDate.Year <= 2010
+                )
+            {
+                docDate = Context.LoginDate;
+            }
+
             SupplySource suptItem = SupplySource.Finder.Find("SupplierInfo.Code=@SuptCode and ItemInfo.ItemCode=@ItemCode and Effective.IsEffective=1 and @Now between Effective.EffectiveDate and Effective.DisableDate"
                 , new OqlParam(newSuptCode)
                 , new OqlParam(newItemCode)
