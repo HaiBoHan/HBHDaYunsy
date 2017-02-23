@@ -18,7 +18,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
   UFIDA.U9.HHKK.Kkpm.ArrivalUI
   UFIDA.U9.HHKK.Kkpm.ArrivalDoc	到货单	Kkpm_ArrivalDoc	UFIDA.U9.HHKK.KkpmBE	ArrivalDoc	UFIDA.U9.HHKK.Kkpm.ArrivalUIModel.ArrivalMainUIFormWebPart	UFIDA.U9.HHKK.Kkpm.ArrivalUI.WebPart   
      */
-    public class ArrivalDoc_BeforeDefaultValue : IEventSubscriber
+    public class ArrivalDoc_AfterDefaultValue : IEventSubscriber
     {
         public void Notify(params object[] args)
         {
