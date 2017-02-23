@@ -1,0 +1,16 @@
+
+
+  U9.VOB.Cus.DaYun.QC
+  U9.VOB.Cus.DaYun.QCDocBE.QCDoc	质检单头	Cus_DAYUN_QCDoc	U9.VOB.Cus.DaYun.QCBE	QCDoc	U9.VOB.Cus.DaYun.QCDocUIModel.QCDocMainUIFormWebPart	U9.VOB.Cus.DaYun.QCDocUI.WebPart
+
+  UFIDA.U9.HHKK.Kkpm.ArrivalUI
+  UFIDA.U9.HHKK.Kkpm.ArrivalDoc	到货单	Kkpm_ArrivalDoc	UFIDA.U9.HHKK.KkpmBE	ArrivalDoc	UFIDA.U9.HHKK.Kkpm.ArrivalUIModel.ArrivalMainUIFormWebPart	UFIDA.U9.HHKK.Kkpm.ArrivalUI.WebPart
+
+  SQCUI
+  UFIDA.U9.SQC.BE.SQCBE	质检样品管理单	DYAuto_SQC	SQCBE	SQCBE	SQCUI.SQCFormWebPart	SQCUI.WebPart
+
+  UFIDA.U9.Cust.Rework
+  UFIDA.U9.CUST.ReworkBE.ReworkBiz	单据头	Re_BizEntity	UFIDA.U9.CUST.ReworkBE	ReworkBiz	UFIDA.U9.CUST.ReworkModelUI.ReworkUIWebPart	UFIDA.U9.CUST.ReworkModel.WebPart
+
+  UFIDA.U9.SO.SplitPOUI
+  UFIDA.U9.PO.SplitPOBE.SpiltPODoc	采购分单表	DYAuto_SplitPODoc	SplitPOBE	SpiltPODoc	UFIDA.U9.PO.SplitPOUI.SplitPOUIMainFormWebPart	UFIDA.U9.PO.SplitPOUI.WebPart
