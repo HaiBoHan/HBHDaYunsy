@@ -237,7 +237,7 @@
     <Compile Include="CompleteRptRcvLineInserted.cs" />
     <Compile Include="PurchaseOrder_BeforeDefaultValue.cs" />
     <Compile Include="Receivement_BeforeDefaultValue.cs" />
-    <Compile Include="ArrivalDoc_AfterDefaultValue.cs" />
+    <Compile Include="ArrivalDoc_AfterInserting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
