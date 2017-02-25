@@ -71,18 +71,34 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                     )
                                 )
                             {
-                                SupplySource suptSource = PurchaseOrder_BeforeDefaultValue.GetSupplySource(docDate, newSuptCode, newItemCode);
-                                if (suptSource != null)
+                                /*
+                                货源表  1
+                                 * 
+                                标准采购：9
+                                标准收货：2
+                                到货：2
+                                质检单：6
+                                 */
+                                POLine srcPOLine = null;
+                                if (docline.SrcPO != null
+                                    && docline.SrcPO.SrcDocLine != null
+                                    && docline.SrcPO.SrcDocLine.EntityID > 0
+                                    )
                                 {
-                                    /*
-                                    货源表  1
-                                     * 
-                                    标准采购：9
-                                    标准收货：2
-                                    到货：2
-                                    质检单：6
-                                     */
-                                    docline.DescFlexSegments.PrivateDescSeg2 = suptSource.DescFlexField.PrivateDescSeg1;
+                                    srcPOLine = POLine.Finder.FindByID(docline.SrcPO.SrcDocLine.EntityID);
+                                }
+
+                                if (srcPOLine != null)
+                                {
+                                    docline.DescFlexSegments.PrivateDescSeg2 = srcPOLine.DescFlexSegments.PrivateDescSeg9;
+                                }
+                                else
+                                {
+                                    SupplySource suptSource = PurchaseOrder_BeforeDefaultValue.GetSupplySource(docDate, newSuptCode, newItemCode);
+                                    if (suptSource != null)
+                                    {
+                                        docline.DescFlexSegments.PrivateDescSeg2 = suptSource.DescFlexField.PrivateDescSeg1;
+                                    }
                                 }
                             }
                         }

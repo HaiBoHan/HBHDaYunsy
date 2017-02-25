@@ -75,18 +75,40 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                     )
                                 )
                             {
-                                SupplySource suptSource = PurchaseOrder_BeforeDefaultValue.GetSupplySource(docDate, newSuptCode, newItemCode);
-                                if (suptSource != null)
+                                /*
+                                货源表  1
+                                 * 
+                                标准采购：9
+                                标准收货：2
+                                到货：2
+                                质检单：6
+                                 */
+                                POLine srcPOLine = null;
+                                if (docline.POLineID > 0
+                                    )
                                 {
-                                    /*
-                                    货源表  1
-                                     * 
-                                    标准采购：9
-                                    标准收货：2
-                                    到货：2
-                                    质检单：6
-                                     */
-                                    docline.DescFlexField.PrivateDescSeg6 = suptSource.DescFlexField.PrivateDescSeg1;
+                                    srcPOLine = POLine.Finder.FindByID(docline.POLineID);
+                                }
+
+                                if (srcPOLine != null)
+                                {
+                                    docline.DescFlexField.PrivateDescSeg6 = srcPOLine.DescFlexSegments.PrivateDescSeg9;
+                                }
+                                else
+                                {
+                                    SupplySource suptSource = PurchaseOrder_BeforeDefaultValue.GetSupplySource(docDate, newSuptCode, newItemCode);
+                                    if (suptSource != null)
+                                    {
+                                        /*
+                                        货源表  1
+                                         * 
+                                        标准采购：9
+                                        标准收货：2
+                                        到货：2
+                                        质检单：6
+                                         */
+                                        docline.DescFlexField.PrivateDescSeg6 = suptSource.DescFlexField.PrivateDescSeg1;
+                                    }
                                 }
                             }
                         }
