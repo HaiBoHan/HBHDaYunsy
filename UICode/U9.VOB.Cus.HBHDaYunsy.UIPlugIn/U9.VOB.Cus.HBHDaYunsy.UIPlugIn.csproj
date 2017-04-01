@@ -120,6 +120,9 @@
     <Reference Include="UFIDA.U9.SCM.PM.ReceivementUI.WebPart">
       <HintPath>..\..\..\..\..\..\U9Product\U9.VOB.Product.WebPart\UFIDA.U9.SCM.PM.ReceivementUI.WebPart.dll</HintPath>
     </Reference>
+    <Reference Include="UFIDA.U9.SCM.SD.SalePriceAdjustmentUI.WebPart">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\UFIDA.U9.SCM.SD.SalePriceAdjustmentUI.WebPart.dll</HintPath>
+    </Reference>
     <Reference Include="UFIDA.U9.SCM.SD.SalePriceListUI.WebPart">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.WebPart\UFIDA.U9.SCM.SD.SalePriceListUI.WebPart.dll</HintPath>
     </Reference>
@@ -269,6 +272,7 @@
     <Compile Include="SupplierList_UIPlugin.cs" />
     <Compile Include="CustomerList_UIPlugin.cs" />
     <Compile Include="SalePriceListBList_UIPlugin.cs" />
+    <Compile Include="SalePriceAdjustmentBList_UIPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="U9.VOB.Cus.HBHDaYunsy.UIPlugIn.config">

@@ -51,7 +51,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
                 HBHCommon.HBHCommonUI.UICommonHelper.Layout(card0, btn2DMSWhqoh, 8, 0);
 
                 // 确认对话框
-                UFIDA.U9.UI.PDHelper.PDFormMessage.ShowDelConfirmDialog(_strongPart.Page, "确认同步DMS库存？", "确认同步DMS库存", btn2DMSWhqoh);
+                UFIDA.U9.UI.PDHelper.PDFormMessage.ShowConfirmDialog(_strongPart.Page, "确认同步DMS库存？", "确认同步DMS库存", btn2DMSWhqoh);
             }
         }
 

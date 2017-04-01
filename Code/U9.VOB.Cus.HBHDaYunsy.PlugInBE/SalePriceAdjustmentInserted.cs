@@ -59,13 +59,13 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									partBaseDto d = service.Do(lines.ToArray());
 									if (d != null && d.flag == 0)
 									{
-										throw new System.ApplicationException(d.errMsg);
+										throw new BusinessException(d.errMsg);
 									}
 								}
 							}
 							catch (System.Exception e)
 							{
-								throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+								throw new BusinessException("调用DMS接口错误：" + e.Message);
 							}
 						}
 					}

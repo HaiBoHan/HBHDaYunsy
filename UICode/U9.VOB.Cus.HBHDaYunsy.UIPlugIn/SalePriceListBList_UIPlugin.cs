@@ -48,7 +48,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
                 HBHCommon.HBHCommonUI.UICommonHelper.Layout(card0, btn2DMS, 8, 0);
 
                 // 确认对话框
-                UFIDA.U9.UI.PDHelper.PDFormMessage.ShowDelConfirmDialog(_strongPart.Page, "确认同步DMS？", "确认同步DMS", btn2DMS);
+                UFIDA.U9.UI.PDHelper.PDFormMessage.ShowConfirmDialog(_strongPart.Page, "确认同步DMS？", "确认同步DMS", btn2DMS);
             }
         }
 

@@ -17,6 +17,7 @@ using UFIDA.U9.CBO.SCM.Customer;
 using UFIDA.U9.SPR.SalePriceAdjustment;
 using System.Net;
 using System.IO;
+using UFIDA.U9.CBO.SCM.Item;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -422,6 +423,29 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 //, Context.LoginOrg.ID.ToString()
                 , GetPartPriceListOrgCode()
                 , supplierItem.ItemInfo.ItemCode
+                , System.DateTime.Now.ToString());
+            //if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+            //{
+            //    opath += string.Format(" and SalePriceList.Code='{0}'", Const_ElectricPartPriceListCode);
+            //}
+            //else if (Context.LoginOrg.Code == Const_OrgCode_Hubei)
+            //{
+            //    //opath += string.Format(" and SalePriceList.Code={0}", Const_SalePartPriceListCode);
+            //}
+            string pricelistCode = GetPartPriceListCode();
+            if (pricelistCode.IsNotNullOrWhiteSpace())
+            {
+                opath += string.Format(" and SalePriceList.Code='{0}'", pricelistCode);
+            }
+            return SalePriceLine.Finder.Find(opath);
+        }
+
+        public static SalePriceLine GetSalePriceList(ItemMaster itemMaster)
+        {
+            string opath = string.Format("SalePriceList.Org.Code={0} and ItemInfo.ItemCode='{1}' and Active=1 and '{2}' between FromDate and ToDate "
+                //, Context.LoginOrg.ID.ToString()
+                , GetPartPriceListOrgCode()
+                , itemMaster.Code
                 , System.DateTime.Now.ToString());
             //if (Context.LoginOrg.Code == Const_OrgCode_Electric)
             //{

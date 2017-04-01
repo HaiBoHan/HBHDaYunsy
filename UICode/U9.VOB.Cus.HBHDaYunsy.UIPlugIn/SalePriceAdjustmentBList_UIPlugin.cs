@@ -13,21 +13,22 @@ using UserDefAllocRateUIModel;
 using UFIDA.U9.Cust.HBH.Common.CommonLibary;
 using UFSoft.UBF.UI.MD.Runtime;
 using U9.VOB.Cus.HBHDaYunsy.Proxy;
+using UFIDA.U9.SPR.SalePriceAdjustmentBListUI;
 
 namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
 {
-    // CBO.Pub.Supplier.SupplierList
-    // UFIDA.U9.CBO.Supplier.SupplierBListModel.SupplierBListUIFormWebPart	UFIDA.U9.CBO.Pub.Supplier.SupplierUI.WebPart
-    public class SupplierList_UIPlugin : ExtendedPartBase
+    // CBO.SCM.MF5040_20
+    // UFIDA.U9.SPR.SalePriceAdjustmentBListUI.SalePriceAdjustmentBListUIFormWebPart	UFIDA.U9.SCM.SD.SalePriceAdjustmentUI.WebPart
+    public class SalePriceAdjustmentBList_UIPlugin : ExtendedPartBase
     {
         public UFSoft.UBF.UI.IView.IPart part;
-        private UFIDA.U9.CBO.Supplier.SupplierBListModel.SupplierBListUIFormWebPart _strongPart;
+        SalePriceAdjustmentBListUIFormWebPart _strongPart;
 
 
         public override void AfterInit(IPart Part, EventArgs e)
         {
             part = Part;
-            _strongPart = Part as UFIDA.U9.CBO.Supplier.SupplierBListModel.SupplierBListUIFormWebPart;
+            _strongPart = Part as SalePriceAdjustmentBListUIFormWebPart;
 
 
             // Card0
@@ -35,21 +36,21 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
             IUFCard card0 = (IUFCard)part.GetUFControlByName(part.TopLevelContainer, "Card0");
             if (card0 != null)
             {
-                IUFButton btn2DMSWhqoh = new UFWebButtonAdapter();
-                btn2DMSWhqoh.Text = "下发DMS库存";
-                btn2DMSWhqoh.ID = "btn2DMSWhqoh";
-                btn2DMSWhqoh.AutoPostBack = true;
-                btn2DMSWhqoh.Click += new EventHandler(btn2DMSWhqoh_Click);
+                IUFButton btn2DMS = new UFWebButtonAdapter();
+                btn2DMS.Text = "下发DMS";
+                btn2DMS.ID = "btn2DMS";
+                btn2DMS.AutoPostBack = true;
+                btn2DMS.Click += new EventHandler(btn2DMS_Click);
 
-                card0.Controls.Add(btn2DMSWhqoh);
-                HBHCommon.HBHCommonUI.UICommonHelper.Layout(card0, btn2DMSWhqoh, 8, 0);
+                card0.Controls.Add(btn2DMS);
+                HBHCommon.HBHCommonUI.UICommonHelper.Layout(card0, btn2DMS, 8, 0);
 
                 // 确认对话框
-                UFIDA.U9.UI.PDHelper.PDFormMessage.ShowConfirmDialog(_strongPart.Page, "确认同步DMS库存？", "确认同步DMS库存", btn2DMSWhqoh);
+                UFIDA.U9.UI.PDHelper.PDFormMessage.ShowConfirmDialog(_strongPart.Page, "确认同步DMS？", "确认同步DMS", btn2DMS);
             }
         }
 
-        public void btn2DMSWhqoh_Click(object sender, EventArgs e)
+        public void btn2DMS_Click(object sender, EventArgs e)
         {
             part.Model.ClearErrorMessage();
             part.DataCollect();
@@ -57,9 +58,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
             part.IsDataBinding = true;
 
             StoreQty2DMSSVProxy proxy = new StoreQty2DMSSVProxy();
-            proxy.TransferType = (int)DaYun2DMSTransferTypeEnum.Supplier;
+            proxy.TransferType = (int)DaYun2DMSTransferTypeEnum.SalePriceAdjustment;
 
-            long[] selected = _strongPart.Model.Supplier.GetSelectedRecordIDs();
+            long[] selected = _strongPart.Model.SalePriceAdjustLine.GetSelectedRecordIDs();
 
             if (selected != null
                 && selected.Length > 0

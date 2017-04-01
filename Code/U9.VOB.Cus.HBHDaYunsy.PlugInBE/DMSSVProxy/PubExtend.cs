@@ -21,6 +21,10 @@ using HBH.DoNet.DevPlatform.ErpSvProxy;
 using UFIDA.U9.CBO.SCM.Supplier;
 using UFIDA.U9.SPR.SalePriceList;
 using UFIDA.U9.CBO.SCM.Customer;
+using U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI01;
+using UFIDA.U9.SPR.SalePriceAdjustment;
+using UFSoft.UBF.Business;
+using UFIDA.U9.CBO.SCM.Item;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -275,7 +279,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 }
                 catch (System.Exception e)
                 {
-                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                    throw new BusinessException("调用DMS接口错误：" + e.Message);
                 }
             }
         }
@@ -355,7 +359,85 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 }
                 catch (System.Exception e)
                 {
-                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                    throw new BusinessException("调用DMS接口错误：" + e.Message);
+                }
+            }
+        }
+
+        public static void BatchSend2DMS_Async(IList<SalePriceAdjustLine> lstErpData, int actionType)
+        {
+            if (lstErpData != null
+                && lstErpData.Count > 0
+                )
+            {
+                DMSAsync_PI06.PI06Client service = PubExtend.GetPI06Async();
+
+                System.Collections.Generic.List<DMSAsync_PI06.partBaseDto> lines = new System.Collections.Generic.List<DMSAsync_PI06.partBaseDto>();
+                foreach (SalePriceAdjustLine ajustLine in lstErpData)
+                {
+                    if (ajustLine.ItemInfo != null
+                        && ajustLine.ItemInfo.ItemID != null
+                        )
+                    {
+                        DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                        //if (supplierItem.OriginalData.SupplierInfo != null && supplierItem.OriginalData.SupplierInfo.SupplierKey != null)
+                        //{
+                        //    linedto.suptCode = supplierItem.OriginalData.SupplierInfo.Supplier.Code;
+                        //}
+                        ItemMaster item = ajustLine.ItemInfo.ItemID;
+                        if (item != null)
+                        {
+                            linedto.partCode = item.Code;
+                            linedto.partName = item.Name;
+                        }
+                        if (item.InventoryUOM != null)
+                        {
+                            linedto.unit = item.InventoryUOM.Name;
+                        }
+                        if (item.PurchaseInfo != null)
+                        {
+                            linedto.miniPack = ((item.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(item.PurchaseInfo.MinRcvQty) : 1);
+                        }
+                        //SalePriceLine line = SalePriceLine.Finder.Find(string.Format("SalePriceList.Org={0} and ItemInfo.ItemID={1} and Active=1 and '{2}' between FromDate and ToDate", Context.LoginOrg.ID.ToString(), supplierItem.OriginalData.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
+                        SalePriceLine line = PubHelper.GetSalePriceList(item);
+                        if (line != null)
+                        {
+                            linedto.salePrice = float.Parse(line.Price.ToString());
+                            linedto.unitPrace = linedto.salePrice;
+                        }
+                        else
+                        {
+                            linedto.salePrice = 0;
+                            linedto.unitPrace = 0;
+                        }
+                        linedto.isFlag = "2";
+                        linedto.isDanger = "0";
+                        linedto.isReturn = "1";
+                        linedto.isSale = "1";
+                        linedto.isEffective = line.Active.ToString();
+                        linedto.actionType = actionType;
+
+                        if (linedto.salePrice > 0)
+                        {
+                            lines.Add(linedto);
+                        }
+                    }
+                }
+
+                // service.Do(lines);
+
+                if (lines != null
+                    && lines.Count > 0
+                    )
+                {
+                    try
+                    {
+                        PubExtend.Do(service, lines.ToArray());
+                    }
+                    catch (System.Exception e)
+                    {
+                        throw new BusinessException("调用DMS接口错误：" + e.Message);
+                    }
                 }
             }
         }
@@ -845,7 +927,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 }
                 catch (System.Exception e)
                 {
-                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                    throw new BusinessException("调用DMS接口错误：" + e.Message);
                 }
             }
         }
@@ -1301,7 +1383,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 }
                 catch (System.Exception e)
                 {
-                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                    throw new BusinessException("调用DMS接口错误：" + e.Message);
                 }
             }
         }
@@ -1418,6 +1500,61 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             return null;
         }
 
+        // vin底盘号 ,bomdm 配件图号,   gysdm供应商代码  pjtm 配件条码   pch 批次号,
+        // MES完工条码更新DMS
+        /// <summary>
+        /// MES完工条码更新DMS
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static mesDataTmpDto Do(this SI01ImplService service, mesDataTmpDto param)
+        {
+            service.Url = PubHelper.GetAddress(service.Url);
+
+            string entityName = "移库接口";
+            long svID = -1;
+            if (IsLog)
+            {
+                svID = ProxyLogger.CreateTransferSV(entityName
+                    //, EntitySerialization.EntitySerial(bpObj)
+                    , Newtonsoft.Json.JsonConvert.SerializeObject(param)
+                    , service.GetType().FullName, Newtonsoft.Json.JsonConvert.SerializeObject(service));
+            }
+
+            try
+            {
+                var result = service.receive(param);
+
+                if (svID > 0)
+                {
+                    if (result != null
+                        )
+                    {
+                        //string resultXml = EntitySerialization.EntitySerial(result);
+                        string resultXml = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+
+                        ProxyLogger.UpdateTransferSV(svID, resultXml, result.flag == 1, result.errMsg, string.Empty, string.Empty);
+                    }
+                    else
+                    {
+                        ProxyLogger.UpdateTransferSV(svID, string.Empty, false, Const_ResultNullMessage, string.Empty, string.Empty);
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                if (svID > 0)
+                {
+                    ProxyLogger.UpdateTransferSV(svID, string.Empty, false, ex.Message, string.Empty, ex.StackTrace);
+                }
+
+                throw ex;
+            }
+
+            return null;
+        }
 
 
 

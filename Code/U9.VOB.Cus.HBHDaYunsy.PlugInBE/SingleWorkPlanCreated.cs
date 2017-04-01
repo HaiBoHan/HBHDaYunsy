@@ -59,12 +59,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									vehicleInfoDto resultdto = service.Do(dto);
 									if (resultdto != null && resultdto.flag == 0)
 									{
-										throw new System.ApplicationException(resultdto.errMsg);
+										throw new BusinessException(resultdto.errMsg);
 									}
 								}
 								catch (System.Exception e)
 								{
-									throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+									throw new BusinessException("调用DMS接口错误：" + e.Message);
 								}
 							}
 						}

@@ -51,12 +51,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 										vehicleMoveInfoDto dto2 = service.Do(list.ToArray());
 										if (dto2 != null && dto2.flag == 0)
 										{
-											throw new System.ApplicationException(dto2.errMsg);
+											throw new BusinessException(dto2.errMsg);
 										}
 									}
 									catch (System.Exception e)
 									{
-										throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+										throw new BusinessException("调用DMS接口错误：" + e.Message);
 									}
 								}
 								else if (transferin.Status == TransInStatus.Opening && transferin.OriginalData.Status == TransInStatus.Approved)
@@ -86,12 +86,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 										vehicleMoveInfoDto dto2 = service.Do(list.ToArray());
 										if (dto2 != null && dto2.flag == 0)
 										{
-											throw new System.ApplicationException(dto2.errMsg);
+											throw new BusinessException(dto2.errMsg);
 										}
 									}
 									catch (System.Exception e)
 									{
-										throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+										throw new BusinessException("调用DMS接口错误：" + e.Message);
 									}
 								}
 							}

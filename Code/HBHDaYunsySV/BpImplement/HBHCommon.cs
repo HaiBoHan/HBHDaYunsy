@@ -229,5 +229,11 @@ namespace UFIDA.U9.Cust.HBDY.API
         /// 价表
         /// </summary>
         PriceList = 4,
+
+        // 调价单
+        /// <summary>
+        /// 调价单
+        /// </summary>
+        SalePriceAdjustment = 5,
     }
 }

@@ -196,6 +196,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="Web References\DMS_SI01\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\DMS_SI02\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -286,6 +291,14 @@
     <None Include="Web References\DMS_PI08\supplierDto.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
+    <None Include="Web References\DMS_SI01\mesDataTmpDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_SI01\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DMS_SI01\SI01ImplService.wsdl" />
     <None Include="Web References\DMS_SI02\orderInfoDto.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -459,6 +472,17 @@
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI11_SI11ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://scisoft.eicp.net:9080/hbdyepc/ws/SI01%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_SI01\</RelPath>
+      <UpdateFromURL>http://scisoft.eicp.net:9080/hbdyepc/ws/SI01%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI01_SI01ImplService</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>

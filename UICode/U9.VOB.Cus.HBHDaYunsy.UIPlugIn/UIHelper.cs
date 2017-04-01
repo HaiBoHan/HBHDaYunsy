@@ -36,5 +36,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.UIPlugIn
         /// 价表
         /// </summary>
         PriceList = 4,
+
+        // 调价单
+        /// <summary>
+        /// 调价单
+        /// </summary>
+        SalePriceAdjustment = 5,
     }
 }

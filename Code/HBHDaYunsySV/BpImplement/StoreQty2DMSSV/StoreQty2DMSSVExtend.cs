@@ -17,6 +17,7 @@ namespace U9.VOB.Cus.HBHDaYunsy
     using UFIDA.U9.SPR.SalePriceList;
     using UFIDA.U9.CBO.SCM.Customer;
     using UFIDA.U9.Base;
+    using UFIDA.U9.SPR.SalePriceAdjustment;
 
 	/// <summary>
 	/// StoreQty2DMSSV partial 
@@ -79,6 +80,11 @@ namespace U9.VOB.Cus.HBHDaYunsy
                     case (int)DaYun2DMSTransferTypeEnum.PriceList:
                         {
                             UpdateDMS_PriceList(bpObj);
+                        }
+                        break;
+                    case (int)DaYun2DMSTransferTypeEnum.SalePriceAdjustment:
+                        {
+                            UpdateDMS_SalePriceAdjustment(bpObj);
                         }
                         break;
                 }
@@ -313,6 +319,57 @@ namespace U9.VOB.Cus.HBHDaYunsy
             }
         }
 
+        private void UpdateDMS_SalePriceAdjustment(StoreQty2DMSSV bpObj)
+        {
+            string opath = "1=1 and PriceList.Code = @Code and SalePriceAdjustment.Org=@Org  @AddSuptOpath ";
+
+            if (bpObj.SupItems != null
+                && bpObj.SupItems.Count > 0
+                )
+            {
+                string ids = bpObj.SupItems.GetOpathFromList();
+
+                opath = opath.Replace("@AddSuptOpath"
+                    , string.Format(" and ID in ({0})", ids)
+                    );
+            }
+            else
+            {
+                // 不选，就不同步
+                opath = opath.Replace("@AddSuptOpath"
+                    , " and 1=0 "
+                    );
+            }
+
+            string priceListCode = HBHCommon.GetPartPriceListCode();
+
+            if (priceListCode.IsNotNullOrWhiteSpace())
+            {
+                SalePriceAdjustLine.EntityList lst = SalePriceAdjustLine.Finder.FindAll(opath
+                    , new OqlParam(priceListCode)
+                    , new OqlParam(Context.LoginOrg.ID)
+                    );
+
+                if (lst != null
+                    && lst.Count > 0
+                    )
+                {
+                    List<List<SalePriceAdjustLine>> pageList = PageList<SalePriceAdjustLine>(lst);
+
+                    if (pageList != null
+                        && pageList.Count > 0
+                        )
+                    {
+                        foreach (List<SalePriceAdjustLine> page in pageList)
+                        {
+                            //PubExtend.BatchSend2DMS_Async(lst, 2);
+                            PubExtend.BatchSend2DMS_Async(page, 2);
+                        }
+                    }
+                }
+            }
+        }
+
 
 
         private static void BatchSend2DMS_Async(IList<WhQoh> lst)
@@ -424,7 +481,8 @@ namespace U9.VOB.Cus.HBHDaYunsy
         {
             List<List<T>> pageList = new List<List<T>>();
             List<T> onePage = new List<T>();
-            int pageSize = 100;
+            //int pageSize = 100;
+            int pageSize = 10;
             int currentPage = 0;
             int currentIndex = 0;
             while (currentIndex + currentPage * pageSize < lst.Count

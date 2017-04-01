@@ -123,12 +123,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     accountInfoDto c = service.Do(dto);
                                                     if (c != null && c.flag == 0)
                                                     {
-                                                        throw new System.ApplicationException(c.errMsg);
+                                                        throw new BusinessException(c.errMsg);
                                                     }
                                                 }
                                                 catch (System.Exception e)
                                                 {
-                                                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                                                    throw new BusinessException("调用DMS接口错误：" + e.Message);
                                                 }
                                             }
                                         }
@@ -231,12 +231,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     accountInfoDto c = service.Do(dto);
                                                     if (c != null && c.flag == 0)
                                                     {
-                                                        throw new System.ApplicationException(c.errMsg);
+                                                        throw new BusinessException(c.errMsg);
                                                     }
                                                 }
                                                 catch (System.Exception e)
                                                 {
-                                                    throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+                                                    throw new BusinessException("调用DMS接口错误：" + e.Message);
                                                 }
                                             }
                                         }

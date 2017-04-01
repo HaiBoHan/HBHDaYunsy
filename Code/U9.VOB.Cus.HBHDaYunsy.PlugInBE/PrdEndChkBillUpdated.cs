@@ -56,12 +56,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                     // 改为异步调用了
                                     //if (t != null && t.Length > 0 && t[0].flag == 0)
                                     //{
-                                    //    throw new System.ApplicationException(t[0].errMsg);
+                                    //    throw new BusinessException(t[0].errMsg);
                                     //}
 								}
 								catch (System.Exception e)
 								{
-									throw new System.ApplicationException("调用DMS接口错误：" + e.Message);
+									throw new BusinessException("调用DMS接口错误：" + e.Message);
 								}
 							}
 						}
