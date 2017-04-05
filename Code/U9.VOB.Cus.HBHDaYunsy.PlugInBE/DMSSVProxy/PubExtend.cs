@@ -25,6 +25,7 @@ using U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI01;
 using UFIDA.U9.SPR.SalePriceAdjustment;
 using UFSoft.UBF.Business;
 using UFIDA.U9.CBO.SCM.Item;
+using UFSoft.UBF.PL;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -298,7 +299,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                     ItemMaster item = line.ItemInfo.ItemID;
                     if (line.Active && System.DateTime.Now >= line.FromDate && (System.DateTime.Now < line.ToDate || line.ToDate.ToString() == "9999.12.31"))
                     {
-                        SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()));
+                        SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll("ItemInfo.ItemCode=@ItemCode and Effective.IsEffective=1 and @Now between Effective.EffectiveDate and Effective.DisableDate"
+                                            , new OqlParam(line.ItemInfo.ItemCode)
+                                            , new OqlParam(System.DateTime.Today)
+                                            );
                         if (supitemlist != null && supitemlist.Count > 0)
                         {
                             foreach (SupplySource supply in supitemlist)
@@ -382,7 +386,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                     {
                         ItemMaster item = ajustLine.ItemInfo.ItemID;
                         SalePriceLine line = PubHelper.GetSalePriceList(item);
-                        SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()));
+                        SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll("ItemInfo.ItemCode=@ItemCode and Effective.IsEffective=1 and @Now between Effective.EffectiveDate and Effective.DisableDate"
+                                            , new OqlParam(line.ItemInfo.ItemCode)
+                                            , new OqlParam(System.DateTime.Today)
+                                            );
                         if (supitemlist != null && supitemlist.Count > 0)
                         {
                             foreach (SupplySource supply in supitemlist)
