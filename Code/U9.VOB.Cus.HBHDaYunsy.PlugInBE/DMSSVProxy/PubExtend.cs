@@ -295,24 +295,25 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 System.Collections.Generic.List<DMSAsync_PI06.partBaseDto> lines = new System.Collections.Generic.List<DMSAsync_PI06.partBaseDto>();
                 foreach (SalePriceLine line in lstErpData)
                 {
+                    ItemMaster item = line.ItemInfo.ItemID;
                     if (line.Active && System.DateTime.Now >= line.FromDate && (System.DateTime.Now < line.ToDate || line.ToDate.ToString() == "9999.12.31"))
                     {
                         SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()));
                         if (supitemlist != null && supitemlist.Count > 0)
                         {
-                            foreach (SupplySource i in supitemlist)
+                            foreach (SupplySource supply in supitemlist)
                             {
                                 DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
-                                linedto.suptCode = i.SupplierInfo.Supplier.Code;
-                                linedto.partCode = line.ItemInfo.ItemID.Code;
-                                linedto.partName = line.ItemInfo.ItemID.Name;
-                                if (line.ItemInfo.ItemID.InventoryUOM != null)
+                                linedto.suptCode = supply.SupplierInfo.Supplier.Code;
+                                linedto.partCode = item.Code;
+                                linedto.partName = item.Name;
+                                if (item.InventoryUOM != null)
                                 {
-                                    linedto.unit = line.ItemInfo.ItemID.InventoryUOM.Name;
+                                    linedto.unit = item.InventoryUOM.Name;
                                 }
-                                if (line.ItemInfo.ItemID.PurchaseInfo != null)
+                                if (item.PurchaseInfo != null)
                                 {
-                                    linedto.miniPack = ((line.ItemInfo.ItemID.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(line.ItemInfo.ItemID.PurchaseInfo.MinRcvQty) : 1);
+                                    linedto.miniPack = ((item.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(item.PurchaseInfo.MinRcvQty) : 1);
                                 }
                                 linedto.salePrice = float.Parse(line.Price.ToString());
                                 linedto.unitPrace = linedto.salePrice;
@@ -328,15 +329,15 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         else
                         {
                             DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
-                            linedto.partCode = line.ItemInfo.ItemID.Code;
-                            linedto.partName = line.ItemInfo.ItemID.Name;
-                            if (line.ItemInfo.ItemID.InventoryUOM != null)
+                            linedto.partCode = item.Code;
+                            linedto.partName = item.Name;
+                            if (item.InventoryUOM != null)
                             {
-                                linedto.unit = line.ItemInfo.ItemID.InventoryUOM.Name;
+                                linedto.unit = item.InventoryUOM.Name;
                             }
-                            if (line.ItemInfo.ItemID.PurchaseInfo != null)
+                            if (item.PurchaseInfo != null)
                             {
-                                linedto.miniPack = ((line.ItemInfo.ItemID.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(line.ItemInfo.ItemID.PurchaseInfo.MinRcvQty) : 1);
+                                linedto.miniPack = ((item.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(item.PurchaseInfo.MinRcvQty) : 1);
                             }
                             linedto.salePrice = float.Parse(line.Price.ToString());
                             linedto.unitPrace = linedto.salePrice;
@@ -379,46 +380,57 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         && ajustLine.ItemInfo.ItemID != null
                         )
                     {
-                        DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
-                        //if (supplierItem.OriginalData.SupplierInfo != null && supplierItem.OriginalData.SupplierInfo.SupplierKey != null)
-                        //{
-                        //    linedto.suptCode = supplierItem.OriginalData.SupplierInfo.Supplier.Code;
-                        //}
                         ItemMaster item = ajustLine.ItemInfo.ItemID;
-                        if (item != null)
-                        {
-                            linedto.partCode = item.Code;
-                            linedto.partName = item.Name;
-                        }
-                        if (item.InventoryUOM != null)
-                        {
-                            linedto.unit = item.InventoryUOM.Name;
-                        }
-                        if (item.PurchaseInfo != null)
-                        {
-                            linedto.miniPack = ((item.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(item.PurchaseInfo.MinRcvQty) : 1);
-                        }
-                        //SalePriceLine line = SalePriceLine.Finder.Find(string.Format("SalePriceList.Org={0} and ItemInfo.ItemID={1} and Active=1 and '{2}' between FromDate and ToDate", Context.LoginOrg.ID.ToString(), supplierItem.OriginalData.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()), new OqlParam[0]);
                         SalePriceLine line = PubHelper.GetSalePriceList(item);
-                        if (line != null)
+                        SupplySource.EntityList supitemlist = SupplySource.Finder.FindAll(string.Format("Org={0} and ItemInfo.ItemID={1} and Effective.IsEffective=1 and '{2}' between Effective.EffectiveDate and Effective.DisableDate", Context.LoginOrg.ID.ToString(), line.ItemInfo.ItemID.ID.ToString(), System.DateTime.Now.ToString()));
+                        if (supitemlist != null && supitemlist.Count > 0)
                         {
-                            linedto.salePrice = float.Parse(line.Price.ToString());
-                            linedto.unitPrace = linedto.salePrice;
+                            foreach (SupplySource supply in supitemlist)
+                            {
+                                DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                                linedto.suptCode = supply.SupplierInfo.Supplier.Code;
+                                linedto.partCode = item.Code;
+                                linedto.partName = item.Name;
+                                if (item.InventoryUOM != null)
+                                {
+                                    linedto.unit = item.InventoryUOM.Name;
+                                }
+                                if (item.PurchaseInfo != null)
+                                {
+                                    linedto.miniPack = ((item.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(item.PurchaseInfo.MinRcvQty) : 1);
+                                }
+                                linedto.salePrice = float.Parse(line.Price.ToString());
+                                linedto.unitPrace = linedto.salePrice;
+                                linedto.isDanger = "0";
+                                linedto.isReturn = "1";
+                                linedto.isSale = "1";
+                                linedto.isFlag = "1";
+                                linedto.isEffective = line.Active.ToString();
+                                linedto.actionType = 1;
+                                lines.Add(linedto);
+                            }
                         }
                         else
                         {
-                            linedto.salePrice = 0;
-                            linedto.unitPrace = 0;
-                        }
-                        linedto.isFlag = "2";
-                        linedto.isDanger = "0";
-                        linedto.isReturn = "1";
-                        linedto.isSale = "1";
-                        linedto.isEffective = line.Active.ToString();
-                        linedto.actionType = actionType;
-
-                        if (linedto.salePrice > 0)
-                        {
+                            DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                            linedto.partCode = item.Code;
+                            linedto.partName = item.Name;
+                            if (item.InventoryUOM != null)
+                            {
+                                linedto.unit = item.InventoryUOM.Name;
+                            }
+                            if (item.PurchaseInfo != null)
+                            {
+                                linedto.miniPack = ((item.PurchaseInfo.MinRcvQty > 0) ? System.Convert.ToInt32(item.PurchaseInfo.MinRcvQty) : 1);
+                            }
+                            linedto.salePrice = float.Parse(line.Price.ToString());
+                            linedto.unitPrace = linedto.salePrice;
+                            linedto.isDanger = "0";
+                            linedto.isReturn = "1";
+                            linedto.isSale = "1";
+                            linedto.isFlag = "1";
+                            linedto.isEffective = line.Active.ToString();
+                            linedto.actionType = 1;
                             lines.Add(linedto);
                         }
                     }
