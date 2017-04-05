@@ -326,7 +326,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                 linedto.isSale = "1";
                                 linedto.isFlag = "1";
                                 linedto.isEffective = line.Active.ToString();
-                                linedto.actionType = 1;
+                                linedto.actionType = 2;
                                 lines.Add(linedto);
                             }
                         }
@@ -350,7 +350,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                             linedto.isSale = "1";
                             linedto.isFlag = "1";
                             linedto.isEffective = line.Active.ToString();
-                            linedto.actionType = 1;
+                            linedto.actionType = 2;
                             lines.Add(linedto);
                         }
                     }
@@ -413,7 +413,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                 linedto.isSale = "1";
                                 linedto.isFlag = "1";
                                 linedto.isEffective = line.Active.ToString();
-                                linedto.actionType = 1;
+                                linedto.actionType = 2;
                                 lines.Add(linedto);
                             }
                         }
@@ -437,7 +437,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                             linedto.isSale = "1";
                             linedto.isFlag = "1";
                             linedto.isEffective = line.Active.ToString();
-                            linedto.actionType = 1;
+                            //   DMS这里的说明不对，价表传2就能成功；不知道为什么(可能1是新增,2是更新) actionType 0 新增,  1 修改 2 删除标志
+                            linedto.actionType = 2;
                             lines.Add(linedto);
                         }
                     }
