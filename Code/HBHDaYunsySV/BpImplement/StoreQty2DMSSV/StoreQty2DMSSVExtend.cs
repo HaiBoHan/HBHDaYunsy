@@ -321,7 +321,7 @@ namespace U9.VOB.Cus.HBHDaYunsy
 
         private void UpdateDMS_SalePriceAdjustment(StoreQty2DMSSV bpObj)
         {
-            string opath = "1=1 and PriceList.Code = @Code and SalePriceAdjustment.Org=@Org  @AddSuptOpath ";
+            string opath = "1=1 and SalePriceAdjustment.PriceList.Code = @Code and SalePriceAdjustment.Org=@Org  @AddSuptOpath ";
 
             if (bpObj.SupItems != null
                 && bpObj.SupItems.Count > 0
@@ -349,7 +349,7 @@ namespace U9.VOB.Cus.HBHDaYunsy
                     , new OqlParam(priceListCode)
                     , new OqlParam(Context.LoginOrg.ID)
                     );
-
+                
                 if (lst != null
                     && lst.Count > 0
                     )
