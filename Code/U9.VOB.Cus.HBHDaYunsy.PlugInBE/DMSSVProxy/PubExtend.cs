@@ -26,6 +26,7 @@ using UFIDA.U9.SPR.SalePriceAdjustment;
 using UFSoft.UBF.Business;
 using UFIDA.U9.CBO.SCM.Item;
 using UFSoft.UBF.PL;
+using U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_PI09;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -375,9 +376,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                 && lstErpData.Count > 0
                 )
             {
-                DMSAsync_PI06.PI06Client service = PubExtend.GetPI06Async();
+                // 异步报错，改成同步接口
+                //DMSAsync_PI06.PI06Client service = PubExtend.GetPI06Async();
+                PI06ImplService service = new PI06ImplService();
 
-                System.Collections.Generic.List<DMSAsync_PI06.partBaseDto> lines = new System.Collections.Generic.List<DMSAsync_PI06.partBaseDto>();
+                //System.Collections.Generic.List<DMSAsync_PI06.partBaseDto> lines = new System.Collections.Generic.List<DMSAsync_PI06.partBaseDto>();
+                System.Collections.Generic.List<partBaseDto> lines = new System.Collections.Generic.List<partBaseDto>();
                 foreach (SalePriceAdjustLine ajustLine in lstErpData)
                 {
                     if (ajustLine.ItemInfo != null
@@ -394,7 +398,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         {
                             foreach (SupplySource supply in supitemlist)
                             {
-                                DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                                //DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                                partBaseDto linedto = new partBaseDto();
                                 linedto.suptCode = supply.SupplierInfo.Supplier.Code;
                                 linedto.partCode = item.Code;
                                 linedto.partName = item.Name;
@@ -419,7 +424,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                         }
                         else
                         {
-                            DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                            //DMSAsync_PI06.partBaseDto linedto = new DMSAsync_PI06.partBaseDto();
+                            partBaseDto linedto = new partBaseDto();
                             linedto.partCode = item.Code;
                             linedto.partName = item.Name;
                             if (item.InventoryUOM != null)
@@ -1528,11 +1534,65 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         /// <param name="service"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static mesDataTmpDto Do(this SI01ImplService service, mesDataTmpDto param)
+        public static mesDataTmpDto Do(this SI01ImplService service, mesDataTmpDto[] param)
         {
             service.Url = PubHelper.GetAddress(service.Url);
 
-            string entityName = "移库接口";
+            string entityName = "条码更新接口";
+            long svID = -1;
+            if (IsLog)
+            {
+                svID = ProxyLogger.CreateTransferSV(entityName
+                    //, EntitySerialization.EntitySerial(bpObj)
+                    , Newtonsoft.Json.JsonConvert.SerializeObject(param)
+                    , service.GetType().FullName, Newtonsoft.Json.JsonConvert.SerializeObject(service));
+            }
+
+            try
+            {
+                var result = service.receive(param);
+
+                if (svID > 0)
+                {
+                    if (result != null
+                        )
+                    {
+                        //string resultXml = EntitySerialization.EntitySerial(result);
+                        string resultXml = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+
+                        ProxyLogger.UpdateTransferSV(svID, resultXml, result.flag == 1, result.errMsg, string.Empty, string.Empty);
+                    }
+                    else
+                    {
+                        ProxyLogger.UpdateTransferSV(svID, string.Empty, false, Const_ResultNullMessage, string.Empty, string.Empty);
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                if (svID > 0)
+                {
+                    ProxyLogger.UpdateTransferSV(svID, string.Empty, false, ex.Message, string.Empty, ex.StackTrace);
+                }
+
+                throw ex;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 出货单删除，更新DMS删除
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static partOrderInfoDto Do(this PI09ImplService service, partOrderInfoDto param)
+        {
+            service.Url = PubHelper.GetAddress(service.Url);
+
+            string entityName = "出货单删除接口";
             long svID = -1;
             if (IsLog)
             {

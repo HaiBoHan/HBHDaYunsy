@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://www.UFIDA.org/EntityData" elementFormDefault="qualified" targetNamespace="http://www.UFIDA.org/EntityData" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.PL.Engine" />
+  <xs:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="U9.VOB.HBHCommon.SVResultDTOData">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:UFSoft.UBF.Business.DataTransObjectBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="m_erpDocNo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="m_erpID" type="xs:long" />
+          <xs:element minOccurs="0" name="m_message" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="m_sucess" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="U9.VOB.HBHCommon.SVResultDTOData" nillable="true" type="tns:U9.VOB.HBHCommon.SVResultDTOData" />
+  <xs:complexType name="UFSoft.UBF.Business.DataTransObjectBase">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/UFSoft.UBF.PL.Engine" minOccurs="0" name="sysState" type="q1:ObjectState" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="UFSoft.UBF.Business.DataTransObjectBase" nillable="true" type="tns:UFSoft.UBF.Business.DataTransObjectBase" />
+</xs:schema>

@@ -132,5 +132,15 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE.Properties {
                 return ((string)(this["U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI01_SI01ImplService"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://scisoft.eicp.net:9080/dms/ws/PI09")]
+        public string U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI09_PI09ImplService {
+            get {
+                return ((string)(this["U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI09_PI09ImplService"]));
+            }
+        }
     }
 }

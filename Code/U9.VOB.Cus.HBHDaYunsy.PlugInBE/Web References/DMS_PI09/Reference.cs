@@ -13,7 +13,7 @@
 // 
 #pragma warning disable 1591
 
-namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI01 {
+namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_PI09 {
     using System;
     using System.Web.Services;
     using System.Diagnostics;
@@ -26,17 +26,17 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI01 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.36366")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Web.Services.WebServiceBindingAttribute(Name="SI01ImplServiceSoapBinding", Namespace="http://server.sale.ws.org.com/")]
+    [System.Web.Services.WebServiceBindingAttribute(Name="PI09ImplServiceSoapBinding", Namespace="http://server.part.ws.org.com/")]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(baseDto))]
-    public partial class SI01ImplService : System.Web.Services.Protocols.SoapHttpClientProtocol {
+    public partial class PI09ImplService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
         private System.Threading.SendOrPostCallback receiveOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
-        public SI01ImplService() {
-            this.Url = global::U9.VOB.Cus.HBHDaYunsy.PlugInBE.Properties.Settings.Default.U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI01_SI01ImplService;
+        public PI09ImplService() {
+            this.Url = global::U9.VOB.Cus.HBHDaYunsy.PlugInBE.Properties.Settings.Default.U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI09_PI09ImplService;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
@@ -74,21 +74,21 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI01 {
         public event receiveCompletedEventHandler receiveCompleted;
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://server.sale.ws.org.com/", ResponseNamespace="http://server.sale.ws.org.com/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://server.part.ws.org.com/", ResponseNamespace="http://server.part.ws.org.com/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public mesDataTmpDto receive([System.Xml.Serialization.XmlElementAttribute("arg0", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] mesDataTmpDto[] arg0) {
+        public partOrderInfoDto receive([System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] partOrderInfoDto arg0) {
             object[] results = this.Invoke("receive", new object[] {
                         arg0});
-            return ((mesDataTmpDto)(results[0]));
+            return ((partOrderInfoDto)(results[0]));
         }
         
         /// <remarks/>
-        public void receiveAsync(mesDataTmpDto[] arg0) {
+        public void receiveAsync(partOrderInfoDto arg0) {
             this.receiveAsync(arg0, null);
         }
         
         /// <remarks/>
-        public void receiveAsync(mesDataTmpDto[] arg0, object userState) {
+        public void receiveAsync(partOrderInfoDto arg0, object userState) {
             if ((this.receiveOperationCompleted == null)) {
                 this.receiveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnreceiveOperationCompleted);
             }
@@ -127,82 +127,56 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI01 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://server.sale.ws.org.com/")]
-    public partial class mesDataTmpDto : baseDto {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://server.part.ws.org.com/")]
+    public partial class partOrderInfoDto : baseDto {
         
-        private string bomdmField;
+        private string dmsSaleNoField;
         
-        private string gysdmField;
+        private string isDelField;
         
-        private string pchField;
-        
-        private string pjtmField;
-        
-        private string vinField;
+        private string remarkField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string bomdm {
+        public string dmsSaleNo {
             get {
-                return this.bomdmField;
+                return this.dmsSaleNoField;
             }
             set {
-                this.bomdmField = value;
+                this.dmsSaleNoField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string gysdm {
+        public string isDel {
             get {
-                return this.gysdmField;
+                return this.isDelField;
             }
             set {
-                this.gysdmField = value;
+                this.isDelField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string pch {
+        public string remark {
             get {
-                return this.pchField;
+                return this.remarkField;
             }
             set {
-                this.pchField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string pjtm {
-            get {
-                return this.pjtmField;
-            }
-            set {
-                this.pjtmField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string vin {
-            get {
-                return this.vinField;
-            }
-            set {
-                this.vinField = value;
+                this.remarkField = value;
             }
         }
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(mesDataTmpDto))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(partOrderInfoDto))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.36366")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://server.sale.ws.org.com/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://server.part.ws.org.com/")]
     public partial class baseDto {
         
         private int actionTypeField;
@@ -315,10 +289,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI01 {
         }
         
         /// <remarks/>
-        public mesDataTmpDto Result {
+        public partOrderInfoDto Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((mesDataTmpDto)(this.results[0]));
+                return ((partOrderInfoDto)(this.results[0]));
             }
         }
     }

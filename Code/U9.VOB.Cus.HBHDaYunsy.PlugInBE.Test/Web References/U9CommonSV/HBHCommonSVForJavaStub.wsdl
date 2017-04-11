@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://www.UFIDA.org" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="HBHCommonSVForJavaStub" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://www.UFIDA.org" location="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl=wsdl0" />
+  <wsdl:types />
+  <wsdl:binding name="BasicHttpBinding_U9.VOB.HBHCommon.IHBHCommonSVForJava" type="i0:U9.VOB.HBHCommon.IHBHCommonSVForJava">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Do">
+      <soap:operation soapAction="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/Do" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceLostExceptionFault">
+        <soap:fault use="literal" name="ServiceLostExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ServiceExceptionFault">
+        <soap:fault use="literal" name="ServiceExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ServiceExceptionDetailFault">
+        <soap:fault use="literal" name="ServiceExceptionDetailFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExceptionBaseFault">
+        <soap:fault use="literal" name="ExceptionBaseFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExceptionFault">
+        <soap:fault use="literal" name="ExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HBHCommonSVForJavaStub">
+    <wsdl:port name="BasicHttpBinding_U9.VOB.HBHCommon.IHBHCommonSVForJava" binding="tns:BasicHttpBinding_U9.VOB.HBHCommon.IHBHCommonSVForJava">
+      <soap:address location="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

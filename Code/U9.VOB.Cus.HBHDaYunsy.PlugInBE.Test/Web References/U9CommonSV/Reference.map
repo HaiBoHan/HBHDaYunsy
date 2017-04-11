@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd13" filename="U9.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://121.42.141.121/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc" filename="HBHCommonSVForJavaStub.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd14" filename="U90.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl=wsdl0" filename="U9.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd7" filename="U91.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd12" filename="U92.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0" filename="U93.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd4" filename="U94.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd8" filename="U95.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd11" filename="U96.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd1" filename="U97.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd5" filename="U98.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd9" filename="U99.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd3" filename="U910.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd10" filename="U911.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd2" filename="U912.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd6" filename="U913.xsd" />
+  </Results>
+</DiscoveryClientResultsFile>

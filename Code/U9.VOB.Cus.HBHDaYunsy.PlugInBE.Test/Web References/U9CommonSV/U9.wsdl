@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://www.UFIDA.org" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.UFIDA.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.UFIDA.org/Imports">
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd8" namespace="http://www.UFIDA.org" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Util.Context" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Business" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd6" namespace="UFSoft.UBF.Exceptions" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Exceptions" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd9" namespace="http://www.UFIDA.org/EntityData" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.PL.Engine" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd11" namespace="UFSoft.UBF.Util.Data" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+      <xsd:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_InputMessage">
+    <wsdl:part name="parameters" element="tns:Do" />
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DoResponse" />
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceLostExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service" name="detail" element="q1:ServiceLostException" />
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service" name="detail" element="q2:ServiceException" />
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceExceptionDetailFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service" name="detail" element="q3:ServiceExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ExceptionBaseFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/UFSoft.UBF" name="detail" element="q4:ExceptionBase" />
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/System" name="detail" element="q5:Exception" />
+  </wsdl:message>
+  <wsdl:portType name="U9.VOB.HBHCommon.IHBHCommonSVForJava">
+    <wsdl:operation name="Do">
+      <wsdl:input wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/Do" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoResponse" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoServiceLostExceptionFault" name="ServiceLostExceptionFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceLostExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoServiceExceptionFault" name="ServiceExceptionFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoServiceExceptionDetailFault" name="ServiceExceptionDetailFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceExceptionDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoExceptionBaseFault" name="ExceptionBaseFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ExceptionBaseFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoExceptionFault" name="ExceptionFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ExceptionFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

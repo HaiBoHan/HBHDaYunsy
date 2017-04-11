@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0DC88297-F441-4525-96E1-CF3B9832D41E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>U9.VOB.Cus.HBHDaYunsy.PlugInBE.Test</RootNamespace>
+    <AssemblyName>U9.VOB.Cus.HBHDaYunsy.PlugInBE.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DMSAsync_PI06\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\U9CommonSVAsync\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DMS_PI06\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\U9CommonSV\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\U9.VOB.Cus.HBHDaYunsy.PlugInBE\U9.VOB.Cus.HBHDaYunsy.PlugInBE.csproj">
+      <Project>{A1121BAD-E0ED-4B7A-968E-A2DC4FA4F24D}</Project>
+      <Name>U9.VOB.Cus.HBHDaYunsy.PlugInBE</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://121.42.141.121/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\U9CommonSV\</RelPath>
+      <UpdateFromURL>http://121.42.141.121/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_Test_U9CommonSV_HBHCommonSVForJavaStub</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://scisoft.eicp.net:9080/dms/ws/PI06%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DMS_PI06\</RelPath>
+      <UpdateFromURL>http://scisoft.eicp.net:9080/dms/ws/PI06%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>U9_VOB_Cus_HBHDaYunsy_PlugInBE_Test_DMS_PI06_PI06ImplService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DMSAsync_PI06\PI06ImplService.wsdl" />
+    <None Include="Service References\DMSAsync_PI06\U9.VOB.Cus.HBHDaYunsy.PlugInBE.Test.DMSAsync_PI06.partBaseDto1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\HBHCommonSVForJavaStub.wsdl" />
+    <None Include="Service References\U9CommonSVAsync\U9.wsdl" />
+    <None Include="Service References\U9CommonSVAsync\U9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U91.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U910.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U911.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U912.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U913.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U914.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U92.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U93.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U94.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U95.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U96.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U97.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U98.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\U9CommonSVAsync\U99.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\DMS_PI06\partBaseDto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DMS_PI06\PI06ImplService.wsdl" />
+    <None Include="Web References\DMS_PI06\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\U9CommonSV\HBHCommonSVForJavaStub.wsdl" />
+    <None Include="Web References\U9CommonSV\MessageBase.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\U9CommonSV\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\U9CommonSV\U9.wsdl" />
+    <None Include="Web References\U9CommonSV\U9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U90.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U91.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U910.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U911.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U912.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U913.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U92.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U93.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U94.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U95.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U96.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U97.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U98.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U99.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\U9CommonSV\U9VOBHBHCommonSVResultDTOData.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\DMSAsync_PI06\" />
+    <WCFMetadataStorage Include="Service References\U9CommonSVAsync\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DMSAsync_PI06\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DMSAsync_PI06\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DMSAsync_PI06\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\U9CommonSVAsync\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\U9CommonSVAsync\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\U9CommonSVAsync\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

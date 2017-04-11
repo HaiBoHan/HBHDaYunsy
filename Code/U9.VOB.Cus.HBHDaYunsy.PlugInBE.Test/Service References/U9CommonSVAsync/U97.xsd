@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://www.UFIDA.org" elementFormDefault="qualified" targetNamespace="http://www.UFIDA.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd9" namespace="http://www.UFIDA.org/EntityData" />
+  <xs:import schemaLocation="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd6" namespace="UFSoft.UBF.Exceptions" />
+  <xs:element name="Do">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="context" nillable="true" type="xs:anyType" />
+        <xs:element minOccurs="0" name="entityFullName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="entityContent" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://www.UFIDA.org/EntityData" minOccurs="0" name="DoResult" nillable="true" type="q1:U9.VOB.HBHCommon.SVResultDTOData" />
+        <xs:element xmlns:q2="UFSoft.UBF.Exceptions" minOccurs="0" name="outMessages" nillable="true" type="q2:ArrayOfMessageBase" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

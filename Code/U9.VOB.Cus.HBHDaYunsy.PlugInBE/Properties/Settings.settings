@@ -35,5 +35,8 @@
     <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_SI01_SI01ImplService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://scisoft.eicp.net:9080/hbdyepc/ws/SI01</Value>
     </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_DMS_PI09_PI09ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://scisoft.eicp.net:9080/dms/ws/PI09</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

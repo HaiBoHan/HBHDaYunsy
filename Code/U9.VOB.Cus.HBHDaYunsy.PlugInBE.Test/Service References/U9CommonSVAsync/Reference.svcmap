@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c8bb613a-4192-44ab-9cce-ac368f29d41d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://121.42.141.121/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="U9.xsd" MetadataType="Schema" ID="2009bd6f-b861-48a1-b60f-f85ac5260496" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd3" />
+    <MetadataFile FileName="U91.xsd" MetadataType="Schema" ID="557c08a8-feed-469c-a64f-803802c668d2" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd11" />
+    <MetadataFile FileName="U92.xsd" MetadataType="Schema" ID="70a383dd-3ffe-4a31-8a3a-d1ec8dfd16e5" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd13" />
+    <MetadataFile FileName="U9.wsdl" MetadataType="Wsdl" ID="94417e3d-9905-42ec-8f13-5d8bce9b3523" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="U93.xsd" MetadataType="Schema" ID="59b7d49c-0ef5-402a-ba92-5892e73a5ec0" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd7" />
+    <MetadataFile FileName="U94.xsd" MetadataType="Schema" ID="c7379b27-4766-4a67-bf8d-0d48d4737de7" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd12" />
+    <MetadataFile FileName="U95.xsd" MetadataType="Schema" ID="cf0f14fc-8a26-40bc-b46a-7789bef00a96" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0" />
+    <MetadataFile FileName="U96.xsd" MetadataType="Schema" ID="4790ad6c-b39b-4378-8a87-235a077d8683" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd4" />
+    <MetadataFile FileName="U97.xsd" MetadataType="Schema" ID="0a2560f7-790f-4a77-9bc7-df2266f7b7a2" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd8" />
+    <MetadataFile FileName="HBHCommonSVForJavaStub.wsdl" MetadataType="Wsdl" ID="89d3a5d2-b164-44ba-a193-0ff86c84a95c" SourceId="1" SourceUrl="http://121.42.141.121/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl" />
+    <MetadataFile FileName="U98.xsd" MetadataType="Schema" ID="4d34725f-779d-4da3-b4c0-f0025e295eb9" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd1" />
+    <MetadataFile FileName="U99.xsd" MetadataType="Schema" ID="f300f636-7800-4a0d-b1ce-bf660816c950" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd14" />
+    <MetadataFile FileName="U910.xsd" MetadataType="Schema" ID="d986189d-e3a8-4d40-adbf-c4c17a6f7c04" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd9" />
+    <MetadataFile FileName="U911.xsd" MetadataType="Schema" ID="78c0623f-e3f2-469f-a10a-cb965c518be9" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd5" />
+    <MetadataFile FileName="U912.xsd" MetadataType="Schema" ID="5e3c4bfc-fa7b-41f7-a493-2af86a0c4703" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd10" />
+    <MetadataFile FileName="U913.xsd" MetadataType="Schema" ID="144f10e5-54c9-4ea0-8485-a6404ae0fa04" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd2" />
+    <MetadataFile FileName="U914.xsd" MetadataType="Schema" ID="21b20f95-2507-4631-b213-59b322a7f469" SourceId="1" SourceUrl="http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd6" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

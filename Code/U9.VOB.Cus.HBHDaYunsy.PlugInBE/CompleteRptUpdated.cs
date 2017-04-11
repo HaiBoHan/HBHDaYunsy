@@ -11,6 +11,8 @@ using UFSoft.UBF.PL;
 using UFIDA.U9.Base;
 using U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_SI01;
 using HBH.DoNet.DevPlatform.EntityMapping;
+using System.Collections.Generic;
+using COM.DaYun.MES.CJDBE;
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class CompleteRptUpdated : IEventSubscriber
@@ -142,45 +144,113 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                             }
 
 
-                            //// MES推送DMS接口
-                            //if (entity.DocType != null
-                            //    // 底盘完工报告（单据类型 = 总装完工报告）
-                            //    && entity.DocType.Code == Const_MesDocTypeCode
-                            //    // VIN码有值
-                            //    && entity.DescFlexField.PubDescSeg12.IsNotNullOrWhiteSpace()
-                            //    )
-                            //{
-                            //    // 审核
-                            //    if (entity.DocState == CompleteRptStateEnum.Approved && entity.OriginalData.DocState == CompleteRptStateEnum.Approving)
-                            //    {
-                            //        try
-                            //        {
-                            //            SI01ImplService service = new SI01ImplService();
-                            //            // service.Url = PubHelper.GetAddress(service.Url);
-                            //            mesDataTmpDto dto = new mesDataTmpDto();
-                            //            // vin底盘号 ,bomdm 配件图号,   gysdm供应商代码  pjtm 配件条码   pch 批次号,
-                            //            dto.vin = entity.DescFlexField.PubDescSeg12;
-                            //            // bomdm 配件图号
-                            //            dto.bomdm = string.Empty;
-                            //            // gysdm供应商代码
-                            //            dto.gysdm = string.Empty;
-                            //            // pjtm 配件条码 
-                            //            dto.pjtm = string.Empty;
-                            //            // pch 批次号
-                            //            dto.pch = string.Empty;
+                            return;
 
-                            //            mesDataTmpDto resultdto = service.Do(dto);
-                            //            if (resultdto != null && resultdto.flag == 0)
-                            //            {
-                            //                throw new BusinessException(resultdto.errMsg);
-                            //            }
-                            //        }
-                            //        catch (System.Exception e)
-                            //        {
-                            //            throw new BusinessException("调用DMS接口SI01[MES接口]错误：" + e.Message);
-                            //        }
-                            //    }
-                            //}
+                            // MES推送DMS接口
+                            /* // 生产线采集点
+                            EntityName	DisplayName	DefaultTableName	AssemblyName	ViewName	UIClassName	UIAssemblyName	IsMainView	UID	FilterOriginalOPath	URI	Container[装配assemblyID]	ClassName
+COM.DaYun.MES.CJDBE.CarTestCQRecord	车辆调试过程检验质量问题记录	dayun_cartestcqrecord	COM.DaYun.MES.DaYunCJDBE	CJDHead_CarTestCQRecord	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart	COM.DaYun.MES.UI.DaYunCJDUI.WebPart	0	CAB27503-D7D5-4E05-84FB-A084202EE8C3		mes.cjd	66be41ba-d206-4bae-8f52-379345be90ee	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart
+COM.DaYun.MES.CJDBE.CarTestQRecord	车辆调试过程质量问题记录	dayun_cartestqrecord	COM.DaYun.MES.DaYunCJDBE	CJDHead_CarTestQRecord	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart	COM.DaYun.MES.UI.DaYunCJDUI.WebPart	0	CAB27503-D7D5-4E05-84FB-A084202EE8C3		mes.cjd	66be41ba-d206-4bae-8f52-379345be90ee	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart
+COM.DaYun.MES.CJDBE.CJDHead	生产采集点	dayun_cjd	COM.DaYun.MES.DaYunCJDBE	CJDHead	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart	COM.DaYun.MES.UI.DaYunCJDUI.WebPart	1	CAB27503-D7D5-4E05-84FB-A084202EE8C3		mes.cjd	66be41ba-d206-4bae-8f52-379345be90ee	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart
+COM.DaYun.MES.CJDBE.CarAssemblyQRecord	车辆装配过程质量问题记录	dayun_carassemblyqrecord	COM.DaYun.MES.DaYunCJDBE	CJDHead_CarAssemblyQRecord	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart	COM.DaYun.MES.UI.DaYunCJDUI.WebPart	0	CAB27503-D7D5-4E05-84FB-A084202EE8C3		mes.cjd	66be41ba-d206-4bae-8f52-379345be90ee	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart
+COM.DaYun.MES.CJDBE.CarCQRecord	车辆最终检测质量问题记录	dayun_carcqrecord	COM.DaYun.MES.DaYunCJDBE	CJDHead_CarCQRecord	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart	COM.DaYun.MES.UI.DaYunCJDUI.WebPart	0	CAB27503-D7D5-4E05-84FB-A084202EE8C3		mes.cjd	66be41ba-d206-4bae-8f52-379345be90ee	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart
+COM.DaYun.MES.CJDBE.CJDLine	关重件绑定	danyun_cjdline	COM.DaYun.MES.DaYunCJDBE	CJDHead_CJDLine	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart	COM.DaYun.MES.UI.DaYunCJDUI.WebPart	0	CAB27503-D7D5-4E05-84FB-A084202EE8C3		mes.cjd	66be41ba-d206-4bae-8f52-379345be90ee	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart
+COM.DaYun.MES.CJDBE.CarAssemblyCQRecord	车辆装配过程检验质量问题记录	dayun_carassemblycqrecord	COM.DaYun.MES.DaYunCJDBE	CJDHead_CarAssemblyCQRecord	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart	COM.DaYun.MES.UI.DaYunCJDUI.WebPart	0	CAB27503-D7D5-4E05-84FB-A084202EE8C3		mes.cjd	66be41ba-d206-4bae-8f52-379345be90ee	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart
+                             */
+                            /* // CJDHead_CarTestCQRecord	DaYunCJDUIModel.DaYunCJDUIMainFromWebPart	COM.DaYun.MES.UI.DaYunCJDUI.WebPart
+                             * OnPush56
+                            		private void OnPush56_Click_Extend(object sender, EventArgs e)
+		{
+			this.OnPush56_Click_DefaultImpl(sender, e);
+			this.Push();
+			this.SaveClick0_Click_Extend(sender, e);
+		}
+		private void Push()
+		{
+			if (this.Model.CJDHead.FocusedRecord != null && this.Model.CJDHead.FocusedRecord.Dtzyplan_PlanStatus.HasValue)
+			{
+				switch (this.Model.CJDHead.FocusedRecord.Dtzyplan_PlanStatus.Value)
+				{
+				case 1:
+					this.Model.CJDHead.FocusedRecord.Status = new int?(3);
+					break;
+				case 3:
+					this.Model.CJDHead.FocusedRecord.Status = new int?(6);
+					break;
+				case 4:
+					this.Model.CJDHead.FocusedRecord.Status = new int?(5);
+					break;
+				case 6:
+					this.Model.CJDHead.FocusedRecord.Status = new int?(4);
+					break;
+				}
+			}
+		}
+                             */
+                            if (entity.DocType != null
+                                // 底盘完工报告（单据类型 = 总装完工报告）
+                                && entity.DocType.Code == Const_MesDocTypeCode
+                                // VIN码有值
+                                && entity.DescFlexField.PubDescSeg12.IsNotNullOrWhiteSpace()
+                                )
+                            {
+                                // 审核
+                                if (entity.DocState == CompleteRptStateEnum.Approved && entity.OriginalData.DocState == CompleteRptStateEnum.Approving)
+                                {
+                                    CJDHead cjdHead = GetCJDHead(entity);
+
+                                    if (cjdHead != null
+                                        && cjdHead.CJDLine != null
+                                        && cjdHead.CJDLine.Count > 0
+                                        )
+                                    {
+                                        try
+                                        {
+                                            SI01ImplService service = new SI01ImplService();
+
+                                            List<mesDataTmpDto> lstMesDTO = new List<mesDataTmpDto>();
+                                            string strVin = entity.DescFlexField.PubDescSeg12;
+
+                                            foreach (CJDLine cjdLine in cjdHead.CJDLine)
+                                            {
+                                                if (cjdLine.ItemMaster != null)
+                                                {
+                                                    // service.Url = PubHelper.GetAddress(service.Url);
+                                                    mesDataTmpDto dto = new mesDataTmpDto();
+                                                    // vin底盘号 ,bomdm 配件图号,   gysdm供应商代码  pjtm 配件条码   pch 批次号,
+                                                    dto.vin = strVin;
+                                                    // bomdm 配件图号
+                                                    dto.bomdm = cjdLine.ItemMaster.Code;
+                                                    // gysdm供应商代码
+                                                    if (cjdLine.Supplyer != null)
+                                                    {
+                                                        dto.gysdm = cjdLine.Supplyer.Code;
+                                                    }
+                                                    // pjtm 配件条码 
+                                                    dto.pjtm = cjdLine.SN;
+                                                    // pch 批次号  采集点没有
+                                                    dto.pch = string.Empty;
+
+                                                    lstMesDTO.Add(dto);
+                                                }
+                                            }
+                                            
+                                            if (lstMesDTO.Count > 0)
+                                            {
+                                                mesDataTmpDto resultdto = service.Do(lstMesDTO.ToArray());
+                                                if (resultdto != null && resultdto.flag == 0)
+                                                {
+                                                    throw new BusinessException(resultdto.errMsg);
+                                                }
+                                            }
+                                        }
+                                        catch (System.Exception e)
+                                        {
+                                            throw new BusinessException("调用DMS接口SI01[MES接口]错误：" + e.Message);
+                                        }
+                                    }
+                                }
+                            }
 
 
 
@@ -189,5 +259,28 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 				}
 			}
 		}
+
+        private CJDHead GetCJDHead(CompleteRpt entity)
+        {
+            // 全局段23 
+            if (entity.DescFlexField.PrivateDescSeg23.IsNotNullOrWhiteSpace())
+            {
+                if (entity.DescFlexField.PrivateDescSeg23.Contains(","))
+                {
+                    throw new BusinessException(string.Format("完工报告[{0}]的来源采集点ID为多个[{1}]，无法给DMS发送条码数据，请检查！"
+                        , entity.DocNo
+                        , entity.DescFlexField.PrivateDescSeg23
+                        ));
+                }
+                else
+                {
+                    CJDHead cjdHead = CJDHead.Finder.FindByID(entity.DescFlexField.PrivateDescSeg23);
+
+                    return cjdHead;
+                }
+            }
+
+            return null;
+        }
 	}
 }

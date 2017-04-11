@@ -23,6 +23,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class PubHelper
     {
+        public static bool IsTest = false;
+
         // 新能源,配件,价表编码
         /// <summary>
         /// 新能源,配件,价表编码

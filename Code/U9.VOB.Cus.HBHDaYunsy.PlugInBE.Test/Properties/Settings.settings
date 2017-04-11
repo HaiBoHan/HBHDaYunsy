@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="U9.VOB.Cus.HBHDaYunsy.PlugInBE.Test.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_Test_U9CommonSV_HBHCommonSVForJavaStub" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://testserver/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc</Value>
+    </Setting>
+    <Setting Name="U9_VOB_Cus_HBHDaYunsy_PlugInBE_Test_DMS_PI06_PI06ImplService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://scisoft.eicp.net:9080/dms/ws/PI06</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
