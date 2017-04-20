@@ -465,7 +465,13 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             return SalePriceLine.Finder.Find(opath);
         }
 
+
         public static string GetAddress(string oldurl)
+        {
+            return GetAddress(oldurl, false);
+        }
+
+        public static string GetAddress(string oldurl, bool isEPC)
         {
             string str = HttpRuntime.AppDomainAppPath.ToString();
             string xmlAddress = "\\bin\\DMSAPIServiceConfig.xml";
@@ -479,15 +485,22 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 
                 //list = doc.GetElementsByTagName("services");
 
-                if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+                if (isEPC)
                 {
-                    list = doc.GetElementsByTagName("servicesElectric");
+                    list = doc.GetElementsByTagName("servicesEPC");
                 }
-                else if (Context.LoginOrg.Code == Const_OrgCode_Hubei
-                    || Context.LoginOrg.Code == Const_OrgCode_Chengdu
-                    )
+                else
                 {
-                    list = doc.GetElementsByTagName("servicesHubei");
+                    if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+                    {
+                        list = doc.GetElementsByTagName("servicesElectric");
+                    }
+                    else if (Context.LoginOrg.Code == Const_OrgCode_Hubei
+                        || Context.LoginOrg.Code == Const_OrgCode_Chengdu
+                        )
+                    {
+                        list = doc.GetElementsByTagName("servicesHubei");
+                    }
                 }
 
                 if (list != null
@@ -530,6 +543,76 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                     ));
             }
         }
+
+        #region Disused
+
+        //public static string GetAddress(string oldurl)
+        //{
+        //    string str = HttpRuntime.AppDomainAppPath.ToString();
+        //    string xmlAddress = "\\bin\\DMSAPIServiceConfig.xml";
+        //    str += xmlAddress;
+
+        //    if (File.Exists(str))
+        //    {
+        //        XmlDocument doc = new XmlDocument();
+        //        doc.Load(str);
+        //        XmlNodeList list = null;
+
+        //        //list = doc.GetElementsByTagName("services");
+
+        //        if (Context.LoginOrg.Code == Const_OrgCode_Electric)
+        //        {
+        //            list = doc.GetElementsByTagName("servicesElectric");
+        //        }
+        //        else if (Context.LoginOrg.Code == Const_OrgCode_Hubei
+        //            || Context.LoginOrg.Code == Const_OrgCode_Chengdu
+        //            )
+        //        {
+        //            list = doc.GetElementsByTagName("servicesHubei");
+        //        }
+
+        //        if (list != null
+        //            && list.Count > 0
+        //            && list[0] != null
+        //            )
+        //        {
+        //            string newurl = list[0].Attributes["url"].Value;
+        //            //string strr = oldurl.Replace("http://", "");
+        //            //int t = strr.IndexOf("/");
+        //            //string h = strr.Substring(0, t);
+        //            //return oldurl.Replace(h, newurl);
+
+        //            int index = oldurl.LastIndexOf("/");
+        //            string svName = oldurl.Substring(index);
+
+        //            newurl += svName;
+
+        //            return newurl;
+        //        }
+        //        else
+        //        {
+        //            string strIP = GetInternalIP();
+
+        //            throw new BusinessException(string.Format("没有找到服务器[{0}]组织[{1}]对应的DMS地址,请检查配置文件内容[{2}]!"
+        //                , strIP
+        //                , Context.LoginOrg.Name + "," + Context.LoginOrg.Code
+        //                , xmlAddress
+        //                ));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        string strIP = GetInternalIP();
+
+        //        throw new BusinessException(string.Format("没有找到服务器[{0}]组织[{1}]对应的DMS配置文件,请检查配置文件是否存在[{2}]!"
+        //            , strIP
+        //            , Context.LoginOrg.Name + "," + Context.LoginOrg.Code
+        //            , xmlAddress
+        //            ));
+        //    }
+        //}
+        
+        #endregion
 
 		public static bool IsUsedDMSAPI()
 		{

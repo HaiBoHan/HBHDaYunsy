@@ -1536,7 +1536,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
         /// <returns></returns>
         public static mesDataTmpDto Do(this SI01ImplService service, mesDataTmpDto[] param)
         {
-            service.Url = PubHelper.GetAddress(service.Url);
+            service.Url = PubHelper.GetAddress(service.Url, true);
 
             string entityName = "条码更新接口";
             long svID = -1;

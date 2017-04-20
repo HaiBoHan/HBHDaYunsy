@@ -523,6 +523,7 @@
   <ItemGroup>
     <Content Include="DMSAPIServiceConfig.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Service References\DMSAsync_PI07\configuration91.svcinfo" />
     <None Include="Service References\DMSAsync_PI07\configuration.svcinfo" />

@@ -144,7 +144,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                             }
 
 
-                            return;
+                            //return;
 
                             // MES推送DMS接口
                             /* // 生产线采集点
