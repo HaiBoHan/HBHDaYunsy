@@ -52,11 +52,6 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
                     {
                         bool isDel = false;
 
-                        if (line.Number != 0)
-                        {
-                            isDel = true;
-                        }
-                        else
                         {
                             decimal qty = PubClass.GetDecimal(line.Number);
 

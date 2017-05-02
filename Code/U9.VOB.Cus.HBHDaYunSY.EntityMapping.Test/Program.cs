@@ -48,6 +48,9 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping.Test
             string str = EntitySerialization.EntitySerial(rcv);
             EntitySerialization.OutPutToFile(rcv.GetType().FullName + "-" + DateTime.Today.ToString("yyyyMMdd"), str);
 
+            string strJson = EntitySerialization.EntitySerialJson(rcv);
+            EntitySerialization.OutPutToFile(rcv.GetType().FullName + "-Json-" + DateTime.Today.ToString("yyyyMMdd"), strJson);
+
             Console.ReadLine();
 
 
