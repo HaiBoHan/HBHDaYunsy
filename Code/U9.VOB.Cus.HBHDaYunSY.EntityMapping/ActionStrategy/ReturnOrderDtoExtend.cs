@@ -6,13 +6,17 @@ using HBH.DoNet.DevPlatform.EntityMapping;
 using UFIDA.U9.ISV.MiscRcvISV.Proxy;
 using UFIDA.U9.ISV.MiscRcvISV;
 using UFIDA.U9.CBO.Pub.Controller;
+using UFIDA.U9.CBO.SCM.Item;
+using UFSoft.UBF.PL;
+using UFIDA.U9.Base;
+using UFIDA.U9.CBO.SCM.Warehouse;
 
 namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
 {
     public partial class ReturnOrderDto : BaseEntity
     {
-        public const string Const_MiscRcvDocTypeCode = "01";
-        public const string Const_MiscRcvWhCode = "001";
+        public const string Const_MiscRcvDocTypeCode = "MiscRcv001";
+        public const string Const_MiscRcvWhCode = "00010";
 
         // CommonCreateMiscRcv
 
@@ -118,25 +122,46 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
                 //miscHead.DescFlexField.PrivateDescSeg2 = firstLine.DMSShipNo;
                 miscHead.DescFlexField.PrivateDescSeg1 = this.ReturnNo;
 
-
+                int lineNo = 0;
                 miscHead.MiscRcvTransLs = new List<IC_MiscRcvTransLsDTOData>();
                 foreach (ReturnOrderDtlDto lineDTO in this.ReturnOrderDtlDto)
                 {
                     IC_MiscRcvTransLsDTOData miscLine = new IC_MiscRcvTransLsDTOData();
 
+                    lineNo += 10;
+                    miscLine.DocLineNo = lineNo;
                     miscLine.ItemInfo = new UFIDA.U9.CBO.SCM.Item.ItemInfoData();
                     //miscLine.ItemInfo.ItemCode = lineDTO.ErpMaterialCode;
                     miscLine.ItemInfo.ItemCode = lineDTO.PartCode;
+                    //ItemMaster item = ItemMaster.Finder.Find("Org=@Org and Code=@Code"
+                    //    , new OqlParam(Context.LoginOrg.ID)
+                    //    , new OqlParam(lineDTO.PartCode)
+                    //    );
+                    //if (item != null)
+                    //{
+                    //    miscLine.ItemInfo.ItemID = item.ID;
+                    //}
 
                     //miscLine.StoreUOMQty = lineDTO.AlreadyIn;
-                    miscLine.StoreUOMQty = lineDTO.ActualCount;
+                    miscLine.StoreUOMQty = lineDTO.AlreadyIn;
+                    //miscLine.CostUOMQty = miscLine.StoreUOMQty;
                     miscLine.CostPrice = lineDTO.PartFee;
                     miscLine.CostMny = miscLine.CostPrice * miscLine.StoreUOMQty;
-                    //miscLine.IsZeroCost = true;
-                    
+                    if (miscLine.CostPrice == 0)
+                    {
+                        miscLine.IsZeroCost = true;
+                    }
                     miscLine.Wh = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTOData();
                     //miscLine.Wh.Code = lineDTO.Warehouse;
                     miscLine.Wh.Code = Const_MiscRcvWhCode;
+                    //Warehouse wh = Warehouse.Finder.Find("Org=@Org and Code=@Code"
+                    //    , new OqlParam(Context.LoginOrg.ID)
+                    //    , new OqlParam(Const_MiscRcvWhCode)
+                    //    );
+                    //if (wh != null)
+                    //{
+                    //    miscLine.Wh.ID = wh.ID;
+                    //}
 
                     //miscLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfoData();
                     //miscLine.LotInfo.LotCode = lineDTO.LotCode;
