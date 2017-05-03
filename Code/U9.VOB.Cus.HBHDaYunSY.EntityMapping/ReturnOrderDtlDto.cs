@@ -6,13 +6,26 @@ using HBH.DoNet.DevPlatform.EntityMapping;
 
 namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
 {
-    public class ReturnOrderDtlDto 
+    public class ReturnOrderDtlDto
     {
+        // 活动类型
+        /// <summary>
+        /// 活动类型
+        /// </summary>
+        public string ActionType { get; set; }
+
+        // 处理标记
+        /// <summary>
+        /// 处理标记
+        /// </summary>
+        public string Flag { get; set; }
+
+
         // 索赔单号
         /// <summary>
         /// 索赔单号
         /// </summary>
-        public decimal ClaimNo { get; set; }
+        public string ClaimNo { get; set; }
 
         //// ERP物料编号
         ///// <summary>

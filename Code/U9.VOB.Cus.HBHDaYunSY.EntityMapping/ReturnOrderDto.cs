@@ -8,6 +8,19 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
 {
     public partial class ReturnOrderDto : BaseEntity
     {
+        // 活动类型
+        /// <summary>
+        /// 活动类型
+        /// </summary>
+        public string ActionType { get; set; }
+
+        // 处理标记
+        /// <summary>
+        /// 处理标记
+        /// </summary>
+        public string Flag { get; set; }
+
+
 
         // 回运单号
         /// <summary>
