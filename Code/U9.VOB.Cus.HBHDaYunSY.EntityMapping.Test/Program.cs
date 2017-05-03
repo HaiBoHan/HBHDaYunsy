@@ -10,7 +10,7 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping.Test
     {
         static void Main(string[] args)
         {
-            CreateMiscReceive rcv = new CreateMiscReceive();
+            ReturnOrderDto rcv = new ReturnOrderDto();
 
             rcv.MiscRcvLines = new List<MiscRcvLine>();
 

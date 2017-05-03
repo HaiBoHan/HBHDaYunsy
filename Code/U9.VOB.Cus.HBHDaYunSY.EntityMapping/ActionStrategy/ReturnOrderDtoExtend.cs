@@ -9,9 +9,10 @@ using UFIDA.U9.CBO.Pub.Controller;
 
 namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
 {
-    public partial class CreateMiscReceive : BaseEntity
+    public partial class ReturnOrderDto : BaseEntity
     {
         public const string Const_MiscRcvDocTypeCode = "01";
+        public const string Const_MiscRcvWhCode = "001";
 
         // CommonCreateMiscRcv
 
@@ -40,34 +41,50 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
             //}
 
             // 删除数量为空的行
-            if (this.MiscRcvLines != null
-                && this.MiscRcvLines.Count > 0
+            bool isAllLineZero = true;
+            if (this.ReturnOrderDtlDto != null
+                && this.ReturnOrderDtlDto.Length > 0
                 )
             {
-                for (int i = this.MiscRcvLines.Count - 1; i >= 0; i--)
+                for (int i = this.ReturnOrderDtlDto.Length - 1; i >= 0; i--)
                 {
-                    MiscRcvLine line = this.MiscRcvLines[i];
+                    ReturnOrderDtlDto line = this.ReturnOrderDtlDto[i];
 
                     if (line != null)
                     {
-                        bool isDel = false;
+                        //bool isDel = false;
 
                         {
-                            decimal qty = PubClass.GetDecimal(line.Number);
+                            decimal qty = PubClass.GetDecimal(line.AlreadyIn);
 
-                            if (qty == 0)
+                            //if (qty == 0)
+                            //{
+                            //    isDel = true;
+                            //}
+                            if (qty > 0)
                             {
-                                isDel = true;
+                                isAllLineZero = false;
+                                break;
                             }
                         }
 
-                        if (isDel)
-                        {
-                            this.MiscRcvLines.RemoveAt(i);
-                            continue;
-                        }
+                        //if (isDel)
+                        //{
+                        //    this.ReturnOrderDtlDto.RemoveAt(i);
+                        //    continue;
+                        //}
                     }
                 }
+            }
+
+            if (isAllLineZero)
+            {
+                result.Sucessfull = false;
+                result.Message = string.Format("回运单[{0}]没有行、或者行数量全部为0，不可生成ERP单据！"
+                    , this.ReturnNo
+                    );
+
+                return result;
             }
 
             //result.Sucessfull = true;
@@ -78,46 +95,55 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
             CommonCreateMiscRcvProxy proxy = new CommonCreateMiscRcvProxy();
             proxy.MiscRcvDTOList = new List<UFIDA.U9.ISV.MiscRcvISV.IC_MiscRcvDTOData>();
 
-            if(this.MiscRcvLines != null
-                && this.MiscRcvLines.Count > 0
+            if(this.ReturnOrderDtlDto != null
+                && this.ReturnOrderDtlDto.Length > 0
                 )
             {
-                MiscRcvLine firstLine = this.MiscRcvLines[0];
+                ReturnOrderDtlDto firstLine = this.ReturnOrderDtlDto[0];
 
                 IC_MiscRcvDTOData miscHead = new IC_MiscRcvDTOData();
 
                 miscHead.MiscRcvDocType = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTOData();
                 miscHead.MiscRcvDocType.Code = Const_MiscRcvDocTypeCode;
 
-                miscHead.BusinessDate = DateTime.Today;
+                //miscHead.BusinessDate = DateTime.Today;
+                miscHead.BusinessDate = this.ReturnDate.GetDateTime(DateTime.Today);
+                miscHead.Memo = this.ReMark;
 
                 if (miscHead.DescFlexField == null)
                 {
                     miscHead.DescFlexField = new UFIDA.U9.Base.FlexField.DescFlexField.DescFlexSegmentsData();
                 }
-                miscHead.DescFlexField.PrivateDescSeg1 = firstLine.DmsSaleNo;
-                miscHead.DescFlexField.PrivateDescSeg2 = firstLine.DMSShipNo;
+                //miscHead.DescFlexField.PrivateDescSeg1 = firstLine.DmsSaleNo;
+                //miscHead.DescFlexField.PrivateDescSeg2 = firstLine.DMSShipNo;
+                miscHead.DescFlexField.PrivateDescSeg1 = this.ReturnNo;
+
 
                 miscHead.MiscRcvTransLs = new List<IC_MiscRcvTransLsDTOData>();
-                foreach (MiscRcvLine lineDTO in this.MiscRcvLines)
+                foreach (ReturnOrderDtlDto lineDTO in this.ReturnOrderDtlDto)
                 {
                     IC_MiscRcvTransLsDTOData miscLine = new IC_MiscRcvTransLsDTOData();
 
                     miscLine.ItemInfo = new UFIDA.U9.CBO.SCM.Item.ItemInfoData();
-                    miscLine.ItemInfo.ItemCode = lineDTO.ErpMaterialCode;
+                    //miscLine.ItemInfo.ItemCode = lineDTO.ErpMaterialCode;
+                    miscLine.ItemInfo.ItemCode = lineDTO.PartCode;
 
-                    miscLine.StoreUOMQty = lineDTO.Number;
-                    miscLine.CostPrice = lineDTO.Price;
-                    miscLine.CostMny = lineDTO.Money;
+                    //miscLine.StoreUOMQty = lineDTO.AlreadyIn;
+                    miscLine.StoreUOMQty = lineDTO.ActualCount;
+                    miscLine.CostPrice = lineDTO.PartFee;
+                    miscLine.CostMny = miscLine.CostPrice * miscLine.StoreUOMQty;
+                    //miscLine.IsZeroCost = true;
                     
                     miscLine.Wh = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTOData();
-                    miscLine.Wh.Code = lineDTO.Warehouse;
+                    //miscLine.Wh.Code = lineDTO.Warehouse;
+                    miscLine.Wh.Code = Const_MiscRcvWhCode;
 
-                    miscLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfoData();
-                    miscLine.LotInfo.LotCode = lineDTO.LotCode;
+                    //miscLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfoData();
+                    //miscLine.LotInfo.LotCode = lineDTO.LotCode;
 
                     miscLine.SupplierInfo = new UFIDA.U9.CBO.SCM.Supplier.SupplierMISCInfoData();
-                    miscLine.SupplierInfo.Code = lineDTO.DealerCode;
+                    //miscLine.SupplierInfo.Code = lineDTO.DealerCode;
+                    miscLine.SupplierInfo.Code = this.DealerCode;
 
 
                     miscHead.MiscRcvTransLs.Add(miscLine);
