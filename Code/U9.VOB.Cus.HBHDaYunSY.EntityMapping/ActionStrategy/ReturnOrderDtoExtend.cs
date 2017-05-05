@@ -15,8 +15,11 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
 {
     public partial class ReturnOrderDto : BaseEntity
     {
-        public const string Const_MiscRcvDocTypeCode = "MiscRcv001";
-        public const string Const_MiscRcvWhCode = "00010";
+        // 单据类型: 三包旧件入库
+        //public const string Const_MiscRcvDocTypeCode = "MiscRcv001";
+        public const string Const_MiscRcvDocTypeCode = "ZS-SB";
+        // 默认旧件库
+        public const string Const_MiscRcvWhCode = "SHJJ";
 
         // CommonCreateMiscRcv
 
