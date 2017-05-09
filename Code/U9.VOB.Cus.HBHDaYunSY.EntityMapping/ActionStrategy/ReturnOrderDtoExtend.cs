@@ -12,7 +12,7 @@ using UFIDA.U9.Base;
 using UFIDA.U9.CBO.SCM.Warehouse;
 
 namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
-{
+{   //   湖北风驰新能源旧件杂收入库接口
     public partial class ReturnOrderDto : BaseEntity
     {
         // 单据类型: 三包旧件入库
