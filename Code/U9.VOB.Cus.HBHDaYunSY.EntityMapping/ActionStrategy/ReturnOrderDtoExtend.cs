@@ -10,6 +10,7 @@ using UFIDA.U9.CBO.SCM.Item;
 using UFSoft.UBF.PL;
 using UFIDA.U9.Base;
 using UFIDA.U9.CBO.SCM.Warehouse;
+using UFIDA.U9.InvDoc.MiscRcv;
 
 namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
 {   //   湖北风驰新能源旧件杂收入库接口
@@ -46,6 +47,40 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
             //        );
             //    return result;
             //}
+
+            // DescFlexField.PrivateDescSeg3
+            if (this.ReturnNo.IsNull())
+            {
+                result.Sucessfull = false;
+                result.Message = "回运单号为空,无法生成ERP旧件回运杂收单!";
+                return result;
+            }
+            // 检查系统中存在不，如果已存在，直接返回存在的单号；
+            else
+            {
+                MiscRcvTrans rcvHead = MiscRcvTrans.Finder.Find("Org=@Org and DescFlexField.PrivateDescSeg3=@ReturnNo"
+                    , new OqlParam(Context.LoginOrg.ID)
+                    , new OqlParam(this.ReturnNo)
+                    );
+
+                if (rcvHead != null)
+                {
+                    result.Sucessfull = true;
+
+                    string erpDocNo = rcvHead.DocNo;
+                    result.Message = string.Format("回运单号[{0}]已生成过ERP单据[{1}]，无需再次生成!"
+                        , this.ReturnNo
+                        , erpDocNo
+                        );
+                    if (erpDocNo.IsNotNullOrWhiteSpace())
+                    {
+                        result.StringValue = erpDocNo;
+                        result.ListValue = new List<string>();
+                        result.ListValue.Add(erpDocNo);
+                    }
+                    return result;
+                }
+            }
 
             // 删除数量为空的行
             bool isAllLineZero = true;
@@ -123,7 +158,7 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
                 }
                 //miscHead.DescFlexField.PrivateDescSeg1 = firstLine.DmsSaleNo;
                 //miscHead.DescFlexField.PrivateDescSeg2 = firstLine.DMSShipNo;
-                miscHead.DescFlexField.PrivateDescSeg1 = this.ReturnNo;
+                miscHead.DescFlexField.PrivateDescSeg3 = this.ReturnNo;
 
                 int lineNo = 0;
                 miscHead.MiscRcvTransLs = new List<IC_MiscRcvTransLsDTOData>();
@@ -170,8 +205,7 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
                     //miscLine.LotInfo.LotCode = lineDTO.LotCode;
 
                     miscLine.SupplierInfo = new UFIDA.U9.CBO.SCM.Supplier.SupplierMISCInfoData();
-                    //miscLine.SupplierInfo.Code = lineDTO.DealerCode;
-                    miscLine.SupplierInfo.Code = this.DealerCode;
+                    miscLine.SupplierInfo.Code = lineDTO.OldSuptCode;
 
 
                     miscHead.MiscRcvTransLs.Add(miscLine);
@@ -192,7 +226,14 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
                         )
                     {
                         result.Sucessfull = true;
-                        result.StringValue = lstResult[0].Code;
+
+                        string erpDocNo = lstResult[0].Code;
+                        if (erpDocNo.IsNotNullOrWhiteSpace())
+                        {
+                            result.StringValue = erpDocNo;
+                            result.ListValue = new List<string>();
+                            result.ListValue.Add(erpDocNo);
+                        }
                     }
                     else
                     {

@@ -38,6 +38,24 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBE">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocBE.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBE.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocBE.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBP.Agent">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocBP.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBP.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocBP.Deploy.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocSV.Agent">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocSV.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocSV.Deploy">
+      <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.InvDoc.InvDocSV.Deploy.dll</HintPath>
+    </Reference>
     <Reference Include="UFIDA.U9.ISV.MiscRcvISV.Agent">
       <HintPath>..\..\..\..\..\..\UBFV30\U9.VOB.Product.Component\App\UFIDA.U9.ISV.MiscRcvISV.Agent.dll</HintPath>
     </Reference>
