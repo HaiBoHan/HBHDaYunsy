@@ -11,6 +11,7 @@ using UFSoft.UBF.PL;
 using UFIDA.U9.Base;
 using UFIDA.U9.CBO.SCM.Warehouse;
 using UFIDA.U9.InvDoc.MiscRcv;
+using UFIDA.U9.CBO.SCM.Customer;
 
 namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
 {   //   湖北风驰新能源旧件杂收入库接口
@@ -21,6 +22,8 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
         public const string Const_MiscRcvDocTypeCode = "ZS-SB";
         // 默认旧件库
         public const string Const_MiscRcvWhCode = "SHJJ";
+        // 默认收益部门
+        public const string Const_MiscBenefitDept = "100307";
 
         // CommonCreateMiscRcv
 
@@ -148,9 +151,28 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
                 miscHead.MiscRcvDocType = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTOData();
                 miscHead.MiscRcvDocType.Code = Const_MiscRcvDocTypeCode;
 
-                //miscHead.BusinessDate = DateTime.Today;
-                miscHead.BusinessDate = this.ReturnDate.GetDateTime(DateTime.Today);
-                miscHead.Memo = this.ReMark;
+                // U9不需要回运日期，暂时不用
+                miscHead.BusinessDate = DateTime.Today;
+                //miscHead.BusinessDate = this.ReturnDate.GetDateTime(DateTime.Today);
+                miscHead.BenefitOrg = Context.LoginOrg.ID;
+
+                // 备注：**退回三包旧件        **取经销商代码+名称
+                //  DDC001运城金元阳退回三包旧件
+                //miscHead.Memo = this.ReMark;
+                string dealerName = string.Empty;
+                if(this.DealerCode.IsNotNullOrWhiteSpace())
+                {
+                    Customer dealer = Customer.Finder.Find("Org=@Org and Code=@Code"
+                        , new OqlParam(Context.LoginOrg.ID)
+                        , new OqlParam(this.DealerCode)
+                        );
+                    dealerName = dealer.Name;
+                }
+                miscHead.Memo = string.Format("{0}{1}{2}"
+                    , this.DealerCode
+                    , dealerName
+                    , " 退回三包旧件"
+                    );
 
                 if (miscHead.DescFlexField == null)
                 {
@@ -207,6 +229,13 @@ namespace U9.VOB.Cus.HBHDaYunSY.EntityMapping
                     miscLine.SupplierInfo = new UFIDA.U9.CBO.SCM.Supplier.SupplierMISCInfoData();
                     miscLine.SupplierInfo.Code = lineDTO.OldSuptCode;
 
+                    miscLine.Memo = lineDTO.Remark;
+
+                    // 收益部门
+                    miscLine.BenefitDept = new CommonArchiveDataDTOData();
+                    miscLine.BenefitDept.Code = Const_MiscBenefitDept;
+
+                    miscLine.BenefitOwnerOrg = Context.LoginOrg.ID;
 
                     miscHead.MiscRcvTransLs.Add(miscLine);
                 }
