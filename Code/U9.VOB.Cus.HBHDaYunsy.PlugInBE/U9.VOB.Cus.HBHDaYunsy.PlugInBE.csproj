@@ -252,7 +252,7 @@
     <Compile Include="Receivement_BeforeDefaultValue.cs" />
     <Compile Include="ArrivalDoc_AfterInserting.cs" />
     <Compile Include="Ship_AfterDeleted.cs" />
-    <Compile Include="CompleteRpt_AfterInserted.cs" />
+    <Compile Include="CompleteRpt_AfterValidate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
