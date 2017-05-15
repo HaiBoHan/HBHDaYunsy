@@ -604,4 +604,543 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.o
          </ufid:soLineDto>\r
       </ufid:Do>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.UFIDA.org/UFIDA.U9.Cust.HBDY.API.ICreateApprovedSaleOrderSV/Do"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.UFIDA.org/UFIDA.U9.Cust.HBDY.API.ICreateApprovedSaleOrderSV/Do"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="fc516eb7-63ff-47f0-b0b2-662604728517" wsaVersion="NONE" name="BasicHttpBinding_U9.VOB.HBHCommon.IHBHCommonSVForJava" type="wsdl" bindingName="{http://tempuri.org/}BasicHttpBinding_U9.VOB.HBHCommon.IHBHCommonSVForJava" soapVersion="1_1" anonymous="optional" definition="http://10.3.11.215/U9/HBHServices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://10.3.11.215/U9/HBHServices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl"><con:part><con:url>http://10.3.11.215/U9/HBHServices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="HBHCommonSVForJavaStub" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:i0="http://www.UFIDA.org" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+  <wsdl:import namespace="http://www.UFIDA.org" location="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl=wsdl0"/>
+  <wsdl:types/>
+  <wsdl:binding name="BasicHttpBinding_U9.VOB.HBHCommon.IHBHCommonSVForJava" type="i0:U9.VOB.HBHCommon.IHBHCommonSVForJava">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Do">
+      <soap:operation soapAction="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/Do" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ServiceLostExceptionFault">
+        <soap:fault name="ServiceLostExceptionFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ServiceExceptionFault">
+        <soap:fault name="ServiceExceptionFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ServiceExceptionDetailFault">
+        <soap:fault name="ServiceExceptionDetailFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExceptionBaseFault">
+        <soap:fault name="ExceptionBaseFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExceptionFault">
+        <soap:fault name="ExceptionFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HBHCommonSVForJavaStub">
+    <wsdl:port name="BasicHttpBinding_U9.VOB.HBHCommon.IHBHCommonSVForJava" binding="tns:BasicHttpBinding_U9.VOB.HBHCommon.IHBHCommonSVForJava">
+      <soap:address location="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?wsdl=wsdl0</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.UFIDA.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.UFIDA.org" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.UFIDA.org/Imports">
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd8" namespace="http://www.UFIDA.org"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Util.Context"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Business"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd6" namespace="UFSoft.UBF.Exceptions"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Exceptions"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd9" namespace="http://www.UFIDA.org/EntityData"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.PL.Engine"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd11" namespace="UFSoft.UBF.Util.Data"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/System.Data"/>
+      <xsd:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_InputMessage">
+    <wsdl:part name="parameters" element="tns:Do"/>
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceLostExceptionFault_FaultMessage">
+    <wsdl:part name="detail" element="q1:ServiceLostException" xmlns:q1="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service"/>
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceExceptionFault_FaultMessage">
+    <wsdl:part name="detail" element="q2:ServiceException" xmlns:q2="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service"/>
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceExceptionDetailFault_FaultMessage">
+    <wsdl:part name="detail" element="q3:ServiceExceptionDetail" xmlns:q3="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service"/>
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ExceptionBaseFault_FaultMessage">
+    <wsdl:part name="detail" element="q4:ExceptionBase" xmlns:q4="http://schemas.datacontract.org/2004/07/UFSoft.UBF"/>
+  </wsdl:message>
+  <wsdl:message name="U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ExceptionFault_FaultMessage">
+    <wsdl:part name="detail" element="q5:Exception" xmlns:q5="http://schemas.datacontract.org/2004/07/System"/>
+  </wsdl:message>
+  <wsdl:portType name="U9.VOB.HBHCommon.IHBHCommonSVForJava">
+    <wsdl:operation name="Do">
+      <wsdl:input wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/Do" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoResponse" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoServiceLostExceptionFault" name="ServiceLostExceptionFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceLostExceptionFault_FaultMessage"/>
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoServiceExceptionFault" name="ServiceExceptionFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceExceptionFault_FaultMessage"/>
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoServiceExceptionDetailFault" name="ServiceExceptionDetailFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ServiceExceptionDetailFault_FaultMessage"/>
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoExceptionBaseFault" name="ExceptionBaseFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ExceptionBaseFault_FaultMessage"/>
+      <wsdl:fault wsaw:Action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/DoExceptionFault" name="ExceptionFault" message="tns:U9.VOB.HBHCommon.IHBHCommonSVForJava_Do_ExceptionFault_FaultMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd8</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://www.UFIDA.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.UFIDA.org">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd9" namespace="http://www.UFIDA.org/EntityData"/>
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd6" namespace="UFSoft.UBF.Exceptions"/>
+  <xs:element name="Do">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="context" nillable="true" type="xs:anyType"/>
+        <xs:element minOccurs="0" name="entityFullName" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="entityContent" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DoResult" nillable="true" type="q1:U9.VOB.HBHCommon.SVResultDTOData" xmlns:q1="http://www.UFIDA.org/EntityData"/>
+        <xs:element minOccurs="0" name="outMessages" nillable="true" type="q2:ArrayOfMessageBase" xmlns:q2="UFSoft.UBF.Exceptions"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd9</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://www.UFIDA.org/EntityData" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.UFIDA.org/EntityData" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.PL.Engine"/>
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+  <xs:complexType name="U9.VOB.HBHCommon.SVResultDTOData">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:UFSoft.UBF.Business.DataTransObjectBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="m_erpDocNo" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="m_erpID" type="xs:long"/>
+          <xs:element minOccurs="0" name="m_message" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="m_sucess" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="U9.VOB.HBHCommon.SVResultDTOData" nillable="true" type="tns:U9.VOB.HBHCommon.SVResultDTOData"/>
+  <xs:complexType name="UFSoft.UBF.Business.DataTransObjectBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="sysState" type="q1:ObjectState" xmlns:q1="http://schemas.datacontract.org/2004/07/UFSoft.UBF.PL.Engine"/>
+    </xs:sequence>
+    <xs:attribute ref="ser:Id"/>
+    <xs:attribute ref="ser:Ref"/>
+  </xs:complexType>
+  <xs:element name="UFSoft.UBF.Business.DataTransObjectBase" nillable="true" type="tns:UFSoft.UBF.Business.DataTransObjectBase"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd10</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.PL.Engine" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/UFSoft.UBF.PL.Engine">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+  <xs:simpleType name="ObjectState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NotExist">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Unchanged"/>
+      <xs:enumeration value="Unknown">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Inserted">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Updated"/>
+      <xs:enumeration value="Deleted">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Operating">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NeedLoad">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ObjectState" nillable="true" type="tns:ObjectState"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0</con:url><con:content><![CDATA[<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+  <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+  <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+  <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+  <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+  <xs:element name="byte" nillable="true" type="xs:byte"/>
+  <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+  <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+  <xs:element name="double" nillable="true" type="xs:double"/>
+  <xs:element name="float" nillable="true" type="xs:float"/>
+  <xs:element name="int" nillable="true" type="xs:int"/>
+  <xs:element name="long" nillable="true" type="xs:long"/>
+  <xs:element name="QName" nillable="true" type="xs:QName"/>
+  <xs:element name="short" nillable="true" type="xs:short"/>
+  <xs:element name="string" nillable="true" type="xs:string"/>
+  <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+  <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+  <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+  <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+  <xs:element name="char" nillable="true" type="tns:char"/>
+  <xs:simpleType name="char">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:element name="duration" nillable="true" type="tns:duration"/>
+  <xs:simpleType name="duration">
+    <xs:restriction base="xs:duration">
+      <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+      <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+      <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="guid" nillable="true" type="tns:guid"/>
+  <xs:simpleType name="guid">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attribute name="FactoryType" type="xs:QName"/>
+  <xs:attribute name="Id" type="xs:ID"/>
+  <xs:attribute name="Ref" type="xs:IDREF"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd6</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="UFSoft.UBF.Exceptions" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="UFSoft.UBF.Exceptions">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Exceptions"/>
+  <xs:complexType name="MessageBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="attributeMetadataID" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="attributeName" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="entityFullName" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="entityID" type="xs:long"/>
+      <xs:element minOccurs="0" name="entityMetadataID" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorLevel" type="xs:short"/>
+      <xs:element minOccurs="0" name="formated" type="q1:MessageBase.FormatState" xmlns:q1="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Exceptions"/>
+      <xs:element minOccurs="0" name="innerMessages" nillable="true" type="tns:ArrayOfMessageBase"/>
+      <xs:element minOccurs="0" name="isValidEntityID" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="localMessage" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="orginalEntityFullName" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MessageBase" nillable="true" type="tns:MessageBase"/>
+  <xs:complexType name="ArrayOfMessageBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MessageBase" nillable="true" type="tns:MessageBase"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMessageBase" nillable="true" type="tns:ArrayOfMessageBase"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd7</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Exceptions" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Exceptions">
+  <xs:simpleType name="MessageBase.FormatState">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="unsignedInt" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Formatting"/>
+      <xs:enumeration value="Formatted"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MessageBase.FormatState" nillable="true" type="tns:MessageBase.FormatState"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd13</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Service">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF"/>
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel"/>
+  <xs:complexType name="ServiceLostException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ExceptionBase" xmlns:q1="http://schemas.datacontract.org/2004/07/UFSoft.UBF"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceLostException" nillable="true" type="tns:ServiceLostException"/>
+  <xs:complexType name="ServiceException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q2:ExceptionBase" xmlns:q2="http://schemas.datacontract.org/2004/07/UFSoft.UBF"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceException" nillable="true" type="tns:ServiceException"/>
+  <xs:complexType name="ServiceExceptionDetail">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q3:ExceptionDetail" xmlns:q3="http://schemas.datacontract.org/2004/07/System.ServiceModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Exception" nillable="true" type="q4:ExceptionBase" xmlns:q4="http://schemas.datacontract.org/2004/07/UFSoft.UBF"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceExceptionDetail" nillable="true" type="tns:ServiceExceptionDetail"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd4</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/UFSoft.UBF">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System"/>
+  <xs:complexType name="ExceptionBase">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:Exception" xmlns:q1="http://schemas.datacontract.org/2004/07/System"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ExceptionBase" nillable="true" type="tns:ExceptionBase"/>
+  <xs:complexType name="UnknownException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ExceptionBase"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UnknownException" nillable="true" type="tns:UnknownException"/>
+  <xs:complexType name="ErrorMessage">
+    <xs:sequence>
+      <xs:element name="errDescriptor" nillable="true" type="tns:ErrorDescriptor"/>
+      <xs:element name="errorType" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="innerMessages" nillable="true" type="tns:ArrayOfErrorMessage"/>
+      <xs:element minOccurs="0" name="message" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ErrorMessage" nillable="true" type="tns:ErrorMessage"/>
+  <xs:complexType name="ErrorDescriptor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="category" nillable="true" type="xs:string"/>
+      <xs:element name="errorid" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="level" type="tns:ErrorLevel"/>
+      <xs:element minOccurs="0" name="owner" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="timeStamp" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ErrorDescriptor" nillable="true" type="tns:ErrorDescriptor"/>
+  <xs:simpleType name="ErrorLevel">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Debug"/>
+      <xs:enumeration value="Info"/>
+      <xs:enumeration value="Warn"/>
+      <xs:enumeration value="Error"/>
+      <xs:enumeration value="Fatal"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ErrorLevel" nillable="true" type="tns:ErrorLevel"/>
+  <xs:complexType name="ArrayOfErrorMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ErrorMessage" nillable="true" type="tns:ErrorMessage"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfErrorMessage" nillable="true" type="tns:ArrayOfErrorMessage"/>
+  <xs:simpleType name="ExceptionBase.FormatState">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="unsignedInt" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Formatting"/>
+      <xs:enumeration value="Formatted"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ExceptionBase.FormatState" nillable="true" type="tns:ExceptionBase.FormatState"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd5</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/System" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+  <xs:complexType name="Exception">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##local" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute ref="ser:FactoryType"/>
+  </xs:complexType>
+  <xs:element name="Exception" nillable="true" type="tns:Exception"/>
+  <xs:complexType name="ArrayOfException">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Exception" nillable="true" type="tns:Exception"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfException" nillable="true" type="tns:ArrayOfException"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd14</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.ServiceModel" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/System.ServiceModel">
+  <xs:complexType name="ExceptionDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HelpLink" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="InnerException" nillable="true" type="tns:ExceptionDetail"/>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="StackTrace" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExceptionDetail" nillable="true" type="tns:ExceptionDetail"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd1</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Util.Context" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Util.Context">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+  <xs:complexType name="ApplicationContext">
+    <xs:sequence>
+      <xs:element name="nameValueHas" nillable="true" type="q1:ArrayOfKeyValueOfanyTypeanyType" xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ApplicationContext" nillable="true" type="tns:ApplicationContext"/>
+  <xs:complexType name="PlatformContext">
+    <xs:sequence>
+      <xs:element name="ctx" nillable="true" type="xs:anyType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlatformContext" nillable="true" type="tns:PlatformContext"/>
+  <xs:complexType name="ThreadContext">
+    <xs:sequence>
+      <xs:element name="nameValueHas" nillable="true" type="q2:ArrayOfKeyValueOfanyTypeanyType" xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ThreadContext" nillable="true" type="tns:ThreadContext"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd2</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <xs:complexType name="ArrayOfKeyValueOfanyTypeanyType">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfanyTypeanyType">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Key" nillable="true" type="xs:anyType"/>
+            <xs:element name="Value" nillable="true" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKeyValueOfanyTypeanyType" nillable="true" type="tns:ArrayOfKeyValueOfanyTypeanyType"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd3</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Business" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Business">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/UFSoft.UBF"/>
+  <xs:complexType name="BusinessException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ExceptionBase" xmlns:q1="http://schemas.datacontract.org/2004/07/UFSoft.UBF"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BusinessException" nillable="true" type="tns:BusinessException"/>
+  <xs:complexType name="AttrsContainerException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BusinessException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AttrsContainerException" nillable="true" type="tns:AttrsContainerException"/>
+  <xs:complexType name="AttributeInValidException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BusinessException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AttributeInValidException" nillable="true" type="tns:AttributeInValidException"/>
+  <xs:complexType name="EntityNotExistException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BusinessException"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EntityNotExistException" nillable="true" type="tns:EntityNotExistException"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd11</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="UFSoft.UBF.Util.Data" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="UFSoft.UBF.Util.Data">
+  <xs:import schemaLocation="http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/System.Data"/>
+  <xs:complexType name="MultiLangDataDict">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="_langs" nillable="true" type="tns:ArrayOfMultiLangData"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MultiLangDataDict" nillable="true" type="tns:MultiLangDataDict"/>
+  <xs:complexType name="ArrayOfMultiLangData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MultiLangData" nillable="true" type="tns:MultiLangData"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMultiLangData" nillable="true" type="tns:ArrayOfMultiLangData"/>
+  <xs:complexType name="MultiLangData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LangType" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="LangValue" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="State" type="q1:DataRowState" xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MultiLangData" nillable="true" type="tns:MultiLangData"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc?xsd=xsd12</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/System.Data">
+  <xs:simpleType name="DataRowState">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Detached"/>
+          <xs:enumeration value="Unchanged"/>
+          <xs:enumeration value="Added"/>
+          <xs:enumeration value="Deleted"/>
+          <xs:enumeration value="Modified"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:element name="DataRowState" nillable="true" type="tns:DataRowState"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc</con:endpoint></con:endpoints><con:operation id="52d9549d-d08b-498c-8691-07e5e80c5c3b" isOneWay="false" action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/Do" name="Do" bindingOperationName="Do" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1897ed9e-667e-45b8-ad2e-38569357deb0" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://win-kcq3lspj5nr/U9/hbhservices/U9.VOB.HBHCommon.IHBHCommonSVForJava.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ufid="http://www.UFIDA.org">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ufid:Do>\r
+         <!--Optional:-->
+         <ufid:context  xmlns:q1="http://schemas.datacontract.org/2004/07/UFSoft.UBF.Util.Context" xsi:type="q1:ThreadContext"   
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <q1:nameValueHas>
+
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">EnterpriseCode</Key>
+            <Value xsi:type="xsd:string">014</Value>
+          </KeyValueOfanyTypeanyType>
+          <!--青岛健力源-->
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">OrgCode</Key>
+            <Value xsi:type="xsd:string">70</Value>
+          </KeyValueOfanyTypeanyType>
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">UserCode</Key>
+            <Value xsi:type="xsd:string">admin</Value>
+          </KeyValueOfanyTypeanyType>
+
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">CultureName</Key>
+            <Value xsi:type="xsd:string">zh-CN</Value>
+          </KeyValueOfanyTypeanyType>
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">DefaultCultureName</Key>
+            <Value xsi:type="xsd:string">zh-CN</Value>
+          </KeyValueOfanyTypeanyType>
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">Support_CultureNameList</Key>
+            <Value xsi:type="xsd:string">zh-CN</Value>
+          </KeyValueOfanyTypeanyType>
+          
+        <!--
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">EnterpriseID</Key>
+            <Value xsi:type="xsd:string">001</Value>
+          </KeyValueOfanyTypeanyType>
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">OrgID</Key>
+            <Value xsi:type="xsd:string">1001510020000248</Value>
+          </KeyValueOfanyTypeanyType>
+          <KeyValueOfanyTypeanyType xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <Key xsi:type="xsd:string">UserID</Key>
+            <Value xsi:type="xsd:string">1001510030000182</Value>
+          </KeyValueOfanyTypeanyType>
+          -->          
+         
+        </q1:nameValueHas>
+         </ufid:context>
+         <!--Optional:-->\r
+         <ufid:entityFullName>CreateMiscReceive</ufid:entityFullName>\r
+         <!--Optional:-->\r
+         <ufid:entityContent>{"actionType":0,"dealerCode":"DDC001","errMsg":"","flag":0,"invokeTime":null,"password":"","reMark":"","returnDate":"2017-05-09 16:28:30.0","returnNo":"DDC001HYD1705090001","returnOrderDtlDto":[{"actionType":0,"actualCount":"0","alreadyIn":"1","claimNo":"DDC001BX1702230001","dutySuptCode":"","errMsg":"","flag":0,"invokeTime":null,"oldSuptCode":"120029","orderNo":"DDC001HYD1705090001","partCode":"8702A-EA201","partFee":"0","partTroubleDesc":"动平衡超差","password":"","remark":"","returnCount":"1","username":"","vin":""},{"actionType":0,"actualCount":"0","alreadyIn":"1","claimNo":"DDC001BX1702230001","dutySuptCode":"","errMsg":"","flag":0,"invokeTime":null,"oldSuptCode":"120003","orderNo":"DDC001HYD1705090001","partCode":"1108001-EA201","partFee":"0","partTroubleDesc":"动平衡超差","password":"","remark":"","returnCount":"1","username":"","vin":""},{"actionType":0,"actualCount":"0","alreadyIn":"1","claimNo":"DDC001BX1702230001","dutySuptCode":"","errMsg":"","flag":0,"invokeTime":null,"oldSuptCode":"120048","orderNo":"DDC001HYD1705090001","partCode":"8201001-EA201","partFee":"0","partTroubleDesc":"抖动","password":"","remark":"","returnCount":"1","username":"","vin":""},{"actionType":0,"actualCount":"0","alreadyIn":"1","claimNo":"DDC001BX1702230001","dutySuptCode":"","errMsg":"","flag":0,"invokeTime":null,"oldSuptCode":"120003","orderNo":"DDC001HYD1705090001","partCode":"8202012-EA201","partFee":"0","partTroubleDesc":"动平衡超差","password":"","remark":"","returnCount":"1","username":"","vin":""},{"actionType":0,"actualCount":"0","alreadyIn":"1","claimNo":"DDC001BX1705090001","dutySuptCode":"","errMsg":"","flag":0,"invokeTime":null,"oldSuptCode":"120020","orderNo":"DDC001HYD1705090001","partCode":"1108001-EA201","partFee":"0","partTroubleDesc":"开裂","password":"","remark":"","returnCount":"1","username":"","vin":""}],"returnProdate":"2017-05","username":""}</ufid:entityContent>\r
+      </ufid:Do>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.UFIDA.org/U9.VOB.HBHCommon.IHBHCommonSVForJava/Do"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
