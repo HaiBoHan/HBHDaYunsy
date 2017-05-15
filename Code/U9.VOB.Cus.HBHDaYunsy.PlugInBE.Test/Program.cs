@@ -9,6 +9,22 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE.Test
     {
         static void Main(string[] args)
         {
+            string strLotCode = string.Empty;
+            // *110377*f0701006*j2914n1h-010*
+            // *供应商*批次号*料号*
+            string sn = "*110377*f0701006*j2914n1h-010*";
+
+            string[] arr = sn.Split(new char[] { '*' }, StringSplitOptions.None);
+
+            if (arr.Length >= 3)
+            {
+                strLotCode = arr[2];
+            }
+
+            Console.WriteLine(strLotCode);
+
+            Console.ReadLine();
+
             DMS_PI06Aysn();
 
             Console.ReadLine();

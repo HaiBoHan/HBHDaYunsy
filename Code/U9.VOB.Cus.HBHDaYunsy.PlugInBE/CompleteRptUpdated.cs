@@ -228,8 +228,10 @@ COM.DaYun.MES.CJDBE.CarAssemblyCQRecord	车辆装配过程检验质量问题记�
                                                     }
                                                     // pjtm 配件条码 
                                                     dto.pjtm = cjdLine.SN;
-                                                    // pch 批次号  采集点没有
-                                                    dto.pch = string.Empty;
+                                                    // pch 批次号  采集点没有(从SN条码解析出来)
+                                                    // *110377*f0701006*j2914n1h-010*
+                                                    // *供应商*批次号*料号*
+                                                    dto.pch = GetLotCode(cjdLine);
 
                                                     lstMesDTO.Add(dto);
                                                 }
@@ -259,6 +261,25 @@ COM.DaYun.MES.CJDBE.CarAssemblyCQRecord	车辆装配过程检验质量问题记�
 				}
 			}
 		}
+
+        public static string GetLotCode(CJDLine cjdLine)
+        {
+            if (cjdLine != null
+                && cjdLine.SN.IsNotNullOrWhiteSpace()
+                )
+            {
+                // *110377*f0701006*j2914n1h-010*
+                // *供应商*批次号*料号*
+                string[] arr = cjdLine.SN.Split(new char[] { '*' }, StringSplitOptions.None);
+
+                if (arr.Length >= 3)
+                {
+                    return arr[2];
+                }
+            }
+
+            return string.Empty;
+        }
 
         private CJDHead GetCJDHead(CompleteRpt entity)
         {
