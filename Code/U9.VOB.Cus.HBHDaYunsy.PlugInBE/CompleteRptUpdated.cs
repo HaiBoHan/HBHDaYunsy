@@ -17,6 +17,7 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
 	public class CompleteRptUpdated : IEventSubscriber
 	{
+        private const string Const_CabName = "驾驶室总成";
         private const string Const_MesDocTypeCode = "2";
 
 		public void Notify(params object[] args)
@@ -220,7 +221,7 @@ COM.DaYun.MES.CJDBE.CarAssemblyCQRecord	车辆装配过程检验质量问题记�
                                                     // vin底盘号 ,bomdm 配件图号,   gysdm供应商代码  pjtm 配件条码   pch 批次号,
                                                     dto.vin = strVin;
                                                     // bomdm 配件图号
-                                                    dto.bomdm = cjdLine.ItemMaster.Code;
+                                                    dto.bomdm = GetItemCode(cjdLine);
                                                     // gysdm供应商代码
                                                     if (cjdLine.Supplyer != null)
                                                     {
@@ -261,6 +262,27 @@ COM.DaYun.MES.CJDBE.CarAssemblyCQRecord	车辆装配过程检验质量问题记�
 				}
 			}
 		}
+
+        private static string GetItemCode(CJDLine cjdLine)
+        {
+            string strItemCode = cjdLine.ItemMaster.Code;
+
+            // 品名="驾驶室总成" 的取 "-"的前两段
+            if (cjdLine.ItemMaster.Name == Const_CabName)
+            {
+                string[] arr = strItemCode.Split(new char[] { '-' }, StringSplitOptions.None);
+
+                if (arr.Length > 2)
+                {
+                    strItemCode = string.Format("{0}-{1}"
+                        , arr[0]
+                        , arr[1]
+                        );
+                }
+            }
+
+            return strItemCode;
+        }
 
         public static string GetLotCode(CJDLine cjdLine)
         {
