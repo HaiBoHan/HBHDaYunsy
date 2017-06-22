@@ -190,20 +190,21 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                         //lines.Add(linedto);
                                     }
                                 }
+                                partBaseDto t = null;
                                 try
                                 {
                                     if (lines.Count > 0)
                                     {
-                                        partBaseDto t = service.Do(lines.ToArray());
-                                        if (t != null && t.flag == 0)
-                                        {
-                                            throw new BusinessException(t.errMsg);
-                                        }
+                                        t = service.Do(lines.ToArray());
                                     }
                                 }
                                 catch (System.Exception e)
                                 {
-                                    throw new BusinessException("调用DMS接口错误：" + e.Message);
+                                    throw new BusinessException("调用DMS接口异常：" + e.Message);
+                                }
+                                if (t != null && t.flag == 0)
+                                {
+                                    throw new BusinessException("DMS接口返回错误：" + t.errMsg);
                                 }
                             }
                         }
