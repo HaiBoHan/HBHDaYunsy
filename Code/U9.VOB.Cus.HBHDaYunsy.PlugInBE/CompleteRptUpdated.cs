@@ -65,7 +65,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
                                                     dto.nodeStatus = "4";
                                                     dto.oldVin = string.Empty;
+                                                    // VIN短码
                                                     dto.flowingCode = ((entity.DescFlexField.PubDescSeg12.Length >= 8) ? entity.DescFlexField.PubDescSeg12.Substring(entity.DescFlexField.PubDescSeg12.Length - 8, 8) : entity.DescFlexField.PubDescSeg12);
+                                                    // 发动机号
+                                                    dto.engineNo = entity.DescFlexField.PrivateDescSeg5;
                                                     vehicleInfoDto resultdto = service.Do(dto);
                                                     if (resultdto != null && resultdto.flag == 0)
                                                     {
@@ -77,7 +80,12 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     throw new BusinessException("调用DMS接口错误：" + e.Message);
                                                 }
                                             }
-                                            else if (entity.DescFlexField.PrivateDescSeg21 != entity.OriginalData.DescFlexField.PrivateDescSeg21)
+                                            else if ((entity.DocState == CompleteRptStateEnum.Approved
+                                                    || entity.DocState == CompleteRptStateEnum.Received
+                                                    || entity.DocState == CompleteRptStateEnum.QualityChecked
+                                                    )
+                                                && entity.DescFlexField.PrivateDescSeg21 != entity.OriginalData.DescFlexField.PrivateDescSeg21
+                                                )
                                             //// 新增是不是要写？？？
                                             //if (rpt.DocState == CompleteRptStateEnum.Opened
                                             //    || rpt.DocState == CompleteRptStateEnum.Approving
@@ -97,7 +105,10 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
                                                     dto.nodeStatus = "4";
                                                     dto.oldVin = entity.DescFlexField.PrivateDescSeg21;
+                                                    // VIN短码
                                                     dto.flowingCode = ((entity.DescFlexField.PrivateDescSeg21.Length >= 8) ? entity.DescFlexField.PrivateDescSeg21.Substring(entity.DescFlexField.PrivateDescSeg21.Length - 8, 8) : entity.DescFlexField.PrivateDescSeg21);
+                                                    // 发动机号
+                                                    dto.engineNo = entity.DescFlexField.PrivateDescSeg5;
                                                     vehicleInfoDto resultdto = service.Do(dto);
                                                     if (resultdto != null && resultdto.flag == 0)
                                                     {
@@ -112,31 +123,34 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                         }
                                         else
                                         {
-                                            System.DateTime arg_42B_0 = entity.ActualRcvTime;
-                                            if (entity.MOKey != null && entity.MO.MODocType.Code == "MO02")
+                                            if (entity.DocState == CompleteRptStateEnum.Approved && entity.OriginalData.DocState == CompleteRptStateEnum.Approving)
                                             {
-                                                try
+                                                System.DateTime arg_42B_0 = entity.ActualRcvTime;
+                                                if (entity.MOKey != null && entity.MO.MODocType.Code == "MO02")
                                                 {
-                                                    SI09ImplService service2 = new SI09ImplService();
-                                                    service2.Url = PubHelper.GetAddress(service2.Url);
-                                                    //vehicleChangeInfoDto d = service2.receive(new vehicleChangeInfoDto
-                                                    //{
-                                                    //    vin = rpt.DescFlexField.PubDescSeg12,
-                                                    //    docStatus = 7
-                                                    //});
-                                                    vehicleChangeInfoDto dto = new vehicleChangeInfoDto();
-                                                    // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
-                                                    dto.vin = entity.DescFlexField.PubDescSeg12;
-                                                    dto.docStatus = 7;
-                                                    vehicleChangeInfoDto d = service2.Do(dto);
-                                                    if (d != null && d.flag == 0)
+                                                    try
                                                     {
-                                                        throw new BusinessException(d.errMsg);
+                                                        SI09ImplService service2 = new SI09ImplService();
+                                                        service2.Url = PubHelper.GetAddress(service2.Url);
+                                                        //vehicleChangeInfoDto d = service2.receive(new vehicleChangeInfoDto
+                                                        //{
+                                                        //    vin = rpt.DescFlexField.PubDescSeg12,
+                                                        //    docStatus = 7
+                                                        //});
+                                                        vehicleChangeInfoDto dto = new vehicleChangeInfoDto();
+                                                        // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
+                                                        dto.vin = entity.DescFlexField.PubDescSeg12;
+                                                        dto.docStatus = 7;
+                                                        vehicleChangeInfoDto d = service2.Do(dto);
+                                                        if (d != null && d.flag == 0)
+                                                        {
+                                                            throw new BusinessException(d.errMsg);
+                                                        }
                                                     }
-                                                }
-                                                catch (System.Exception e)
-                                                {
-                                                    throw new BusinessException("调用DMS接口错误：" + e.Message);
+                                                    catch (System.Exception e)
+                                                    {
+                                                        throw new BusinessException("调用DMS接口错误：" + e.Message);
+                                                    }
                                                 }
                                             }
                                         }
