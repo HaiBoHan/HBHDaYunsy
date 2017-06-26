@@ -62,10 +62,14 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             //System.ServiceModel.EndpointAddress remoteAddress = new System.ServiceModel.EndpointAddress(new Uri("http://ip/dms/ws/PI07?wsdl")); ;
 
                                             //DMSAsync_PI07.PI07Client service = new DMSAsync_PI07.PI07Client(binding, remoteAddress);
-                                            DMSAsync_PI07.PI07Client service = PubExtend.GetPI07Async();
+                                            //DMSAsync_PI07.PI07Client service = PubExtend.GetPI07Async();
+                                            // 异步总会有返回结果丢失，改为同步了
+                                            PI07ImplService service = new PI07ImplService();
 											// service.Url = PubHelper.GetAddress(service.Url);
-                                            System.Collections.Generic.List<DMSAsync_PI07.stockDTO> list = new System.Collections.Generic.List<DMSAsync_PI07.stockDTO>();
-                                            DMSAsync_PI07.stockDTO dto = new DMSAsync_PI07.stockDTO();
+                                            //System.Collections.Generic.List<DMSAsync_PI07.stockDTO> list = new System.Collections.Generic.List<DMSAsync_PI07.stockDTO>();
+                                            //DMSAsync_PI07.stockDTO dto = new DMSAsync_PI07.stockDTO();
+                                            System.Collections.Generic.List<stockDTO> list = new System.Collections.Generic.List<stockDTO>();
+                                            stockDTO dto = new stockDTO();
 											dto.itemMaster = transline.ItemInfo.ItemID.Code;
                                             //if (transline.SupplierInfo != null && transline.SupplierInfo.Supplier != null)
                                             //{
@@ -115,7 +119,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             dto.actionType = transline.Direction.Value;
 
 											list.Add(dto);
-                                            DMSAsync_PI07.stockDTO[] dtolist = service.Do(list.ToArray());
+                                            //DMSAsync_PI07.stockDTO[] dtolist = service.Do(list.ToArray());
+                                            stockDTO[] dtolist = service.Do(list.ToArray());
                                             //stockDTO[] dtolist = service.Do(list.ToArray());
                                             // 改为异步调用了
                                             //if (dtolist != null && dtolist.Length > 0 && dtolist[0].flag == 0)

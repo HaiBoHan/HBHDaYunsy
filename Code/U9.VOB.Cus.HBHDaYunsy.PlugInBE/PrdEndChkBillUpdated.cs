@@ -32,10 +32,14 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                 {
                                     //PI07ImplService service = new PI07ImplService();
                                     //DMSAsync_PI07.PI07Client service = new DMSAsync_PI07.PI07Client();
-                                    DMSAsync_PI07.PI07Client service = PubExtend.GetPI07Async();
+                                    //DMSAsync_PI07.PI07Client service = PubExtend.GetPI07Async();
+                                    // 异步总会有返回结果丢失，改为同步了
+                                    PI07ImplService service = new PI07ImplService();
                                     // service.Url = PubHelper.GetAddress(service.Url);
-                                    System.Collections.Generic.List<DMSAsync_PI07.stockDTO> list = new System.Collections.Generic.List<DMSAsync_PI07.stockDTO>();
-                                    DMSAsync_PI07.stockDTO dto = new DMSAsync_PI07.stockDTO();
+                                    //System.Collections.Generic.List<DMSAsync_PI07.stockDTO> list = new System.Collections.Generic.List<DMSAsync_PI07.stockDTO>();
+                                    //DMSAsync_PI07.stockDTO dto = new DMSAsync_PI07.stockDTO();
+                                    System.Collections.Generic.List<stockDTO> list = new System.Collections.Generic.List<stockDTO>();
+                                    stockDTO dto = new stockDTO();
 									dto.itemMaster = prdendChkBill.ItemInfo.ItemID.Code;
 									if (prdendChkBill.Supplier != null && prdendChkBill.Supplier.Supplier != null)
 									{
@@ -52,7 +56,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 									}
 									dto.actionType = 2;
 									list.Add(dto);
-                                    DMSAsync_PI07.stockDTO[] t = service.Do(list.ToArray());
+                                    //DMSAsync_PI07.stockDTO[] t = service.Do(list.ToArray());
+                                    stockDTO[] t = service.Do(list.ToArray());
                                     // 改为异步调用了
                                     //if (t != null && t.Length > 0 && t[0].flag == 0)
                                     //{
