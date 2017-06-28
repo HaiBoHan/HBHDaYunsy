@@ -153,60 +153,60 @@
                             }
                             // 先不下发，下发直接死掉了
 
-                            foreach (string projCode in lstProjectCode)
-                            {
-                                Project project2 = Project.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, projCode), new OqlParam[0]);
-                                if (project2 != null)
-                                {
-                                    try
-                                    {
-                                        OnlineSendObjsProxy onlineSendObjsProxy = new OnlineSendObjsProxy();
-                                        onlineSendObjsProxy.FullName = ("UFIDA.U9.CBO.SCM.ProjectTask.Project");
-                                        onlineSendObjsProxy.IDs = (new System.Collections.Generic.List<long>());
-                                        onlineSendObjsProxy.IDs.Add(project2.ID);
-                                        onlineSendObjsProxy.FromOrg = (Context.LoginOrg.ID);
-                                        onlineSendObjsProxy.ToOrgList = (new System.Collections.Generic.List<long>());
-                                        //Organization org = Organization.Finder.Find("Code='10'", new OqlParam[0]);
-                                        //if (org != null)
-                                        //{
-                                        //    onlineSendObjsProxy.ToOrgList.Add(org.ID);
-                                        //}
-                                        //Organization org2 = Organization.Finder.Find("Code='30'", new OqlParam[0]);
-                                        //if (org2 != null)
-                                        //{
-                                        //    onlineSendObjsProxy.ToOrgList.Add(org2.ID);
-                                        //}
-                                        if (HBHCommon.ProjectSendOrgCode.Count > 0)
-                                        {
-                                            foreach (string orgCode in HBHCommon.ProjectSendOrgCode)
-                                            {
-                                                Organization org = Organization.Finder.Find("Code=@OrgCode"
-                                                    , new OqlParam(orgCode)
-                                                    );
-                                                if (org != null)
-                                                {
-                                                    onlineSendObjsProxy.ToOrgList.Add(org.ID);
-                                                }
-                                            }
-                                        }
-                                        if (onlineSendObjsProxy.ToOrgList.Count > 0)
-                                        {
-                                            onlineSendObjsProxy.Do();
-                                        }
-                                    }
-                                    catch (System.Exception e)
-                                    {
-                                        //throw new System.ApplicationException(string.Format("{0}项目下发失败：{1}", project2.Code, ex.Message));
-                                        result.IsSuccess = false;
-                                        result.ErrorInfo = e.Message;
-                                        result.Timestamp = System.DateTime.Now.ToString();
-                                        results.Add(result);
-                                        //result2 = results;
-                                        //return result2;
-                                        return results;
-                                    }
-                                }
-                            }
+                            //foreach (string projCode in lstProjectCode)
+                            //{
+                            //    Project project2 = Project.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, projCode), new OqlParam[0]);
+                            //    if (project2 != null)
+                            //    {
+                            //        try
+                            //        {
+                            //            OnlineSendObjsProxy onlineSendObjsProxy = new OnlineSendObjsProxy();
+                            //            onlineSendObjsProxy.FullName = ("UFIDA.U9.CBO.SCM.ProjectTask.Project");
+                            //            onlineSendObjsProxy.IDs = (new System.Collections.Generic.List<long>());
+                            //            onlineSendObjsProxy.IDs.Add(project2.ID);
+                            //            onlineSendObjsProxy.FromOrg = (Context.LoginOrg.ID);
+                            //            onlineSendObjsProxy.ToOrgList = (new System.Collections.Generic.List<long>());
+                            //            //Organization org = Organization.Finder.Find("Code='10'", new OqlParam[0]);
+                            //            //if (org != null)
+                            //            //{
+                            //            //    onlineSendObjsProxy.ToOrgList.Add(org.ID);
+                            //            //}
+                            //            //Organization org2 = Organization.Finder.Find("Code='30'", new OqlParam[0]);
+                            //            //if (org2 != null)
+                            //            //{
+                            //            //    onlineSendObjsProxy.ToOrgList.Add(org2.ID);
+                            //            //}
+                            //            if (HBHCommon.ProjectSendOrgCode.Count > 0)
+                            //            {
+                            //                foreach (string orgCode in HBHCommon.ProjectSendOrgCode)
+                            //                {
+                            //                    Organization org = Organization.Finder.Find("Code=@OrgCode"
+                            //                        , new OqlParam(orgCode)
+                            //                        );
+                            //                    if (org != null)
+                            //                    {
+                            //                        onlineSendObjsProxy.ToOrgList.Add(org.ID);
+                            //                    }
+                            //                }
+                            //            }
+                            //            if (onlineSendObjsProxy.ToOrgList.Count > 0)
+                            //            {
+                            //                onlineSendObjsProxy.Do();
+                            //            }
+                            //        }
+                            //        catch (System.Exception e)
+                            //        {
+                            //            //throw new System.ApplicationException(string.Format("{0}项目下发失败：{1}", project2.Code, ex.Message));
+                            //            result.IsSuccess = false;
+                            //            result.ErrorInfo = e.Message;
+                            //            result.Timestamp = System.DateTime.Now.ToString();
+                            //            results.Add(result);
+                            //            //result2 = results;
+                            //            //return result2;
+                            //            return results;
+                            //        }
+                            //    }
+                            //}
 
                             // 如果已经生成了订单，则看看是否审核、没有审核 则 审核之；
 
