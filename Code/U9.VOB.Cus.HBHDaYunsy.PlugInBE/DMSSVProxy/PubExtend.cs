@@ -27,6 +27,7 @@ using UFSoft.UBF.Business;
 using UFIDA.U9.CBO.SCM.Item;
 using UFSoft.UBF.PL;
 using U9.VOB.Cus.HBHDaYunsy.PlugInBE.DMS_PI09;
+using UFIDA.U9.Base.UserRole;
 
 namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
 {
@@ -1649,7 +1650,17 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
             context.OrgID = Context.LoginOrg.ID.ToString();
             context.CultureName = Context.LoginLanguageCode;
             context.UserID = Context.LoginUserID;
-            context.UserCode = Context.LoginUser;
+            context.UserName = Context.LoginUser;
+            // 这个是名称，不能赋值到编码上
+            User usr = User.Finder.FindByID(context.UserID);
+            if (usr != null)
+            {
+                context.UserCode = usr.Code;
+            }
+            else
+            {
+                context.UserCode = "admin";
+            }
             context.Url = "http://localhost/U9/HBHServices/U9.VOB.HBHCommon.IU9CommonSV.svc";
             return context;
         }
