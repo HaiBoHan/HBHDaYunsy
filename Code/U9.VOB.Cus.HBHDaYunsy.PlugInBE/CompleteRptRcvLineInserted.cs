@@ -49,7 +49,8 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             && soline.ItemInfo.ItemID.Code == rpt.Item.Code
                                             )
                                         {
-                                            //if (entity.DocState == CompleteRptStateEnum.Approved && entity.OriginalData.DocState == CompleteRptStateEnum.Approving)
+                                            //CompleteRpt rpt = entity.CompleteRpt;
+                                            if (rpt.DocState == CompleteRptStateEnum.Received && rpt.OriginalData.DocState == CompleteRptStateEnum.Approved)
                                             {
                                                 try
                                                 {
