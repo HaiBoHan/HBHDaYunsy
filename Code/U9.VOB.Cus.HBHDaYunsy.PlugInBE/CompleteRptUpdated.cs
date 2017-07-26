@@ -49,8 +49,11 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                             && soline.ItemInfo.ItemID.Code == entity.Item.Code
                                             )
                                         {
+                                            // 审核，更新成 最终检验；
+                                            // 关闭，更新成 总装入库；
                                             if (entity.DocState == CompleteRptStateEnum.Approved && entity.OriginalData.DocState == CompleteRptStateEnum.Approving)
                                             {
+                                                vehicleInfoDto resultdto = null;
                                                 try
                                                 {
                                                     SI03ImplService service = new SI03ImplService();
@@ -69,28 +72,36 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     dto.flowingCode = ((entity.DescFlexField.PubDescSeg12.Length >= 8) ? entity.DescFlexField.PubDescSeg12.Substring(entity.DescFlexField.PubDescSeg12.Length - 8, 8) : entity.DescFlexField.PubDescSeg12);
                                                     // 发动机号
                                                     dto.engineNo = entity.DescFlexField.PrivateDescSeg5;
-                                                    vehicleInfoDto resultdto = service.Do(dto);
-                                                    if (resultdto != null && resultdto.flag == 0)
-                                                    {
-                                                        throw new BusinessException(resultdto.errMsg);
-                                                    }
+                                                    resultdto = service.Do(dto);
+                                                    //if (resultdto != null && resultdto.flag == 0)
+                                                    //{
+                                                    //    throw new BusinessException(resultdto.errMsg);
+                                                    //}
                                                 }
                                                 catch (System.Exception e)
                                                 {
-                                                    throw new BusinessException("调用DMS接口错误：" + e.Message);
+                                                    throw new BusinessException("调用DMS接口异常：" + e.Message);
+                                                }
+                                                if (resultdto != null && resultdto.flag == 0)
+                                                {
+                                                    if (resultdto.errMsg.IsNull())
+                                                    {
+                                                        throw new BusinessException("调用DMS接口错误,错误标记(flag)为0，但是无错误消息返回!");
+                                                    }
+                                                    else
+                                                    {
+                                                        throw new BusinessException("调用DMS接口执行失败：" + resultdto.errMsg);
+                                                    }
                                                 }
                                             }
-                                            else if ((entity.DocState == CompleteRptStateEnum.Approved
-                                                    || entity.DocState == CompleteRptStateEnum.Received
-                                                    || entity.DocState == CompleteRptStateEnum.QualityChecked
+                                            else if (entity.DocState == CompleteRptStateEnum.Received 
+                                                && (entity.OriginalData.DocState == CompleteRptStateEnum.Approved
+                                                    || entity.OriginalData.DocState == CompleteRptStateEnum.QualityChecked
+                                                    || entity.OriginalData.DocState == CompleteRptStateEnum.Approving
                                                     )
-                                                && entity.DescFlexField.PrivateDescSeg21 != entity.OriginalData.DescFlexField.PrivateDescSeg21
                                                 )
-                                            //// 新增是不是要写？？？
-                                            //if (rpt.DocState == CompleteRptStateEnum.Opened
-                                            //    || rpt.DocState == CompleteRptStateEnum.Approving
-                                            //    )
                                             {
+                                                vehicleInfoDto resultdto = null;
                                                 try
                                                 {
                                                     SI03ImplService service = new SI03ImplService();
@@ -103,31 +114,80 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     dto.vin = entity.DescFlexField.PubDescSeg12;
                                                     dto.erpMaterialCode = entity.Item.Code;
                                                     // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
-                                                    dto.nodeStatus = "4";
-                                                    dto.oldVin = entity.DescFlexField.PrivateDescSeg21;
+                                                    dto.nodeStatus = "5";
+                                                    dto.oldVin = string.Empty;
                                                     // VIN短码
-                                                    dto.flowingCode = ((entity.DescFlexField.PrivateDescSeg21.Length >= 8) ? entity.DescFlexField.PrivateDescSeg21.Substring(entity.DescFlexField.PrivateDescSeg21.Length - 8, 8) : entity.DescFlexField.PrivateDescSeg21);
+                                                    dto.flowingCode = ((entity.DescFlexField.PubDescSeg12.Length >= 8) ? entity.DescFlexField.PubDescSeg12.Substring(entity.DescFlexField.PubDescSeg12.Length - 8, 8) : entity.DescFlexField.PubDescSeg12);
                                                     // 发动机号
                                                     dto.engineNo = entity.DescFlexField.PrivateDescSeg5;
-                                                    vehicleInfoDto resultdto = service.Do(dto);
-                                                    if (resultdto != null && resultdto.flag == 0)
-                                                    {
-                                                        throw new BusinessException(resultdto.errMsg);
-                                                    }
+                                                    resultdto = service.Do(dto);
                                                 }
                                                 catch (System.Exception e)
                                                 {
-                                                    throw new BusinessException("调用DMS接口错误：" + e.Message);
+                                                    throw new BusinessException("调用DMS接口异常：" + e.Message);
+                                                }
+                                                if (resultdto != null && resultdto.flag == 0)
+                                                {
+                                                    if (resultdto.errMsg.IsNull())
+                                                    {
+                                                        throw new BusinessException("调用DMS接口错误,错误标记(flag)为0，但是无错误消息返回!");
+                                                    }
+                                                    else
+                                                    {
+                                                        throw new BusinessException("调用DMS接口执行失败：" + resultdto.errMsg);
+                                                    }
                                                 }
                                             }
+                                            // 关闭后，不会改VIN码，而且现在好像不用私有段21了，用的是公共段12
+                                            //else if ((entity.DocState == CompleteRptStateEnum.Approved
+                                            //        || entity.DocState == CompleteRptStateEnum.Received
+                                            //        || entity.DocState == CompleteRptStateEnum.QualityChecked
+                                            //        )
+                                            //    && entity.DescFlexField.PrivateDescSeg21 != entity.OriginalData.DescFlexField.PrivateDescSeg21
+                                            //    )
+                                            ////// 新增是不是要写？？？
+                                            ////if (rpt.DocState == CompleteRptStateEnum.Opened
+                                            ////    || rpt.DocState == CompleteRptStateEnum.Approving
+                                            ////    )
+                                            //{
+                                            //    try
+                                            //    {
+                                            //        SI03ImplService service = new SI03ImplService();
+                                            //        // service.Url = PubHelper.GetAddress(service.Url);
+                                            //        vehicleInfoDto dto = new vehicleInfoDto();
+                                            //        if (entity.ProjectKey != null)
+                                            //        {
+                                            //            dto.dmsSaleNo = entity.Project.Code;
+                                            //        }
+                                            //        dto.vin = entity.DescFlexField.PubDescSeg12;
+                                            //        dto.erpMaterialCode = entity.Item.Code;
+                                            //        // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
+                                            //        dto.nodeStatus = "4";
+                                            //        dto.oldVin = entity.DescFlexField.PrivateDescSeg21;
+                                            //        // VIN短码
+                                            //        dto.flowingCode = ((entity.DescFlexField.PrivateDescSeg21.Length >= 8) ? entity.DescFlexField.PrivateDescSeg21.Substring(entity.DescFlexField.PrivateDescSeg21.Length - 8, 8) : entity.DescFlexField.PrivateDescSeg21);
+                                            //        // 发动机号
+                                            //        dto.engineNo = entity.DescFlexField.PrivateDescSeg5;
+                                            //        vehicleInfoDto resultdto = service.Do(dto);
+                                            //        if (resultdto != null && resultdto.flag == 0)
+                                            //        {
+                                            //            throw new BusinessException(resultdto.errMsg);
+                                            //        }
+                                            //    }
+                                            //    catch (System.Exception e)
+                                            //    {
+                                            //        throw new BusinessException("调用DMS接口异常：" + e.Message);
+                                            //    }
+                                            //}
                                         }
                                         else
                                         {
-                                            if (entity.DocState == CompleteRptStateEnum.Approved && entity.OriginalData.DocState == CompleteRptStateEnum.Approving)
+                                            if (entity.MOKey != null && entity.MO.MODocType.Code == "MO02")
                                             {
                                                 System.DateTime arg_42B_0 = entity.ActualRcvTime;
-                                                if (entity.MOKey != null && entity.MO.MODocType.Code == "MO02")
+                                                if (entity.DocState == CompleteRptStateEnum.Approved && entity.OriginalData.DocState == CompleteRptStateEnum.Approving)
                                                 {
+                                                    vehicleChangeInfoDto resultdto = null;
                                                     try
                                                     {
                                                         SI09ImplService service2 = new SI09ImplService();
@@ -141,15 +201,69 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                         // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
                                                         dto.vin = entity.DescFlexField.PubDescSeg12;
                                                         dto.docStatus = 7;
-                                                        vehicleChangeInfoDto d = service2.Do(dto);
-                                                        if (d != null && d.flag == 0)
-                                                        {
-                                                            throw new BusinessException(d.errMsg);
-                                                        }
+                                                        resultdto = service2.Do(dto);
+                                                        //if (resultdto != null && resultdto.flag == 0)
+                                                        //{
+                                                        //    throw new BusinessException(resultdto.errMsg);
+                                                        //}
                                                     }
                                                     catch (System.Exception e)
                                                     {
-                                                        throw new BusinessException("调用DMS接口错误：" + e.Message);
+                                                        throw new BusinessException("调用DMS接口异常：" + e.Message);
+                                                    }
+                                                    if (resultdto != null && resultdto.flag == 0)
+                                                    {
+                                                        if (resultdto.errMsg.IsNull())
+                                                        {
+                                                            throw new BusinessException("调用DMS接口错误,错误标记(flag)为0，但是无错误消息返回!");
+                                                        }
+                                                        else
+                                                        {
+                                                            throw new BusinessException("调用DMS接口执行失败：" + resultdto.errMsg);
+                                                        }
+                                                    }
+                                                }
+                                                else if (entity.DocState == CompleteRptStateEnum.Received
+                                                    && (entity.OriginalData.DocState == CompleteRptStateEnum.Approved
+                                                        || entity.OriginalData.DocState == CompleteRptStateEnum.QualityChecked
+                                                        || entity.OriginalData.DocState == CompleteRptStateEnum.Approving
+                                                        )
+                                                    )
+                                                {
+                                                    vehicleChangeInfoDto resultdto = null;
+                                                    try
+                                                    {
+                                                        SI09ImplService service2 = new SI09ImplService();
+                                                        service2.Url = PubHelper.GetAddress(service2.Url);
+                                                        //vehicleChangeInfoDto d = service2.receive(new vehicleChangeInfoDto
+                                                        //{
+                                                        //    vin = rpt.DescFlexField.PubDescSeg12,
+                                                        //    docStatus = 7
+                                                        //});
+                                                        vehicleChangeInfoDto dto = new vehicleChangeInfoDto();
+                                                        // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
+                                                        dto.vin = entity.DescFlexField.PubDescSeg12;
+                                                        dto.docStatus = 5;
+                                                        resultdto = service2.Do(dto);
+                                                        //if (resultdto != null && resultdto.flag == 0)
+                                                        //{
+                                                        //    throw new BusinessException(resultdto.errMsg);
+                                                        //}
+                                                    }
+                                                    catch (System.Exception e)
+                                                    {
+                                                        throw new BusinessException("调用DMS接口异常：" + e.Message);
+                                                    }
+                                                    if (resultdto != null && resultdto.flag == 0)
+                                                    {
+                                                        if (resultdto.errMsg.IsNull())
+                                                        {
+                                                            throw new BusinessException("调用DMS接口错误,错误标记(flag)为0，但是无错误消息返回!");
+                                                        }
+                                                        else
+                                                        {
+                                                            throw new BusinessException("调用DMS接口执行失败：" + resultdto.errMsg);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -219,6 +333,7 @@ COM.DaYun.MES.CJDBE.CarAssemblyCQRecord	车辆装配过程检验质量问题记�
                                         && cjdHead.CJDLine.Count > 0
                                         )
                                     {
+                                        mesDataTmpDto resultdto = null;
                                         try
                                         {
                                             SI01ImplService service = new SI01ImplService();
@@ -254,16 +369,16 @@ COM.DaYun.MES.CJDBE.CarAssemblyCQRecord	车辆装配过程检验质量问题记�
                                             
                                             if (lstMesDTO.Count > 0)
                                             {
-                                                mesDataTmpDto resultdto = service.Do(lstMesDTO.ToArray());
-                                                if (resultdto != null && resultdto.flag == 0)
-                                                {
-                                                    throw new BusinessException(resultdto.errMsg);
-                                                }
+                                                resultdto = service.Do(lstMesDTO.ToArray());
                                             }
                                         }
                                         catch (System.Exception e)
                                         {
-                                            throw new BusinessException("调用DMS接口SI01[MES接口]错误：" + e.Message);
+                                            throw new BusinessException("调用DMS接口SI01[MES接口]异常：" + e.Message);
+                                        }
+                                        if (resultdto != null && resultdto.flag == 0)
+                                        {
+                                            throw new BusinessException("调用DMS接口SI01[MES接口]执行失败：" + resultdto.errMsg);
                                         }
                                     }
                                 }

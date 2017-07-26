@@ -23,6 +23,9 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                     CompleteRptRcvLine entity = key.GetEntity() as CompleteRptRcvLine;
                     CompleteRpt rpt = entity.CompleteRpt;
 
+                    // 改为在完工报告单上判断，审核、最终检验，关闭、总装入库；
+                    return;
+
                     if (entity == null
                         || rpt == null
                         )
