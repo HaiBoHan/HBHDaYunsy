@@ -101,42 +101,43 @@ namespace U9.VOB.Cus.HBHDaYunsy.PlugInBE
                                                     )
                                                 )
                                             {
-                                                vehicleInfoDto resultdto = null;
-                                                try
-                                                {
-                                                    SI03ImplService service = new SI03ImplService();
-                                                    // service.Url = PubHelper.GetAddress(service.Url);
-                                                    vehicleInfoDto dto = new vehicleInfoDto();
-                                                    if (entity.ProjectKey != null)
-                                                    {
-                                                        dto.dmsSaleNo = entity.Project.Code;
-                                                    }
-                                                    dto.vin = entity.DescFlexField.PubDescSeg12;
-                                                    dto.erpMaterialCode = entity.Item.Code;
-                                                    // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
-                                                    dto.nodeStatus = "5";
-                                                    dto.oldVin = string.Empty;
-                                                    // VIN短码
-                                                    dto.flowingCode = ((entity.DescFlexField.PubDescSeg12.Length >= 8) ? entity.DescFlexField.PubDescSeg12.Substring(entity.DescFlexField.PubDescSeg12.Length - 8, 8) : entity.DescFlexField.PubDescSeg12);
-                                                    // 发动机号
-                                                    dto.engineNo = entity.DescFlexField.PrivateDescSeg5;
-                                                    resultdto = service.Do(dto);
-                                                }
-                                                catch (System.Exception e)
-                                                {
-                                                    throw new BusinessException("调用DMS接口异常：" + e.Message);
-                                                }
-                                                if (resultdto != null && resultdto.flag == 0)
-                                                {
-                                                    if (resultdto.errMsg.IsNull())
-                                                    {
-                                                        throw new BusinessException("调用DMS接口错误,错误标记(flag)为0，但是无错误消息返回!");
-                                                    }
-                                                    else
-                                                    {
-                                                        throw new BusinessException("调用DMS接口执行失败：" + resultdto.errMsg);
-                                                    }
-                                                }
+                                                // 2017-07-27 wf 只传最终检验状态，后续不传给DMS；DMS自己系统中会有相关操作；DMS这个接口，强制更新成状态4，无论传入状态是什么；
+                                                //vehicleInfoDto resultdto = null;
+                                                //try
+                                                //{
+                                                //    SI03ImplService service = new SI03ImplService();
+                                                //    // service.Url = PubHelper.GetAddress(service.Url);
+                                                //    vehicleInfoDto dto = new vehicleInfoDto();
+                                                //    if (entity.ProjectKey != null)
+                                                //    {
+                                                //        dto.dmsSaleNo = entity.Project.Code;
+                                                //    }
+                                                //    dto.vin = entity.DescFlexField.PubDescSeg12;
+                                                //    dto.erpMaterialCode = entity.Item.Code;
+                                                //    // 等待上线0,上线1,下线滞留2,下线调试3,最终检验4,总装入库5,调试检验6,车辆整改7
+                                                //    dto.nodeStatus = "5";
+                                                //    dto.oldVin = string.Empty;
+                                                //    // VIN短码
+                                                //    dto.flowingCode = ((entity.DescFlexField.PubDescSeg12.Length >= 8) ? entity.DescFlexField.PubDescSeg12.Substring(entity.DescFlexField.PubDescSeg12.Length - 8, 8) : entity.DescFlexField.PubDescSeg12);
+                                                //    // 发动机号
+                                                //    dto.engineNo = entity.DescFlexField.PrivateDescSeg5;
+                                                //    resultdto = service.Do(dto);
+                                                //}
+                                                //catch (System.Exception e)
+                                                //{
+                                                //    throw new BusinessException("调用DMS接口异常：" + e.Message);
+                                                //}
+                                                //if (resultdto != null && resultdto.flag == 0)
+                                                //{
+                                                //    if (resultdto.errMsg.IsNull())
+                                                //    {
+                                                //        throw new BusinessException("调用DMS接口错误,错误标记(flag)为0，但是无错误消息返回!");
+                                                //    }
+                                                //    else
+                                                //    {
+                                                //        throw new BusinessException("调用DMS接口执行失败：" + resultdto.errMsg);
+                                                //    }
+                                                //}
                                             }
                                             // 关闭后，不会改VIN码，而且现在好像不用私有段21了，用的是公共段12
                                             //else if ((entity.DocState == CompleteRptStateEnum.Approved
